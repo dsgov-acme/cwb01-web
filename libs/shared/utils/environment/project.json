@@ -1,0 +1,31 @@
+{
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "name": "shared-utils-environment",
+  "prefix": "dsg",
+  "projectType": "library",
+  "sourceRoot": "libs/shared/utils/environment/src",
+  "tags": ["type:utils", "scope:shared"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/shared/utils/environment/**/*.ts", "libs/shared/utils/environment/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      },
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "libs/shared/utils/environment/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"]
+    }
+  }
+}

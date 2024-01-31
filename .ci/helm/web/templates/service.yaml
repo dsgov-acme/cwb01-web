@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Values.namespace | default "cwb01" }}
+  # We only want this annotation in GKE; not in Minikube
+  {{- if .Values.isGke }}
+  annotations:
+    cloud.google.com/neg: '{"ingress": true}' # Creates a NEG after an Ingress is created
+  {{- end }}
+spec:
+  selector:
+    app: {{ .Release.Name }}
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: {{ .Values.applicationPort | default 80 }}
+  sessionAffinity: None
+  type: NodePort

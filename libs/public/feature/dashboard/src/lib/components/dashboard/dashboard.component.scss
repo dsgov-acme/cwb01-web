@@ -1,0 +1,177 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/variables' as themeVars;
+
+:host {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  & > .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .expansion-panel {
+    ::ng-deep .mat-expansion-panel {
+      border: none;
+      padding-bottom: 10px;
+
+      &-header {
+        margin-left: rem.fromPx(-14px);
+        background-color: var(--theme-color-white) !important;
+        min-height: rem.fromPx(64px);
+      }
+
+      &-body {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding: 0px;
+      }
+    }
+
+    ::ng-deep .mat-expansion-panel-content {
+      font: unset;
+      letter-spacing: normal;
+    }
+  }
+
+  .transactions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .transaction-container {
+      border-radius: 0.25rem;
+      background-color: var(--theme-color-m3-neutral-95);
+      padding: rem.fromPx(24px);
+      display: flex;
+      flex-direction: column;
+      margin: 0 10px;
+
+      &--past-transaction {
+        z-index: 2;
+        background-color: var(--theme-color-white);
+        box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.15);
+
+        .application-card-title::after {
+          border-color: var(--theme-color-primary);
+        }
+      }
+
+      &.empty-transactions {
+        align-items: center;
+        padding: rem.fromPx(72px) rem.fromPx(24px);
+
+        nuverial-icon {
+          margin-bottom: 16px;
+          --nuverial-icon-size: 56px;
+          --nuverial-icon-color: var(--theme-color-tertiary);
+        }
+      }
+
+      .transaction-container-text {
+        margin: 0;
+        font-size: rem.fromPx(16px);
+        font-weight: 400;
+        line-height: 1.5rem;
+        text-align: center;
+      }
+
+      @media screen and (max-width: themeVars.$layout-mobile-breakpoint) {
+        .transaction-container-text:first-of-type {
+          margin-bottom: 24px;
+        }
+      }
+    }
+
+    .load-more-button-container {
+      margin-top: rem.fromPx(-5px);
+      ::ng-deep .mdc-button {
+        letter-spacing: normal;
+      }
+    }
+
+    .seperator {
+      margin-top: rem.fromPx(15px);
+      margin-bottom: rem.fromPx(-12px);
+    }
+
+    .application-card-title {
+      font-size: 1.7rem;
+      line-height: rem.fromPx(30px);
+      margin-bottom: 0.5rem;
+      position: relative;
+
+      &::after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        left: -1.5rem;
+        width: 0;
+        height: 100%;
+        border-left: 4px solid var(--theme-color-tertiary);
+      }
+    }
+
+    .application-transaction-id {
+      font-size: var(--theme-typography-font-size-large);
+      padding-bottom: 0.5rem;
+    }
+
+    .timestamps {
+      display: flex;
+      flex-wrap: wrap;
+      padding-bottom: 3rem;
+      & > div {
+        margin-right: rem.fromPx(10px);
+      }
+    }
+
+    .application-status {
+      font-size: var(--theme-typography-font-size-large);
+      padding-bottom: 1rem;
+    }
+
+    .documents-requested {
+      padding-bottom: 1rem;
+    }
+  }
+
+  @media screen and (max-width: themeVars.$layout-mobile-breakpoint) {
+    & .header {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    & .transactions nuverial-button {
+      width: 100%;
+    }
+  }
+
+  .documents-requested {
+    font-weight: bold;
+
+    .alert {
+      font-size: var(--theme-typography-font-size-small);
+      color: var(--theme-color-priority-urgent) !important;
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+
+      nuverial-icon {
+        margin: 0 0.4rem 0 -0.1rem;
+        --nuverial-icon-color: var(--theme-color-priority-urgent);
+        --nuverial-icon-size: 1.5rem;
+      }
+    }
+
+    ul {
+      font-size: var(--theme-typography-font-size-normal);
+      padding-left: 1.8rem;
+      margin: 0.3rem 0;
+    }
+  }
+}

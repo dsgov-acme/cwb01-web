@@ -1,0 +1,52 @@
+<div class="form-wrapper">
+  <nuverial-section-header class="flex-full" *ngIf="props.label">
+    <h2 nuverialCardContentType="label">{{props.label}}</h2>
+  </nuverial-section-header>
+
+  <ng-container *ngFor="let component of components; trackBy: trackByFn">
+    <ng-container [ngSwitch]="component.props?.componentId">
+      <ng-container *ngSwitchCase="'addressLine1'">
+        <ng-container *ngTemplateOutlet="textInputTemplate; context: { component, name: 'addressLine1' }"></ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="'addressLine2'">
+        <ng-container *ngTemplateOutlet="textInputTemplate; context: { component, name: 'addressLine2' }"></ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="'city'">
+        <ng-container *ngTemplateOutlet="textInputTemplate; context: { component, name: 'city' }"></ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="'stateCode'">
+        <ng-container *ngTemplateOutlet="selectTemplate; context: { component, name: 'stateCode' }"></ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="'postalCode'">
+        <ng-container *ngTemplateOutlet="textInputTemplate; context: { class: 'flex-quarter', component, name: 'postalCode' }"></ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="'postalCodeExtension'">
+        <ng-container *ngTemplateOutlet="textInputTemplate; context: { class: 'flex-quarter', component, name: 'postalCodeExtension' }"></ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="'countryCode'">
+        <ng-container *ngTemplateOutlet="selectTemplate; context: { component, name: 'countryCode' }"></ng-container>
+      </ng-container>
+    </ng-container>
+
+    <ng-template #textInputTemplate let-class="class" let-component="component" let-name="name">
+      <nuverial-text-input
+        class="{{class || 'flex-half'}}"
+        *ngIf="!component.hide"
+        [label]="component.props.label"
+        [required]="component.props.required"
+        [(ngModel)]="model[name]"
+      ></nuverial-text-input>
+    </ng-template>
+
+    <ng-template #selectTemplate let-class="class" let-component="component" let-name="name">
+      <nuverial-select
+        class="{{class || 'flex-half'}}"
+        *ngIf="!component.hide"
+        [label]="component.props.label"
+        [required]="component.props.required"
+        [selectOptions]="component.props.selectOptions || []"
+        [(ngModel)]="model[name]"
+      ></nuverial-select>
+    </ng-template>
+  </ng-container>
+</div>

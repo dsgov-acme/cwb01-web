@@ -1,0 +1,70 @@
+@use '@dsg/shared-theme/partials/mixins';
+@use '@dsg/shared-theme/partials/variables';
+
+.nuverial-table {
+  flex-direction: column;
+  flex: 1;
+  @include mixins.table-styleTable();
+
+  .mat-mdc-table {
+    border-left: none !important;
+  }
+
+  .mat-mdc-paginator {
+    border-left: none !important;
+  }
+
+  .priority {
+    font-weight: var(--theme-typography-font-weight-bold);
+    display: flex;
+    align-items: center;
+
+    &.low {
+      $color: var(--theme-color-priority-low);
+      color: $color;
+      ::ng-deep .mat-icon {
+        color: $color !important;
+      }
+    }
+
+    &.medium {
+      $color: var(--theme-color-priority-medium);
+      color: $color;
+      ::ng-deep .mat-icon {
+        color: $color !important;
+      }
+    }
+
+    &.high {
+      $color: var(--theme-color-priority-high);
+      color: $color;
+      ::ng-deep .mat-icon {
+        color: $color !important;
+      }
+    }
+
+    &.urgent {
+      $color: var(--theme-color-priority-urgent);
+      color: $color;
+      ::ng-deep .mat-icon {
+        color: $color !important;
+      }
+    }
+  }
+
+  &__header {
+    color: var(--theme-color-secondary);
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1.5rem;
+  }
+}
+
+.hidden {
+  display: none;
+}

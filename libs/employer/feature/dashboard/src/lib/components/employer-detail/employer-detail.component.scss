@@ -1,0 +1,104 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/mixins' as mixins;
+
+:host {
+  flex: 1;
+  display: flex;
+  margin: rem.fromPx(-40px) 0 0 0;
+  background-color: var(--theme-color-white);
+
+  & > .employer-details {
+    display: flex;
+    flex-direction: column;
+    gap: rem.fromPx(24px);
+    flex: 0 0 rem.fromPx(200px);
+    margin: rem.fromPx(10px) rem.fromPx(25px) rem.fromPx(40px);
+
+    & .sub-section {
+      display: flex;
+      flex-direction: column;
+      gap: rem.fromPx(10px);
+      flex: 0 0 rem.fromPx(10px);
+
+      & .transaction-name {
+        margin: 0;
+        color: var(--theme-color-black);
+        font-size: var(--theme-typography-font-size-normal);
+        font-weight: var(--theme-typography-font-weight-mid);
+      }
+
+      & > .employer-id {
+        color: var(--theme-color-m3-neutral-30);
+        font-size: var(--theme-typography-font-size-small);
+        margin-top: -5px;
+      }
+
+      & .copy-employer-id {
+        cursor: pointer;
+        vertical-align: sub;
+
+        ::ng-deep .mat-icon {
+          color: var(--theme-color-tertiary);
+          font-size: var(--theme-typography-font-size-x-large);
+        }
+      }
+
+      & .pill-container {
+        padding: rem.fromPx(6px) 0;
+        margin-bottom: 8px;
+
+        ::ng-deep .nuverial-pill {
+          font-weight: var(--theme-typography-font-weight-bold);
+          letter-spacing: rem.fromPx(0.5px);
+        }
+      }
+
+      & .transaction-submitted-on {
+        color: var(--theme-color-m3-neutral-30);
+        font-size: var(--theme-typography-font-size-small);
+      }
+
+      & > .details-container {
+        margin-left: rem.fromPx(10px);
+
+        .details {
+          display: flex;
+          gap: 0.3rem;
+          align-items: center;
+        }
+
+        ::ng-deep {
+          .nuverial-icon {
+            --nuverial-icon-size: 1rem;
+          }
+        }
+      }
+    }
+
+    & > .detail-menu {
+      margin: rem.fromPx(-14px) rem.fromPx(-25px) 0;
+    }
+  }
+
+  .detail-content {
+    background: var(--theme-color-m3-neutral-95);
+    width: 100%;
+    padding: rem.fromPx(27px);
+    padding-bottom: 0;
+    display: flex;
+    flex: 1;
+  }
+
+  .assign-container {
+    padding-bottom: rem.fromPx(10px);
+
+    .assign-label {
+      padding-bottom: rem.fromPx(10px);
+    }
+
+    ::ng-deep .mat-mdc-form-field-infix {
+      height: rem.fromPx(45px);
+      min-height: auto;
+    }
+  }
+}

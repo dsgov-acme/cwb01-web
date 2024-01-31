@@ -1,0 +1,25 @@
+<mat-checkbox
+  class="nuverial-checkbox"
+  #formBaseInput
+  [aria-describedby]="ariaDescribedBy"
+  [aria-label]="ariaLabel"
+  [attr.disabled]="disabled"
+  [checked]="checked"
+  [color]="$any(colorTheme)"
+  [formControl]="formControl"
+  [indeterminate]="indeterminate"
+  [labelPosition]="labelPosition"
+  [ngClass]="{'nuverial-checkbox-invalid': invalid$ | async, 'nuverial-checkbox-forced-invalid': invalid}"
+  [required]="required"
+  (change)="onChange($event)"
+>
+  <div class="nuverial-checkbox-label">
+    <ng-content select="[nuverialCardContentType='label']"></ng-content>
+  </div>
+</mat-checkbox>
+<ng-container *ngIf="displayError">
+  <nuverial-form-field-error class="nuverial-checkbox-error" *ngIf="(invalid$ | async) && (error$ | async) as error">
+    <nuverial-icon iconName="error_outline"></nuverial-icon>
+    {{ error }}</nuverial-form-field-error
+  >
+</ng-container>

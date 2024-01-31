@@ -1,0 +1,102 @@
+<section class="header">
+  <span>
+    <h1>Welcome<span *ngIf="profile$ | async as profile">{{profile.displayName ? ', ' + profile.displayName : ''}}</span></h1>
+    <p>View/update your applications or submit a new one</p>
+  </span>
+
+  <nuverial-selector-button-dropdown
+    [menuItems]="selectOption"
+    (buttonClickedEvent)="createNewTransaction($event)"
+    buttonText="New Application"
+  ></nuverial-selector-button-dropdown>
+</section>
+
+<section class="transactions" *ngIf="activeTransactions$ | async as activeTransactions; else loading">
+  <ng-container *ngIf="activeTransactions.length; else emptyTransactionsState">
+    <div class="transaction-container" *ngFor="let transaction of activeTransactions; trackBy:trackByFn">
+      <ng-container *ngTemplateOutlet="transactionTemplate; context: {transaction: transaction}"></ng-container>
+    </div>
+  </ng-container>
+  <div class="load-more-button-container" *ngIf="activeTransactions.length < totalActiveTransactions">
+    <nuverial-button *ngIf="!loadingActiveTransactions else loading" (click)="loadMoreActiveApplications()" buttonStyle="text" colorTheme="accent">
+      LOAD MORE APPLICATIONS
+    </nuverial-button>
+  </div>
+  <ng-container *ngIf="pastTransactions$ | async as pastTransactions; else loading">
+    <ng-container *ngIf="pastTransactions.length">
+      <section class="seperator"><hr /></section>
+      <ng-container>
+        <nuverial-accordion class="expansion-panel" [panelList]="pastApplicationPanel">
+          <ng-template #body let-panel>
+            <ng-container>
+              <div class="transaction-container transaction-container--past-transaction" *ngFor="let transaction of pastTransactions; trackBy:trackByFn">
+                <ng-container *ngTemplateOutlet="transactionTemplate; context: {transaction: transaction}"></ng-container>
+              </div>
+            </ng-container>
+            <div class="load-more-button-container" *ngIf="pastTransactions.length < totalPastTransactions">
+              <nuverial-button *ngIf="!loadingPastTransactions else loading" (click)="loadMorePastApplications()" buttonStyle="text" colorTheme="accent">
+                LOAD MORE APPLICATIONS
+              </nuverial-button>
+            </div>
+          </ng-template>
+        </nuverial-accordion>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</section>
+
+<ng-template #transactionTemplate let-transaction="transaction">
+  <div>
+    <div>
+      <h1 class="application-card-title">{{transaction.transactionDefinitionName}}</h1>
+      <h2 class="application-transaction-id">Transaction ID: {{transaction.externalId | uppercase}}</h2>
+    </div>
+    <div class="timestamps">
+      <div>Created On: {{transaction.createdTimestamp | date:'MM/dd/yyyy'}}</div>
+      <div><i>(Last update {{transaction.lastUpdatedTimestamp | date:'MM/dd/yyyy h:mm a'}})</i></div>
+    </div>
+    <div class="application-status">Status: <b>{{transaction.status | titlecase}}</b></div>
+    <div class="documents-requested" *ngIf="transaction.rejectedDocuments.length > 0">
+      <div class="alert">
+        <nuverial-icon iconName="notifications_outline"></nuverial-icon>
+        <span>One or more documents require correction</span>
+      </div>
+      <ul>
+        <li *ngFor="let document of transaction.rejectedDocuments; trackBy:trackByFn">{{document.label}}</li>
+      </ul>
+    </div>
+    <div *ngIf="transaction.activeTasks.length > 0; else readonly">
+      <nuverial-button
+        ariaLabel="Edit application"
+        [queryParams]="{resume: 'true'}"
+        [routerLink]="['/dashboard/transaction/' + transaction.id]"
+        buttonStyle="filled"
+        colorTheme="primary"
+        routerLinkActive="router-link-active"
+        >Continue</nuverial-button
+      >
+    </div>
+    <ng-template #readonly>
+      <nuverial-button
+        ariaLabel="View submitted application"
+        [routerLink]="['/dashboard/transaction/' + transaction.id]"
+        buttonStyle="filled"
+        colorTheme="primary"
+        routerLinkActive="router-link-active"
+        >View Application</nuverial-button
+      >
+    </ng-template>
+  </div>
+</ng-template>
+
+<ng-template #emptyTransactionsState>
+  <div class="transaction-container empty-transactions">
+    <nuverial-icon [outlined]="true" iconName="file_copy"></nuverial-icon>
+    <p class="transaction-container-text">You currently don’t have any active applications.</p>
+    <p class="transaction-container-text">Start a new application using the New Application button above</p>
+  </div>
+</ng-template>
+
+<ng-template #loading>
+  <nuverial-spinner></nuverial-spinner>
+</ng-template>

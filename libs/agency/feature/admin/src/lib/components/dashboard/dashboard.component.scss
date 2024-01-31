@@ -1,0 +1,15 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+
+:host {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+
+  .header {
+    display: flex;
+    justify-content: center;
+    padding-top: rem.fromPx(36px);
+    padding-bottom: rem.fromPx(40px);
+  }
+}

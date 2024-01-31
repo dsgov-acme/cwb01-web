@@ -1,0 +1,58 @@
+<h2>Checkbox</h2>
+
+<div class="component-section">
+  <nuverial-checkbox [checked]="true">
+    <div nuverialCardContentType="label">Enabled</div>
+  </nuverial-checkbox>
+  <nuverial-checkbox [checked]="true" [indeterminate]="true">
+    <div nuverialCardContentType="label">Indeterminate</div>
+  </nuverial-checkbox>
+  <nuverial-checkbox [checked]="true" [disabled]="true">
+    <div nuverialCardContentType="label">Disabled</div>
+  </nuverial-checkbox>
+</div>
+
+<div class="component-section">
+  <nuverial-checkbox>
+    <div nuverialCardContentType="label">Enabled</div>
+  </nuverial-checkbox>
+  <nuverial-checkbox [disabled]="true">
+    <div nuverialCardContentType="label">Disabled</div>
+  </nuverial-checkbox>
+  <nuverial-checkbox [invalid]="true">
+    <div nuverialCardContentType="label">Error / Invalid</div>
+  </nuverial-checkbox>
+</div>
+
+<div class="component-section">
+  <nuverial-checkbox labelPosition="before">
+    <div nuverialCardContentType="label">Enabled</div>
+  </nuverial-checkbox>
+  <nuverial-checkbox [disabled]="true" labelPosition="before">
+    <div nuverialCardContentType="label">Disabled</div>
+  </nuverial-checkbox>
+</div>
+
+<div class="component-section">
+  <nuverial-checkbox [checked]="true" colorTheme="warn">
+    <div nuverialCardContentType="label">Enabled</div>
+  </nuverial-checkbox>
+  <nuverial-checkbox [checked]="true" [indeterminate]="true" colorTheme="warn">
+    <div nuverialCardContentType="label">Indeterminate</div>
+  </nuverial-checkbox>
+  <nuverial-checkbox [checked]="true" [disabled]="true" colorTheme="warn">
+    <div nuverialCardContentType="label">Disabled</div>
+  </nuverial-checkbox>
+</div>
+
+<div class="component-section">
+  <nuverial-checkbox [checked]="true" colorTheme="accent">
+    <div nuverialCardContentType="label">Enabled</div>
+  </nuverial-checkbox>
+  <nuverial-checkbox [checked]="true" [indeterminate]="true" colorTheme="accent">
+    <div nuverialCardContentType="label">Indeterminate</div>
+  </nuverial-checkbox>
+  <nuverial-checkbox [checked]="true" [disabled]="true" colorTheme="accent">
+    <div nuverialCardContentType="label">Disabled</div>
+  </nuverial-checkbox>
+</div>

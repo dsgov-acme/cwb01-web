@@ -1,0 +1,80 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/variables' as themeVars;
+
+:host {
+  .unsaved-step-modal {
+    padding: 40px;
+    max-width: 400px;
+
+    @media screen and (max-width: themeVars.$layout-mobile-breakpoint) {
+      padding: 25px;
+    }
+
+    .modal-header {
+      float: right;
+      position: relative;
+      bottom: 20px;
+      left: 20px;
+      cursor: pointer;
+    }
+
+    .warning-icon {
+      margin-bottom: 5px;
+      .nuverial-icon {
+        --nuverial-icon-size: #{rem.fromPx(35px)};
+        --nuverial-icon-color: var(--theme-color-tertiary);
+      }
+    }
+
+    .modal-title {
+      color: var(--theme-color-primary);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-text {
+      font-size: 0.8rem;
+    }
+
+    mat-dialog-content {
+      padding: 20px 0 20px 0;
+      width: 100%;
+    }
+
+    mat-dialog-actions {
+      padding: 0;
+      display: flex;
+      align-items: center;
+      @media screen and (max-width: themeVars.$layout-mobile-breakpoint) {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+
+    .modal-btn {
+      flex: auto;
+
+      ::ng-deep button {
+        text-transform: uppercase;
+        font-size: 13px;
+        height: 35px;
+      }
+
+      &.cancel-btn {
+        ::ng-deep .mat-mdc-outlined-button {
+          border-width: 2px;
+
+          &:active {
+            background-color: white;
+          }
+
+          @media screen and (max-width: themeVars.$layout-mobile-breakpoint) {
+            margin-bottom: 10px;
+          }
+        }
+      }
+    }
+  }
+}

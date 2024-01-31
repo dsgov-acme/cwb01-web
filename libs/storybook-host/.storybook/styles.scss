@@ -1,0 +1,5 @@
+///* You can add global styles to this file, and also import other style files */
+@use '@dsg/shared-theme';
+@use '@dsg/shared-theme/partials/mixins' as mixins;
+
+@include mixins.toolTop-styleTooltip();

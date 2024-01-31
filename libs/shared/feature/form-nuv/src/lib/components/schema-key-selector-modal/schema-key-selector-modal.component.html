@@ -1,0 +1,28 @@
+<div class="schema-key-selector-modal">
+  <div class="schema-key-selector-modal__header">
+    <h1 class="schema-key-selector-modal__header--title" aria-label="title">Schema Attribute</h1>
+    <nuverial-icon aria-label="close" (click)="closeDialog()" (keyup.enter)="closeDialog()" iconName="close" tabindex="0"></nuverial-icon>
+  </div>
+
+  <nuverial-text-input
+    class="schema-key-selector-modal--filter"
+    ariaLabel="Search schemas"
+    [formControl]="searchInput"
+    [prefixIcon]="searchBoxIcon"
+    [type]="'text'"
+    (clickIcon)="clearSearch()"
+    (keyup.enter)="getSchemasList()"
+    (keyup)="liveSearch()"
+    placeholder="Search by schema"
+    style="width: 1000px"
+  />
+
+  <div class="schema-key-selector-modal--tree" *ngIf="loadSchemaTree$ | async">
+    <nuverial-tree [root]="schemaTree" [selectable]="true" (nodeSelected)="setSelectedSchemaKey($event)"></nuverial-tree>
+  </div>
+
+  <footer class="schema-key-selector-modal--footer">
+    <nuverial-button ariaLabel="Cancel" (click)="closeDialog()" buttonStyle="outlined" buttonType="submit" colorTheme="primary"> CANCEL </nuverial-button>
+    <nuverial-button ariaLabel="Connect" (click)="submitDialog()" buttonStyle="filled" buttonType="submit" colorTheme="primary"> CONNECT </nuverial-button>
+  </footer>
+</div>

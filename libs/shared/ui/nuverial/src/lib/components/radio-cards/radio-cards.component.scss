@@ -1,0 +1,50 @@
+@use '@dsg/shared-theme/partials/functions/flex';
+@use '@dsg/shared-theme/partials/variables' as themeVars;
+
+$formFieldGap: 1rem;
+
+:host {
+  display: block;
+
+  .radio-card {
+    flex: 0 flex.flexBasisWithGap(2, $formFieldGap);
+  }
+
+  & .nuverial-card-group {
+    --nuverial-card-group-card-layout-direction: row;
+  }
+
+  ::ng-deep .nuverial-radio-card-container {
+    max-width: none !important;
+  }
+}
+
+:host-context(formly-field.flex-full) {
+  .radio-card {
+    flex: 0 flex.flexBasisWithGap(2, $formFieldGap);
+  }
+}
+
+:host-context(.flex-half) {
+  .radio-card {
+    flex: 0 100% !important;
+  }
+}
+
+:host-context(.flex-third) {
+  .radio-card {
+    flex: 0 100% !important;
+  }
+}
+
+:host-context(.flex-quarter) {
+  .radio-card {
+    flex: 0 100% !important;
+  }
+}
+
+@media screen and (max-width: themeVars.$layout-mobile-breakpoint) {
+  :host .radio-card {
+    flex: 0 100% !important;
+  }
+}

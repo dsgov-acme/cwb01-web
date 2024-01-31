@@ -1,0 +1,79 @@
+<ng-container *ngIf="loadTransactionDetails$ | async; else loading">
+  <section class="user-details" *ngIf="{transaction: transaction$ | async, user: user$ | async} as details">
+    <nuverial-breadcrumb [breadCrumbs]="breadCrumbs"></nuverial-breadcrumb>
+
+    <div class="transaction-name">{{details.transaction?.transactionDefinitionName || details.transaction?.transactionDefinitionKey}}</div>
+    <h1 class="user-name">{{details.user?.displayName || 'N/A'}}</h1>
+    <div class="user-name--not-found" *ngIf="!details.user?.displayName">
+      <span [title]="details.transaction!.subjectUserId">
+        User ID: {{ details.transaction!.subjectUserId!.length > 10 ? (details.transaction!.subjectUserId |
+        slice:0:10)+'...':(details.transaction!.subjectUserId)}}
+      </span>
+      <nuverial-copy-button [copyText]="details.transaction!.subjectUserId" beforeCopyTooltipText="Copy User ID" tooltipText="User ID copied!" />
+    </div>
+    <div class="pill-container"><nuverial-pill>{{details.transaction?.status | titlecase}}</nuverial-pill></div>
+    <div>Transaction ID: <b>{{details.transaction?.externalId | uppercase}}</b></div>
+    <div class="transaction-submitted-on">
+      <i>Submitted On: {{details.transaction?.submittedOn ? (details.transaction?.submittedOn | date: 'MM/dd/yyyy, h:mm:ss a') : 'N/A'}}</i>
+    </div>
+    <div class="user-email" *ngIf="details.user?.email">
+      <a href="mailto:{{details.user?.email}}"><nuverial-icon iconName="email-outline"></nuverial-icon> {{details.user?.email}}</a>
+    </div>
+
+    <div class="priority">
+      <span>Priority:</span>
+      <span class="priority--select">
+        <nuverial-select
+          class="no-border no-error-height"
+          *ngIf="prioritySelectOptionsSorted$ | async as prioritySelectOptions"
+          [formControl]="priorityControl"
+          [selectedClearable]="false"
+          [selectOptions]="prioritySelectOptions"
+          (validOptionSelected)="handlePriority($event)"
+        ></nuverial-select>
+      </span>
+    </div>
+
+    <ng-container *ngIf="(agentsSelectOptions$ | async) as agentsSelectOptions">
+      <div class="assign-container">
+        <div class="assign-label">Assigned Agent:</div>
+        <nuverial-select
+          class="no-error-height"
+          [formControl]="assignedToControl"
+          [loading]="loadingSearchAgent"
+          [selectOptions]="agentsSelectOptions"
+          (optionCleared)="handleUnassign()"
+          (searchInput)="handleSearchAgent($event)"
+          (validOptionSelected)="handleAssignedTo($event.key)"
+        ></nuverial-select>
+      </div>
+    </ng-container>
+
+    <div class="detail-menu">
+      <nuverial-navigable-tabs [baseRoute]="baseRoute" [tabs]="tabs"></nuverial-navigable-tabs>
+    </div>
+
+    <ng-container *ngIf="isTransactionStatusRequestPending">
+      <nuverial-spinner></nuverial-spinner>
+    </ng-container>
+  </section>
+
+  <section class="detail-container">
+    <div class="detail-content">
+      <div class="detail-content-tabs">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </section>
+  <ng-container *ngIf="(transactionActiveTask$ | async) as activeTask">
+    <nuverial-footer-actions
+      [buttonsDisabled]="isTransactionStatusRequestPending"
+      [footerActions]="activeTask.actions"
+      (actionSelected)="onActionClick($event)"
+    ></nuverial-footer-actions>
+  </ng-container>
+</ng-container>
+
+<ng-template #loading>
+  <nuverial-spinner></nuverial-spinner>
+</ng-template>

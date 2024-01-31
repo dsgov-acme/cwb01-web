@@ -1,0 +1,34 @@
+<div class="manage-users__actions">
+  <nuverial-text-input
+    class="filter manage-users__search"
+    ariaLabel="Search users"
+    [formControl]="searchInput"
+    [suffixIcon]="searchBoxIcon"
+    (clickIcon)="clearSearch()"
+    (keyup.enter)="handleSearch()"
+    (keyup)="setSearchBoxIcon()"
+    placeholder="Search"
+    suffixAriaLabel="Search users"
+    type="text"
+  />
+  <nuverial-button class="manage-users__invite-user" ariaLabel="Invite user" (click)="inviteUser()" buttonStyle="outlined" colorTheme="primary">
+    INVITE USER
+  </nuverial-button>
+</div>
+
+<mat-tab-group [mat-stretch-tabs]="false" [selectedIndex]="selectedIndex" (selectedIndexChange)="setSelectedIndex($event)">
+  <mat-tab bodyClass="manage-users__tab-body" labelClass="manage-users__tab-label">
+    <ng-template mat-tab-label>
+      <h3>Users</h3>
+      <span class="manage-users__tab-label__count">{{userListCount}}</span>
+    </ng-template>
+    <dsg-user-list [reset$]="reset$" [search$]="search$" (count)="setUserListCount($event)" />
+  </mat-tab>
+  <mat-tab bodyClass="manage-users__tab-body" labelClass="manage-users__tab-label">
+    <ng-template mat-tab-label>
+      <h3>Invites</h3>
+      <span class="manage-users__tab-label__count">{{inviteListCount}}</span>
+    </ng-template>
+    <dsg-invite-list [reset$]="reset$" [search$]="search$" (count)="setInviteListCount($event)" />
+  </mat-tab>
+</mat-tab-group>

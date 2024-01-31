@@ -1,0 +1,70 @@
+@use '@angular/material' as mat;
+@use '../partials/variables' as themeVars;
+@include mat.core();
+
+// used the color picker at https://materialtheme.arcsine.dev/
+// to get the lighter and darker shades + contrast colors from the single design color of
+// reduced the output of that generator + the angular material docs to get this code
+$custom-primary-colors: (
+  main: themeVars.$color-primary,
+  lighter: #bcbcbc,
+  darker: #121212,
+  200: themeVars.$color-primary,
+  // For slide toggle,
+  contrast:
+    (
+      main: themeVars.$color-white,
+      lighter: themeVars.$color-black,
+      darker: themeVars.$color-white,
+    ),
+);
+$custom-primary-palette: mat.define-palette($custom-primary-colors, main, lighter, darker);
+
+$custom-accent-colors: (
+  main: themeVars.$color-secondary,
+  lighter: #d2d2d2,
+  darker: #4c4c4c,
+  200: themeVars.$color-secondary,
+  // For slide toggle,
+  contrast:
+    (
+      main: themeVars.$color-black,
+      lighter: themeVars.$color-black,
+      darker: themeVars.$color-white,
+    ),
+);
+$custom-accent-palette: mat.define-palette($custom-accent-colors, main, lighter, darker);
+
+$custom-warn-colors: (
+  main: themeVars.$color-error,
+  lighter: #f5b3b3,
+  darker: #d10000,
+  200: themeVars.$color-error,
+  // For slide toggle,
+  contrast:
+    (
+      main: themeVars.$color-white,
+      lighter: themeVars.$color-black,
+      darker: themeVars.$color-white,
+    ),
+);
+$custom-warn-palette: mat.define-palette($custom-warn-colors, main, lighter, darker);
+
+$custom-typography: mat.define-typography-config(
+  $font-family: themeVars.$typography-font-family,
+);
+
+$custom-material-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $custom-primary-palette,
+      accent: $custom-accent-palette,
+      warn: $custom-warn-palette,
+    ),
+    typography: $custom-typography,
+  )
+);
+
+@include mat.all-component-themes($custom-material-theme);
+// strong focus indicators are recommended for WCAG accessibility requirements
+@include mat.strong-focus-indicators-theme($custom-material-theme);

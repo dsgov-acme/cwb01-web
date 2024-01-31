@@ -1,0 +1,36 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/variables' as themeVars;
+
+:host {
+  display: block;
+
+  as-split {
+    overflow: inherit;
+
+    .first-area {
+      height: auto;
+    }
+
+    .second-area {
+      height: auto;
+      border-width: 1px 0px 1px 0px;
+      border-color: var(--theme-color-m3-neutral-90);
+      border-style: solid;
+    }
+
+    ::ng-deep .as-split-gutter {
+      height: auto !important;
+      border-top-left-radius: 16px;
+      border-bottom-left-radius: 16px;
+      background-color: var(--theme-color-white) !important;
+      border-width: 1px 0px 1px 1px;
+      border-color: var(--theme-color-m3-neutral-90);
+      border-style: solid;
+    }
+
+    &.as-horizontal ::ng-deep .as-split-gutter-icon {
+      background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAYCAYAAADDLGwtAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAABySURBVHgB7ZPBDYAgDEVbJtANHICdnEEnkA1cwZ24wwYyAfgbNSmePBN+0vT39/VY9t7PpZSdmRMRbdbaA52+OSMIMBPdSgDHB6xyowbRoHyVG/qpDnawcRCfltQcX4P8VD4KuAggBzlnp5YrWpADlLsAF7g+2dixH2sAAAAASUVORK5CYII=') !important;
+      width: 25px !important;
+    }
+  }
+}

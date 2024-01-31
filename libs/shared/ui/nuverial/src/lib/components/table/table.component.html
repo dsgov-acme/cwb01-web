@@ -1,0 +1,85 @@
+<div class="nuverial-table">
+  <table
+    [attr.aria-label]="ariaLabel"
+    [dataSource]="dataSourceTable"
+    [matSortActive]="pagingRequestModel.sortBy"
+    [matSortDirection]="sortDirection"
+    (matSortChange)="sortData.emit($event)"
+    mat-table
+    matSort
+    multiTemplateDataRows
+  >
+    <ng-container *ngFor="let col of displayedColumns; trackBy: trackByFn" [matColumnDef]="col.attributePath">
+      <th
+        class="nuverial-table__header"
+        *matHeaderCellDef
+        [disabled]="col.sortable ? false : true"
+        [mat-sort-header]="col.sortable === true ? col.attributePath : ''"
+        [style.width]="col.width || 'auto'"
+        mat-header-cell
+      >
+        {{col.label | nuverialSplitCamelCase }}
+      </th>
+      <ng-container [ngSwitch]="col.type">
+        <span *ngSwitchCase="'priority'">
+          <td *matCellDef="let element" mat-cell>
+            <span class="priority" [ngClass]="element[col.attributePath].class">
+              <nuverial-icon class="priority-icon" [iconName]="element[col.attributePath].icon" [outlined]="true"></nuverial-icon>
+              <span>{{element[col.attributePath].value}}</span>
+            </span>
+          </td>
+        </span>
+
+        <span *ngSwitchCase="'pill'">
+          <td *matCellDef="let element" mat-cell>
+            <nuverial-tag [tag]="element[col.attributePath]"></nuverial-tag>
+          </td>
+        </span>
+
+        <span *ngSwitchCase="'icon'">
+          <td *matCellDef="let element" mat-cell><nuverial-icon [iconName]="element[col.attributePath] ? col.icon : undefined"></nuverial-icon></td>
+        </span>
+
+        <span *ngSwitchCase="'datetime'">
+          <td *matCellDef="let element" mat-cell>{{element[col.attributePath] | date:"MM/dd/yyyy"}}</td>
+        </span>
+
+        <span *ngSwitchCase="'actions'">
+          <td *matCellDef="let element" mat-cell>
+            <div class="nuverial-table__actions">
+              <nuverial-icon
+                *ngFor="let tableIcon of element[col.attributePath]; trackBy: trackByFn"
+                [iconName]="tableIcon.icon"
+                [outlined]="true"
+                (click)="clickAction.emit({action: tableIcon.id, column: element})"
+              />
+            </div>
+          </td>
+        </span>
+
+        <span *ngSwitchDefault>
+          <td *matCellDef="let element" mat-cell>{{element[col.attributePath]}}</td>
+        </span>
+      </ng-container>
+    </ng-container>
+    <tr *matHeaderRowDef="displayedColumnsValues" mat-header-row></tr>
+    <tr *matRowDef="let row; columns: displayedColumnsValues;" (click)="clickRow.emit(row)" mat-row></tr>
+  </table>
+  <ng-container *ngIf="listIsLoading">
+    <nuverial-spinner></nuverial-spinner>
+  </ng-container>
+  <ng-container *ngIf="pagingMetadata">
+    <mat-paginator
+      aria-label="Select page"
+      #tablePaginator
+      [class.hidden]="!pagingMetadata.totalCount"
+      [length]="pagingMetadata.totalCount"
+      [pageIndex]="pagingMetadata.pageNumber"
+      [pageSize]="pagingMetadata.pageSize"
+      [pageSizeOptions]="pageSizeOptions"
+      (page)="setPage.emit($event)"
+      showFirstLastButtons
+    >
+    </mat-paginator>
+  </ng-container>
+</div>

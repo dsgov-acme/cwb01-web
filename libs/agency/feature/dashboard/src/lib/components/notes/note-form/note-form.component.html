@@ -1,0 +1,44 @@
+<ng-container *ngIf="(note$ | async)">
+  <header class="notes-header">
+    <nuverial-breadcrumb class="notes-header-breadcrumb" [breadCrumbs]="breadCrumbs"></nuverial-breadcrumb>
+    <nuverial-icon class="notes-header-icon" *ngIf="this.mode === formModeEnum.Add" iconName="menu_open"></nuverial-icon>
+  </header>
+  <section class="notes-form">
+    <header *ngIf="formErrors.length"><nuverial-form-errors [formErrors]="formErrors"></nuverial-form-errors></header>
+
+    <header class="notes-form-header">
+      <h3 class="notes-form-header-title">{{ headerTitle }}</h3>
+      <p class="notes-form-header-subtitle">All fields are required unless noted</p>
+    </header>
+
+    <div class="notes-form-fields" [formGroup]="noteFormGroup">
+      <nuverial-text-input class="notes-form-field" ariaLabel="Title" [id]="formConfigs.title.id" formControlName="title" label="Title"></nuverial-text-input>
+      <nuverial-select
+        class="notes-form-field"
+        ariaLabel="Select Note Type"
+        *ngIf="noteTypesOptions$ | async as noteTypesOptions"
+        [id]="formConfigs.type.id"
+        [selectOptions]="noteTypesOptions"
+        formControlName="type"
+        label="Note Type"
+      ></nuverial-select>
+      <nuverial-rich-text-editor
+        class="notes-form-field-full"
+        ariaLabel="Note"
+        [id]="formConfigs.body.id"
+        formControlName="body"
+        label="Note"
+      ></nuverial-rich-text-editor>
+    </div>
+
+    <nuverial-button class="notes-form-attachment-button" ariaLabel="Attachment"
+      ><nuverial-icon iconName="attach_file"></nuverial-icon>Attachment</nuverial-button
+    >
+
+    <nuverial-footer-actions [footerActions]="actions" (actionSelected)="onActionClick($event)"></nuverial-footer-actions>
+  </section>
+</ng-container>
+
+<ng-container *ngIf="loading">
+  <nuverial-spinner></nuverial-spinner>
+</ng-container>

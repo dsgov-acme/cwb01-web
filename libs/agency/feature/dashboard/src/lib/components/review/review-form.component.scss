@@ -1,0 +1,9 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+
+:host {
+  display: block;
+
+  .step-content {
+    margin: rem.fromPx(40px);
+  }
+}

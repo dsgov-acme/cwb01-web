@@ -1,0 +1,31 @@
+{
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "name": "shared-utils-access-control",
+  "prefix": "dsg",
+  "projectType": "library",
+  "sourceRoot": "libs/shared/utils/access-control/src",
+  "tags": ["type:utils", "scope:shared"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/shared/utils/access-control/**/*.ts", "libs/shared/utils/access-control/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      },
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "libs/shared/utils/access-control/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"]
+    }
+  }
+}

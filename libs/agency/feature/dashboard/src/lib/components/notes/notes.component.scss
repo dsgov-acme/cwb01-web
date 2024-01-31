@@ -1,0 +1,199 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '../../styles/_mixins.scss';
+
+:host {
+  display: flex;
+  flex: 1;
+  flex-flow: column nowrap;
+
+  @include mixins.styleTransactionDetailHeader();
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 0 15px;
+    align-items: center;
+  }
+
+  .notes-toolbar {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: rem.fromPx(30px);
+    padding: rem.fromPx(30px);
+    padding-bottom: 0;
+
+    &-title {
+      font-size: var(--theme-typography-font-size-xx-large);
+    }
+
+    &-actions {
+      display: flex;
+      gap: rem.fromPx(5px);
+    }
+  }
+
+  .notes-container {
+    display: flex;
+    flex: 1;
+    flex-flow: column nowrap;
+    padding: rem.fromPx(30px);
+    padding-top: rem.fromPx(15px);
+
+    &:has(.notes-cta) {
+      display: grid;
+    }
+  }
+
+  .note-card {
+    ::ng-deep .mat-expansion-panel {
+      box-shadow: var(--theme-color-box-shadow);
+
+      &-header {
+        gap: rem.fromPx(32px);
+        padding: rem.fromPx(24px) rem.fromPx(18px);
+        padding-right: rem.fromPx(24px);
+        align-items: flex-start;
+        height: auto;
+        background-color: transparent !important;
+
+        .mat-expansion-indicator {
+          position: relative;
+
+          &::after {
+            color: var(--theme-color-primary);
+          }
+        }
+
+        .mat-content {
+          overflow: initial;
+        }
+
+        &.mat-expanded {
+          .mat-expansion-indicator {
+            top: 10px;
+          }
+        }
+      }
+
+      &-body {
+        padding: rem.fromPx(24px) rem.fromPx(18px);
+        padding-top: 0;
+      }
+    }
+
+    &-header {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      gap: rem.fromPx(16px);
+      width: 100%;
+
+      &-title {
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: flex-start;
+        gap: rem.fromPx(8px);
+
+        h4 {
+          display: flex;
+          flex-flow: row nowrap;
+          align-items: flex-start;
+          gap: rem.fromPx(16px);
+          font-size: var(--theme-typography-font-size-large);
+        }
+
+        .pill-container {
+          position: relative;
+          bottom: rem.fromPx(2px);
+
+          ::ng-deep .nuverial-pill {
+            letter-spacing: rem.fromPx(0.5px);
+          }
+        }
+      }
+
+      &-actions {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: flex-start;
+        gap: rem.fromPx(6px);
+
+        ::ng-deep .mat-icon {
+          color: var(--theme-color-tertiary);
+        }
+      }
+
+      &-icon-button {
+        position: relative;
+        top: -6px;
+        border: 0;
+        padding: 0;
+
+        ::ng-deep .nuverial-button-text {
+          min-width: auto;
+        }
+      }
+
+      &-meta {
+        margin: 0;
+        color: var(--theme-color-m3-neutral-30);
+        font-style: italic;
+      }
+    }
+
+    &-body {
+      margin: 0;
+      font-size: var(--theme-typography-font-size-normal);
+    }
+  }
+
+  .notes-cta {
+    display: flex;
+    flex: 1;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+
+    &-icon {
+      --nuverial-icon-size: 100px;
+      --nuverial-icon-color: var(--theme-color-tertiary);
+      position: relative;
+
+      &::before {
+        content: '';
+        width: 72px;
+        height: 82px;
+        position: absolute;
+        bottom: 0;
+        right: 2px;
+        background: var(--theme-color-tertiary-opaque-08);
+        border-radius: 4px;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 18px;
+        right: 2px;
+        border-top: 28px solid var(--theme-color-white);
+        border-left: 28px solid var(--theme-color-tertiary-opaque-08);
+        width: 0;
+      }
+
+      ::ng-deep .mat-icon {
+        z-index: 1;
+      }
+    }
+
+    &-message {
+      font-size: var(--theme-typography-font-size-large);
+      max-width: 250px;
+      text-align: center;
+      line-height: 1.5;
+    }
+  }
+}

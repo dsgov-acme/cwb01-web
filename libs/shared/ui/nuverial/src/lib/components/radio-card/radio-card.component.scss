@@ -1,0 +1,180 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/variables' as themeVars;
+
+:host {
+  display: flex;
+
+  @media screen and (max-width: themeVars.$layout-medium-screen-breakpoint) {
+    max-width: 100%;
+  }
+
+  .nuverial-radio-card-container {
+    border-radius: rem.fromPx(6px);
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    max-width: rem.fromPx(448px);
+    min-width: rem.fromPx(288px);
+    padding: rem.fromPx(2px);
+
+    .nuverial-radio-card-image-container {
+      display: flex;
+      flex-shrink: 1;
+
+      ::ng-deep .nuverial-card-image {
+        border-top-left-radius: rem.fromPx(6px);
+        border-top-right-radius: rem.fromPx(6px);
+        width: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .nuverial-radio-card-label-container {
+      border-style: solid;
+      border-color: var(--theme-color-m3-neutral-80);
+      border-radius: rem.fromPx(6px);
+      border-width: rem.fromPx(2px);
+      box-shadow: var(--theme-color-box-shadow);
+      background-color: var(--theme-color-white);
+      height: 100%;
+
+      .nuverial-radio-card-label {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+
+        &.radio-card-checked {
+          border-color: var(--theme-color-tertiary);
+        }
+
+        &.radio-card-disabled {
+          color: var(--theme-color-disabled);
+
+          ::ng-deep .nuverial-card-image {
+            opacity: var(--nuverial-radio-card-disabled-opacity, 0.5);
+          }
+        }
+      }
+    }
+
+    .radio-card-checked {
+      border-color: var(--theme-color-primary);
+    }
+  }
+
+  .nuverial-radio-card-container:has(.nuverial-card-image) {
+    &.image-position-before {
+      min-width: rem.fromPx(449px);
+      min-height: rem.fromPx(100px);
+      max-width: unset;
+
+      @media screen and (max-width: themeVars.$layout-medium-screen-breakpoint) {
+        min-width: unset;
+      }
+
+      .nuverial-radio-card-label-container .nuverial-radio-card-label {
+        flex-direction: row;
+
+        .nuverial-radio-card-image-container {
+          flex-shrink: 0;
+
+          ::ng-deep .nuverial-card-image,
+          img {
+            border-top-left-radius: rem.fromPx(6px);
+            border-bottom-left-radius: rem.fromPx(6px);
+            border-top-right-radius: 0;
+            width: 100%;
+            max-width: rem.fromPx(300px);
+
+            @media screen and (max-width: themeVars.$layout-mobile-breakpoint) {
+              max-width: rem.fromPx(150px);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .nuverial-radio-card-container:focus-within {
+    border-color: var(--theme-color-tertiary);
+    border-width: rem.fromPx(1px);
+    border-style: solid;
+
+    .nuverial-radio-card-label-container {
+      border-color: var(--theme-color-tertiary);
+    }
+  }
+
+  .nuverial-radio-card-content {
+    padding: rem.fromPx(16px);
+
+    ::ng-deep .nuverial-card-content {
+      display: flex;
+      flex-direction: column;
+      font-size: var(--theme-typography-font-size-small);
+      line-height: rem.fromPx(20px);
+      row-gap: 0.5rem;
+    }
+
+    ::ng-deep .nuverial-card-title {
+      line-height: rem.fromPx(24px);
+      font-weight: var(--theme-typography-font-weight-bold);
+    }
+  }
+
+  .nuverial-radio-error {
+    padding-top: 0.25rem;
+    padding-left: rem.fromPx(2px);
+    nuverial-icon {
+      padding-right: 0.25rem;
+    }
+  }
+
+  --mdc-theme-text-primary-on-background: var(--theme-color-black);
+
+  .mat-mdc-checkbox {
+    position: absolute;
+  }
+
+  ::ng-deep {
+    .mat-mdc-radio-button {
+      flex: 1;
+      display: flex;
+      height: 100%;
+    }
+
+    .mat-mdc-checkbox .mdc-form-field {
+      border: none;
+      box-shadow: none;
+      background-color: var(--theme-color-white);
+    }
+
+    // hide's checkbox in conjunction with 'cdk-visually-hidden' on mdc-radio
+    --mdc-checkbox-state-layer-size: 0px;
+    .mdc-form-field {
+      flex: 1;
+      align-items: flex-start;
+
+      > label {
+        padding-left: 0;
+        flex: 1;
+        height: 100%;
+      }
+
+      .mdc-radio {
+        border: 0;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+        white-space: nowrap;
+        outline: 0;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+      }
+    }
+  }
+}

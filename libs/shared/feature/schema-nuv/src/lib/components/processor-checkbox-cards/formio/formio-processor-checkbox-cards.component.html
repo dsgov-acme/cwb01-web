@@ -1,0 +1,8 @@
+<ng-container *ngIf="gotProcessors">
+  <div [formGroup]="formGroup">
+    <nuverial-checkbox-card *ngFor="let processor of processors; trackBy: trackByFn" [formControlName]="processor.id" [value]="processor.id">
+      <div nuverialCardContentType="title">{{processor.name}}</div>
+      <div nuverialCardContentType="content">{{processor.description}}</div>
+    </nuverial-checkbox-card>
+  </div>
+</ng-container>

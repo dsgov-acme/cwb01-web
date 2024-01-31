@@ -1,0 +1,32 @@
+<div
+  class="nuverial-snackbar-container"
+  [ngClass]="{'error': nuverialSnackBarConfiguration.type === 'error', 'warn': nuverialSnackBarConfiguration.type === 'warn', 'success': nuverialSnackBarConfiguration.type === 'success'}"
+>
+  <nuverial-icon
+    class="snackbar-icon"
+    [iconName]="iconName"
+    [ngClass]="{'error': nuverialSnackBarConfiguration.type === 'error', 'warn': nuverialSnackBarConfiguration.type === 'warn', 'success': nuverialSnackBarConfiguration.type === 'success'}"
+  ></nuverial-icon>
+
+  <span class="snackbar-title">{{ nuverialSnackBarConfiguration.title }}</span>
+  <span class="snackbar-message">{{ nuverialSnackBarConfiguration.message }}</span>
+  <nuverial-button
+    class="nuverial-snackbar-action"
+    *ngFor="let item of nuverialSnackBarConfiguration.nuverialActions; trackBy: trackByAction"
+    [ariaLabel]="item.ariaLabel || item.label"
+    [buttonStyle]="item.buttonStyle"
+    [colorTheme]="item.colorTheme"
+    [uppercaseText]="item.uppercaseText || false"
+    (click)="onActionClick(item.context)"
+    >{{item.label}}
+  </nuverial-button>
+  <nuverial-button
+    class="nuverial-snackbar-close"
+    *ngIf="nuverialSnackBarConfiguration.dismissible"
+    [ariaLabel]="nuverialSnackBarConfiguration.ariaLabelDismiss"
+    (click)="onClosedClick()"
+    buttonStyle="icon-no-border"
+  >
+    <nuverial-icon iconName="close"></nuverial-icon>
+  </nuverial-button>
+</div>

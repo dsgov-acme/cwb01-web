@@ -1,0 +1,15 @@
+<div class="confirmation-modal">
+  <nuverial-icon class="confirmation-modal__close" aria-label="close" [mat-dialog-close]="confirmationModalResponses.Cancel" iconName="clear" role="button" />
+  <h2 class="confirmation-modal__title" *ngIf="title">{{title}}</h2>
+  <mat-dialog-content class="confirmation-modal__content">
+    <p>{{contentText}}</p>
+  </mat-dialog-content>
+  <mat-dialog-actions class="confirmation-modal__actions" align="end">
+    <nuverial-button [ariaLabel]="secondaryAction" [mat-dialog-close]="confirmationModalResponses.SecondaryAction" buttonStyle="outlined" colorTheme="primary">
+      {{secondaryAction}}
+    </nuverial-button>
+    <nuverial-button [ariaLabel]="primaryAction" [mat-dialog-close]="confirmationModalResponses.PrimaryAction" buttonStyle="filled" colorTheme="primary">
+      {{primaryAction}}
+    </nuverial-button>
+  </mat-dialog-actions>
+</div>

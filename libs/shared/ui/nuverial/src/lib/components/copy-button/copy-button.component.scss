@@ -1,0 +1,36 @@
+@use '@dsg/shared-theme/partials/functions/flex';
+@use '@dsg/shared-theme/partials/variables' as themeVars;
+
+$formFieldGap: 1rem;
+
+:host {
+  display: inline;
+
+  .nuverial-copy-button {
+    cursor: pointer;
+    vertical-align: sub;
+
+    ::ng-deep .mat-icon {
+      color: var(--theme-color-tertiary);
+      font-size: var(--theme-typography-font-size-x-large);
+    }
+  }
+}
+
+::ng-deep mat-tooltip-component .copy-button__tooltip div {
+  background-color: var(--theme-color-m3-neutral-95);
+  color: var(--primary);
+  box-shadow: var(--theme-color-box-shadow);
+  padding: 6px 6px 6px 30px;
+  margin-top: -5px;
+
+  &:before {
+    font-family: 'Material Icons', sans-serif;
+    content: '\e86c';
+    color: var(--theme-color-success);
+    display: flex;
+    font-size: 16px;
+    top: 4px;
+    padding-left: 5px;
+  }
+}

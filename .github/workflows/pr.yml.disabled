@@ -1,0 +1,31 @@
+name: 'PR'
+on:
+  pull_request:
+
+jobs:
+  pr:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'pull_request' }}
+    steps:
+      - name: Fetch [${{ github.base_ref }}]
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v3
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '16'
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+      - name: Linting the code
+        run: yarn lint:ci --parallel=3
+      - name: Unit Tests
+        # runInBand because Axe accessibility tests timeout when run in parallel
+        run: yarn test:ci --parallel=3 --runInBand
+      - name: e2e Tests
+        run: yarn e2e:ci --parallel=3
+      - name: Build apps
+        run: yarn build:ci --parallel=3

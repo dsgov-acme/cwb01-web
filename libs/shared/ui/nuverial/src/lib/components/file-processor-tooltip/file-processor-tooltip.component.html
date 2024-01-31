@@ -1,0 +1,33 @@
+<span
+  class="processor-tooltip-wrapper"
+  data-testid="file-processor-tooltip-trigger"
+  #trigger="cdkOverlayOrigin"
+  *ngIf="processors?.length"
+  (mouseenter)="isTooltipOpen = true"
+  (mouseleave)="isTooltipOpen = false"
+  cdkOverlayOrigin
+>
+  <ng-template [cdkConnectedOverlayOpen]="isTooltipOpen" [cdkConnectedOverlayOrigin]="trigger" cdkConnectedOverlay>
+    <div class="error-tooltip" *ngIf="processors">
+      <div *ngFor="let processor of processors; trackBy: trackByFn">
+        <div class="error-tooltip--processor" *ngIf="processor.processorId === 'docai-document-quality' && processor.result?.shouldDisplayError">
+          <div class="error-tooltip--type">DocAI Document Quality</div>
+          Possible Poor Quality Detected
+        </div>
+
+        <div class="error-tooltip--processor" *ngIf="processor.processorId === 'docai-id-proofing' && processor.result?.shouldDisplayError">
+          <div class="error-tooltip--type">DocAI Id Proofing</div>
+          <div *ngFor="let signal of processor.result.signals; trackBy: trackByFn">
+            <div *ngIf="!signal.isPass">{{signal.name}}</div>
+          </div>
+        </div>
+        <div class="error-tooltip--processor" *ngIf="processor.processorId === 'antivirus-scanner' && processor.result?.shouldDisplayError">
+          <div class="error-tooltip--type">Antivirus Scanner</div>
+          {{processor.result.code}} ({{processor.result.status}}) : {{processor.result.message}}
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <nuverial-icon iconName="info_outline"></nuverial-icon>
+  <ng-content></ng-content>
+</span>

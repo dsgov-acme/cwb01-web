@@ -1,0 +1,16 @@
+@use '../functions/rem';
+@use '../variables' as themeVars;
+
+@mixin styleTooltip() {
+  @media screen and (max-width: themeVars.$layout-medium-screen-breakpoint) {
+    mat-tooltip-component {
+      .mdc-tooltip__surface {
+        line-height: 22px;
+      }
+
+      .mat-mdc-tooltip {
+        --mdc-plain-tooltip-supporting-text-size: var(--theme-typography-font-size-small);
+      }
+    }
+  }
+}

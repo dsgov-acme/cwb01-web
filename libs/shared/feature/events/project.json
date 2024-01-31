@@ -1,0 +1,31 @@
+{
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "name": "shared-feature-events",
+  "prefix": "dsg",
+  "projectType": "library",
+  "sourceRoot": "libs/shared/feature/events/src",
+  "tags": ["type:feature", "scope:shared"],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/shared/feature/events/**/*.ts", "libs/shared/feature/events/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      },
+      "executor": "@nrwl/jest:jest",
+      "options": {
+        "jestConfig": "libs/shared/feature/events/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"]
+    }
+  }
+}

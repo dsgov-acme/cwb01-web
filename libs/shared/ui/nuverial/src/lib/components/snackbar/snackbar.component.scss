@@ -1,0 +1,58 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/variables' as themeVars;
+
+:host {
+  ::ng-deep {
+    nuverial-button {
+      --nuverial-button-height: #{rem.fromPx(28px)};
+      --nuverial-button-icon-size: #{rem.fromPx(28px)};
+
+      .nuverial-button-label {
+        white-space: nowrap;
+      }
+    }
+
+    .nuverial-icon {
+      --nuverial-icon-size: #{rem.fromPx(15px)};
+    }
+  }
+
+  .nuverial-snackbar-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.25rem;
+
+    .snackbar-message,
+    .snackbar-title {
+      line-height: rem.fromPx(20px);
+    }
+    .snackbar-title {
+      font-weight: var(--theme-typography-font-weight-bold);
+    }
+
+    .nuverial-snackbar-action,
+    .nuverial-snackbar-close {
+      margin-left: auto;
+    }
+
+    &.error {
+      .snackbar-icon,
+      .snackbar-title {
+        --nuverial-icon-color: var(--theme-color-error);
+      }
+    }
+
+    &.success {
+      .snackbar-icon {
+        --nuverial-icon-color: var(--theme-color-success);
+      }
+    }
+
+    &.warn {
+      .snackbar-icon {
+        --nuverial-icon-color: var(--theme-color-warning);
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+@use '@dsg/shared-theme/partials/mixins' as mixins;
+
+:host {
+  display: block;
+
+  .form-wrapper {
+    @include mixins.dynamicForms-styleAdvancedFields();
+
+    h2 {
+      font-size: var(--theme-typography-font-size-normal) !important;
+      font-weight: var(--theme-typography-font-weight-bold);
+    }
+  }
+}

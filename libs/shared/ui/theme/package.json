@@ -1,0 +1,6 @@
+{
+  "name": "@dsg/shared-theme",
+  "version": "0.0.1",
+  "private": true,
+  "main": "./index.scss"
+}

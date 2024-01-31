@@ -1,0 +1,40 @@
+{
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "name": "shared-ui-theme",
+  "prefix": "dsg",
+  "projectType": "library",
+  "sourceRoot": "libs/shared/ui/theme",
+  "tags": ["scope:shared", "type:ui"],
+  "targets": {
+    "build-storybook": {
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      },
+      "executor": "@storybook/angular:build-storybook",
+      "options": {
+        "browserTarget": "shared-ui-theme:build-storybook",
+        "compodoc": false,
+        "configDir": "libs/shared/ui/theme/.storybook",
+        "outputDir": "dist/storybook/shared-theme"
+      },
+      "outputs": ["{options.outputDir}"]
+    },
+    "storybook": {
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      },
+      "executor": "@storybook/angular:start-storybook",
+      "options": {
+        "browserTarget": "shared-ui-theme:build-storybook",
+        "compodoc": false,
+        "configDir": "libs/shared/ui/theme/.storybook",
+        "port": 4400,
+        "styles": ["libs/shared/ui/theme/.storybook/styles.scss"]
+      }
+    }
+  }
+}

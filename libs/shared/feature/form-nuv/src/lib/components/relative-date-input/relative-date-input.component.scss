@@ -1,0 +1,17 @@
+@use '@dsg/shared-theme/partials/mixins' as mixins;
+:host {
+  ::ng-deep {
+    @include mixins.formBuilder-mimicFormioStyles();
+  }
+  .flex-container {
+    display: flex;
+  }
+
+  nuverial-text-input {
+    flex: 4;
+  }
+
+  nuverial-select {
+    flex: 1;
+  }
+}

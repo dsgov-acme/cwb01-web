@@ -1,0 +1,48 @@
+<ng-container [ngSwitch]="mode">
+  <ng-container *ngSwitchCase="formStateMode.Edit" [ngTemplateOutlet]="editTemplate"></ng-container>
+  <ng-container *ngSwitchCase="formStateMode.Review" [ngTemplateOutlet]="reviewTemplate"></ng-container>
+  <ng-container *ngSwitchDefault>{{mode}} mode not implemented</ng-container>
+</ng-container>
+
+<ng-template #editTemplate>
+  <div class="form-list-edit__wrapper">
+    <div class="form-list-edit__item" *ngFor="let _field of field.fieldGroup; trackBy: trackByFn; let i = index">
+      <nuverial-section-header class="list-item__header" *ngIf="props.includeLabel || props.includeIndex || props.includeRemoveItemAction">
+        <h2 *ngIf="props.includeLabel || props.includeIndex" nuverialCardContentType="label">
+          <ng-container *ngIf="props.includeLabel">{{props.label + ' '}}</ng-container>
+          <ng-container *ngIf="props.includeIndex">{{i + 1}}</ng-container>
+        </h2>
+
+        <ng-container *ngIf="props.includeRemoveItemAction && model.length > 1" nuverialCardContentType="action">
+          <!-- span to push the action to the right -->
+          <span></span>
+          <a class="remove-item__link" (click)="remove(i)" (keyup.enter)="remove(i)" tabindex="0">{{props.removeItemLabel | uppercase}}</a>
+        </ng-container>
+      </nuverial-section-header>
+
+      <formly-field class="col" [field]="_field"></formly-field>
+    </div>
+
+    <div>
+      <a class="add-item__link" (click)="add()" (keyup.enter)="add()" tabindex="0"
+        ><nuverial-icon iconName="add"></nuverial-icon>{{props.addItemLabel | uppercase}}</a
+      >
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #reviewTemplate>
+  <div class="field-value-container">
+    <div *ngFor="let _field of field.fieldGroup; trackBy: trackByFn; let i = index">
+      <div class="review-header" *ngIf="props.includeLabel || props.includeIndex">
+        <nuverial-section-header>
+          <b nuverialCardContentType="label">
+            <ng-container *ngIf="props.includeLabel">{{props.label + ' '}}</ng-container>
+            <ng-container *ngIf="props.includeIndex">{{i + 1}}</ng-container>
+          </b>
+        </nuverial-section-header>
+      </div>
+      <formly-field class="col" [field]="_field"></formly-field>
+    </div>
+  </div>
+</ng-template>

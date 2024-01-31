@@ -1,0 +1,43 @@
+:host {
+  display: block;
+}
+
+.icon-container {
+  display: flex;
+  align-items: center;
+
+  .text-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+
+    nuverial-icon {
+      height: 100%;
+    }
+
+    .menu-item-subtitle {
+      font-weight: normal;
+      font-size: calc(1rem - 4px);
+    }
+  }
+}
+
+::ng-deep nuverial-icon.menu-icon mat-icon {
+  font-size: 2rem !important;
+  width: 2rem !important;
+  height: 2rem !important;
+  padding-top: 0.9rem !important;
+  margin-right: 0 !important;
+}
+
+.border-top {
+  border-top: 1px solid var(--theme-color-m3-neutral-90);
+}
+
+.menu-button {
+  height: 4.3rem;
+}
+
+::ng-deep .mat-mdc-menu-content {
+  padding: 0 !important;
+}

@@ -1,0 +1,15 @@
+<nuverial-tabs [tabs]="tabs">
+  <ng-template let-form nuverialTabKey="formly">
+    <div>Formly Content</div>
+    <button type="submit">Click</button>
+  </ng-template>
+  <ng-template let-form nuverialTabKey="formIO">FormIO Content</ng-template>
+  <ng-template let-form nuverialTabKey="formlyJson">
+    <nuverial-section-header>
+      <div>Formly Data</div>
+    </nuverial-section-header>
+  </ng-template>
+  <ng-template let-form nuverialTabKey="formioJson">
+    <h4>Formio Data</h4>
+  </ng-template>
+</nuverial-tabs>

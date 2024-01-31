@@ -1,0 +1,15 @@
+<div class="alert-modal">
+  <div class="modal-header" mat-dialog-close><span class="material-symbols-outlined"> close </span></div>
+  <mat-dialog-content class="modal-title">
+    <div class="warning-icon" *ngIf="icon">
+      <nuverial-icon [iconName]="icon"></nuverial-icon>
+    </div>
+    <h2 class="modal-title">{{title}}</h2>
+    <p class="modal-text">{{body}}</p>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <nuverial-button class="modal-btn" [ariaLabel]="dismissalButtonLabel" [mat-dialog-close]="true" buttonStyle="filled" colorTheme="primary">
+      {{dismissalButtonLabel}}
+    </nuverial-button>
+  </mat-dialog-actions>
+</div>

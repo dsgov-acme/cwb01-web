@@ -1,0 +1,58 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+
+:host {
+  display: block;
+  padding: 30px;
+
+  .new-message {
+    display: flex;
+    flex-direction: column;
+
+    &__errors {
+      margin-bottom: 1rem;
+    }
+
+    &__title {
+      font-size: var(--theme-typography-font-size-large);
+      font-weight: var(--theme-typography-font-weight-bold);
+      line-height: rem.fromPx(26px);
+      margin-bottom: 0.5rem;
+    }
+
+    &__subtitle {
+      margin: 0;
+      margin-bottom: 1.5rem;
+      font-size: var(--theme-typography-font-size-small);
+      font-weight: var(--theme-typography-font-weight-normal);
+      color: var(--theme-color-m3-neutral-30);
+      line-height: var(--theme-typography-font-size-normal);
+    }
+
+    &__form {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1rem;
+
+      &__title {
+        max-width: 50%;
+      }
+    }
+
+    &__attachment-action {
+      align-self: flex-end;
+      ::ng-deep {
+        .mat-icon,
+        button {
+          color: var(--theme-color-tertiary);
+        }
+      }
+    }
+
+    &__actions {
+      ::ng-deep .footer-actions {
+        z-index: 3;
+      }
+    }
+  }
+}

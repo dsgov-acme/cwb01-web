@@ -1,0 +1,31 @@
+{
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "name": "agency-feature-admin",
+  "prefix": "dsg",
+  "projectType": "library",
+  "sourceRoot": "libs/agency/feature/admin/src",
+  "tags": ["type:feature", "scope:agency"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/agency/feature/admin/**/*.ts", "libs/agency/feature/admin/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      },
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "libs/agency/feature/admin/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"]
+    }
+  }
+}

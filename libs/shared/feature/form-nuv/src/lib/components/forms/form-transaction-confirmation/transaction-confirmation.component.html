@@ -1,0 +1,26 @@
+<div class="confirmation__message">
+  <div class="confirmation__message--header">
+    <h3>Application Submitted</h3>
+    <nuverial-icon class="confirmation__message--icon" iconName="check_circle_outline"></nuverial-icon>
+  </div>
+  Thank you for submitting your application. Your Application ID is <b>{{externalTransactionId | uppercase}}</b>.
+  <div class="confirmation__message--print">
+    <b>PRINT THIS PAGE FOR YOUR RECORDS</b>
+    <span class="confirmation__message--print-button" onclick="window.print()">
+      <nuverial-icon class="confirmation__message--icon" iconName="print-icon"></nuverial-icon>
+      Print
+    </span>
+  </div>
+</div>
+<div class="confirmation__actions">
+  <nuverial-button
+    class="confirmation__actions--back"
+    ariaLabel="Dashboard"
+    (click)="navigateToTransactionsDashboard()"
+    (keyup.enter)="navigateToTransactionsDashboard()"
+    buttonStyle="filled"
+    colorTheme="primary"
+    tabindex="0"
+    >GO TO MY TRANSACTIONS</nuverial-button
+  >
+</div>

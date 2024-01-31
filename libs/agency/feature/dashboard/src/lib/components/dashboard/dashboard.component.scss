@@ -1,0 +1,102 @@
+@use '@dsg/shared-theme/partials/mixins' as mixins;
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/variables' as themeVars;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem;
+  flex: 1;
+
+  .title {
+    padding-left: rem.fromPx(34px);
+  }
+
+  .empty-dashboards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: rem.fromPx(72px) rem.fromPx(24px);
+
+    .dashboards-container-text {
+      margin: 0;
+      font-size: rem.fromPx(16px);
+      font-weight: 400;
+      line-height: 1.5rem;
+      text-align: center;
+    }
+
+    ::ng-deep .mat-icon {
+      font-size: 56px;
+      height: 56px;
+      width: 56px;
+      display: flex;
+      align-items: center;
+      color: var(--theme-color-tertiary);
+      margin-bottom: 16px;
+    }
+  }
+
+  .transactions-list {
+    &__actions {
+      width: 325px;
+      position: absolute;
+      right: 40px;
+
+      ::ng-deep .mat-mdc-form-field-icon-suffix {
+        padding-right: 1rem;
+
+        .nuverial-button.mat-mdc-icon-button:hover {
+          padding: 1.5rem;
+          position: relative;
+          left: 0.75rem;
+        }
+      }
+    }
+
+    &__tab {
+      font-weight: 700;
+      letter-spacing: normal;
+      font-size: 16px;
+
+      &--badge {
+        background-color: var(--theme-color-m3-neutral-60);
+        color: var(--theme-color-white);
+        padding: 2px 12px;
+        border-radius: 6px;
+        margin-left: 7px;
+      }
+    }
+
+    &__table {
+      flex-direction: column;
+      flex: 1;
+
+      &--filter {
+        width: 25%;
+        float: right;
+        margin: -10px 0 -20px 0;
+        min-width: 250px;
+        top: -55px;
+        position: relative;
+      }
+    }
+  }
+
+  ::ng-deep .transactions-list__table {
+    margin-top: 2rem;
+  }
+
+  ::ng-deep .transactions-list__table--tabs .mat-mdc-tab.mdc-tab {
+    max-width: 200px;
+  }
+
+  ::ng-deep .mdc-tab--active .transactions-list__tab--badge {
+    background-color: var(--theme-color-primary) !important;
+  }
+
+  .hidden {
+    display: none;
+  }
+}

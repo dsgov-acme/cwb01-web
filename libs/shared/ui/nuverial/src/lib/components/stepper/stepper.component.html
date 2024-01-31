@@ -1,0 +1,24 @@
+<mat-stepper
+  aria-busy="true"
+  #nuvStepper
+  [attr.aria-label]="ariaLabel"
+  [ngClass]="stepperOrientation"
+  [orientation]="stepperOrientation"
+  (selectionChange)="onStepChange($event)"
+  labelPosition="bottom"
+  linear
+>
+  <ng-template matStepperIcon="edit"> {{selectedStep}} </ng-template>
+  <mat-step
+    *ngFor="let step of activeSteps; index as i; trackBy: trackByFn;"
+    [aria-label]="step.label"
+    [completed]="allowStepTraversal || step.state === 'SAVED'"
+    [optional]="step.optional"
+    [stepControl]="step.form!"
+  >
+    <ng-template matStepLabel>{{ step.label }}</ng-template>
+    <ng-template matStepContent>
+      <ng-template *ngIf="nuvStepper.selectedIndex === i" [ngTemplateOutlet]="step.template!"></ng-template>
+    </ng-template>
+  </mat-step>
+</mat-stepper>

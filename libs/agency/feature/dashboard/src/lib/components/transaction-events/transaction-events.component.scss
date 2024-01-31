@@ -1,0 +1,8 @@
+@use '../../styles/_mixins.scss';
+
+:host {
+  display: flex;
+  flex: 1;
+  flex-flow: column nowrap;
+  @include mixins.styleTransactionDetailHeader();
+}

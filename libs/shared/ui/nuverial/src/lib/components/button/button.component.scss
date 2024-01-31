@@ -1,0 +1,230 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/variables' as themeVars;
+
+:host {
+  --nuverial-button-border-color-filled: var(--theme-color-primary);
+  --nuverial-button-border-color-icon: var(--theme-color-primary);
+  --nuverial-button-border-color-outlined: var(--theme-color-primary);
+  --nuverial-button-border-color-text: var(--theme-color-secondary);
+  --nuverial-button-font-size: var(--theme-typography-font-size-normal);
+  --nuverial-button-font-weight: var(--theme-typography-font-weight-mid);
+  --nuverial-button-height: #{rem.fromPx(40px)};
+  --nuverial-button-icon-color: var(--theme-color-black);
+  --nuverial-button-icon-size: #{rem.fromPx(40px)};
+  --nuverial-button-filled-background-color-disabled: var(--theme-color-m3-neutral-90);
+  --nuverial-button-letter-spacing: #{rem.fromPx(0.4px)};
+
+  --mdc-icon-button-icon-color: var(--nuverial-button-icon-color);
+
+  border-radius: rem.fromPx(6px);
+  display: inline-flex;
+
+  pointer-events: none;
+
+  button:not(:disabled) {
+    pointer-events: auto;
+
+    ::ng-deep * {
+      pointer-events: none;
+    }
+  }
+
+  &.nuverial-button {
+    border-style: solid;
+    border-width: rem.fromPx(1px);
+    border-color: transparent;
+
+    @media screen and (max-width: themeVars.$layout-mobile-breakpoint) {
+      border: none;
+    }
+
+    &.nuverial-button:has(.nuverial-button-filled) {
+      padding: rem.fromPx(2px);
+    }
+    &.nuverial-button:has(.nuverial-button-outlined) {
+      padding: rem.fromPx(2px);
+
+      @media screen and (max-width: themeVars.$layout-mobile-breakpoint) {
+        padding: 0;
+      }
+    }
+
+    &.nuverial-button:has(.nuverial-button-icon) {
+      padding: rem.fromPx(3px);
+    }
+
+    &:focus-within {
+      &.nuverial-button-container:has(.nuverial-button-text) {
+        border-color: var(--nuverial-button-border-color-text);
+      }
+      &.nuverial-button:has(.nuverial-button-filled) {
+        border-color: var(--nuverial-button-border-color-filled);
+      }
+      &.nuverial-button:has(.nuverial-button-outlined) {
+        border-color: var(--nuverial-button-border-color-outlined);
+      }
+      &.nuverial-button:has(.nuverial-button-icon) {
+        border-color: var(--nuverial-button-border-color-icon);
+      }
+    }
+  }
+
+  .nuverial-button-filled {
+    color: var(--theme-color-primary);
+    &.uppercaseText {
+      ::ng-deep .nuverial-button-label {
+        text-transform: uppercase;
+      }
+    }
+  }
+  .nuverial-button-icon {
+    color: var(--nuverial-button-icon-color);
+    height: var(--nuverial-button-icon-size);
+    width: var(--nuverial-button-icon-size);
+  }
+  .nuverial-button-outlined {
+    color: var(--theme-color-primary);
+
+    &.uppercaseText {
+      ::ng-deep .nuverial-button-label {
+        text-transform: uppercase;
+      }
+    }
+  }
+  .nuverial-button-text {
+    color: var(--theme-color-primary);
+    &.uppercaseText {
+      ::ng-deep .nuverial-button-label {
+        text-transform: uppercase;
+      }
+    }
+  }
+  .nuverial-button-spinner {
+    left: 100%;
+    position: absolute;
+    top: 0;
+    transform: translate(50%);
+  }
+
+  ::ng-deep .mat-mdc-button-base {
+    align-items: center;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    font-size: var(--nuverial-button-font-size);
+    font-weight: var(--nuverial-button-font-weight);
+    letter-spacing: var(--nuverial-button-letter-spacing);
+    justify-content: center;
+    text-align: center;
+
+    .nuverial-button-prefix-icon {
+      margin-right: var(--nuverial-button-prefix-icon-margin-right, rem.fromPx(10px));
+    }
+
+    .nuverial-button-label {
+      align-items: center;
+      display: flex;
+      gap: 0.25rem;
+
+      @media screen and (max-width: themeVars.$layout-mobile-breakpoint) {
+        font-size: var(--theme-typography-font-size-small);
+      }
+    }
+  }
+
+  .mat-mdc-button.mat-mdc-button-base,
+  .mat-mdc-raised-button.mat-mdc-button-base,
+  .mat-mdc-unelevated-button.mat-mdc-button-base,
+  .mat-mdc-outlined-button.mat-mdc-button-base,
+  .mat-mdc-icon-button.mat-mdc-button-base {
+    height: var(--nuverial-button-height);
+    border-width: 2px;
+  }
+  .mat-mdc-icon-button.mat-mdc-button-base {
+    height: var(--nuverial-button-icon-size);
+    width: var(--nuverial-button-icon-size);
+  }
+  ::ng-deep .mat-mdc-icon-button .mat-mdc-button-touch-target {
+    height: var(--nuverial-button-icon-size);
+    width: var(--nuverial-button-icon-size);
+  }
+  .mat-mdc-button-base:disabled {
+    color: var(--theme-color-black-opaque-38);
+  }
+
+  //Text button
+  .mat-mdc-button-base.mat-accent {
+    color: var(--theme-color-tertiary);
+  }
+  .mat-mdc-button-base.mat-warn {
+    color: var(--theme-color-error);
+  }
+  .mat-mdc-button-base:hover {
+    background-color: var(--theme-color-tertiary-opaque-08);
+  }
+
+  //Outlined/Stroked button
+  .mat-mdc-outlined-button {
+    border-radius: rem.fromPx(6px);
+    border-width: rem.fromPx(1px);
+    border-style: solid;
+    border-color: var(--theme-color-primary);
+
+    &.mat-accent {
+      color: var(--theme-color-secondary);
+    }
+
+    &.mat-warn {
+      color: var(--theme-color-error);
+    }
+
+    &.mat-danger {
+      color: var(--theme-color-red);
+      border-color: var(--theme-color-red);
+    }
+
+    &:hover {
+      background-color: var(theme-color-primary-opaque-12);
+    }
+
+    &:disabled {
+      border-color: var(--theme-color-status-disabled-opaque-12);
+      color: var(--theme-color-black-opaque-38);
+    }
+  }
+
+  //Filled/Flat Button
+  .mat-mdc-unelevated-button {
+    border-radius: rem.fromPx(6px);
+  }
+  .mat-mdc-unelevated-button.mat-accent:not(:disabled),
+  .mat-mdc-unelevated-button.mat-primary:not(:disabled),
+  .mat-mdc-unelevated-button.mat-warn:not(:disabled) {
+    color: var(--theme-color-white);
+  }
+  .mat-mdc-unelevated-button.mat-primary:hover,
+  .mat-mdc-unelevated-button.mat-primary {
+    background-color: var(--theme-color-primary);
+  }
+  .mat-mdc-unelevated-button.mat-accent:hover,
+  .mat-mdc-unelevated-button.mat-accent {
+    background-color: var(--theme-color-secondary);
+  }
+  .mat-mdc-unelevated-button.mat-warn:hover,
+  .mat-mdc-unelevated-button.mat-warn {
+    background-color: var(--theme-color-error);
+  }
+  .mat-mdc-unelevated-button:disabled {
+    background-color: var(--nuverial-button-filled-background-color-disabled);
+    color: var(--theme-color-black-opaque-38);
+  }
+}
+
+:host-context(.loading-button) {
+  &.nuverial-button {
+    & > button {
+      padding-left: rem.fromPx(50px);
+      padding-right: rem.fromPx(50px);
+    }
+  }
+}

@@ -1,0 +1,108 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/mixins' as mixins;
+
+:host {
+  .mat-icon {
+    $iconSize: 18px;
+    height: rem.fromPx($iconSize);
+    width: rem.fromPx($iconSize);
+    font-size: rem.fromPx($iconSize);
+    margin: 0;
+  }
+
+  nuverial-button {
+    --nuverial-button-icon-size: #{rem.fromPx(24px)};
+  }
+
+  ::ng-deep .nuverial-button:has(.nuverial-button-icon) {
+    border: none;
+  }
+
+  ::ng-deep .mat-mdc-form-field-icon-prefix {
+    margin-left: rem.fromPx(10px);
+    margin-right: rem.fromPx(12px);
+  }
+
+  .selectedOptionPrefixIcon {
+    align-items: center;
+    padding-right: 0.5rem;
+  }
+
+  .selectSuffixIcon {
+    align-items: center;
+  }
+
+  @include mixins.formField-styleFormField();
+
+  ::ng-deep .mdc-text-field > .mat-mdc-form-field-flex > .mat-mdc-form-field-infix {
+    padding: 11px 0 12px;
+  }
+
+  .nuverial-select-loading {
+    align-self: center;
+    ::ng-deep svg {
+      stroke: var(--theme-color-tertiary);
+    }
+  }
+}
+
+// must be outside of the host tor style the chip properly
+::ng-deep .nuverial-select-autocomplete-panel {
+  .mdc-list-item__primary-text {
+    .nuverial-select-option-chip {
+      background-color: var(--theme-color-m3-neutral-60);
+      border-radius: 10px;
+      color: var(--theme-color-white);
+      padding: 2px 8px 0px;
+    }
+  }
+
+  .nuverial-select-option-container {
+    .nuverial-select-option {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+  }
+  nuverial-icon {
+    min-width: 24px;
+  }
+
+  .mat-mdc-option .mat-icon {
+    margin-right: 0;
+  }
+
+  .mat-mdc-option.mdc-list-item {
+    min-height: auto !important;
+    padding-top: rem.fromPx(12px);
+    padding-bottom: rem.fromPx(12px);
+  }
+
+  .nuverial-select-option-selected {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+}
+
+:host-context(.no-border) {
+  &:host {
+    ::ng-deep .mdc-notched-outline__leading,
+    ::ng-deep .mdc-notched-outline__notch,
+    ::ng-deep .mdc-notched-outline__trailing {
+      border: none;
+    }
+    ::ng-deep .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__notch {
+      border: none;
+    }
+  }
+}
+
+:host-context(.no-error-height) {
+  &:host {
+    ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+      height: rem.fromPx(0px);
+    }
+    ::ng-deep .mat-form-field-invalid .mat-mdc-form-field-subscript-wrapper {
+      height: rem.fromPx(22px);
+    }
+  }
+}

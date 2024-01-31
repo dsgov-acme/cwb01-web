@@ -1,0 +1,25 @@
+{
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "name": "shared-utils-http",
+  "prefix": "dsg",
+  "projectType": "library",
+  "sourceRoot": "libs/shared/utils/http/src",
+  "tags": ["type:utils", "scope:shared"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/shared/utils/http/**/*.ts", "libs/shared/utils/http/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "libs/shared/utils/http/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"]
+    }
+  }
+}

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-config
+  namespace: {{ .Values.namespace | default "cwb01" }}
+data:
+  environment.js: |
+    (function (window) {
+      window.environment = window.environment || {{ .Values.environmentJSON | toPrettyJson | nindent 6 }};
+    })(this);
+  nginx.conf: |-
+{{ tpl (.Files.Get "conf/nginx.conf") . | indent 4 }}

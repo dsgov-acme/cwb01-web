@@ -1,0 +1,18 @@
+<div id="legend">{{ legend }}</div>
+<br />
+<nuverial-card-group aria-labelledby="legend" [columns]="columns" [formControl]="formControl" [required]="required">
+  <nuverial-radio-card
+    class="radio-card"
+    *ngFor="let radioCard of radioCards; trackBy: trackByFn"
+    [ariaLabel]="radioCard.title || 'label'"
+    [checked]="radioCard.value === formControl.value"
+    [groupName]="groupName"
+    [imagePosition]="radioCard.imagePosition || 'top'"
+    [pointValue]="radioCard.pointValue || 0"
+    [value]="radioCard.value"
+  >
+    <img *ngIf="radioCard.imagePath" [alt]="radioCard.imageAltLabel" [src]="radioCard.imagePath" nuverialCardContentType="image" />
+    <div *ngIf="radioCard.title" nuverialCardContentType="title">{{ radioCard.title }}</div>
+    <div *ngIf="radioCard.content" nuverialCardContentType="content">{{ radioCard.content }}</div>
+  </nuverial-radio-card>
+</nuverial-card-group>

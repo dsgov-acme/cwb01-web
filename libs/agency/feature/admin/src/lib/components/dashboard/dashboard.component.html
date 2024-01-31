@@ -1,0 +1,14 @@
+<header class="header">
+  <h1>Admin Portal</h1>
+</header>
+<nuverial-dashboard-cards-group>
+  <ng-container *ngFor="let card of cards; trackBy: trackByFn">
+    <nuverial-dashboard-card
+      [description]="card.description"
+      [icon]="card.icon"
+      [name]="card.name"
+      [route]="card.route"
+      [tooltip]="card.tooltip"
+    ></nuverial-dashboard-card>
+  </ng-container>
+</nuverial-dashboard-cards-group>

@@ -1,0 +1,61 @@
+/************************************************************************
+IMPORTANT: DON'T EXPORT ANYTHING THAT PRODUCES CSS CODE!
+************************************************************************/
+
+@forward './partials/mixins' as mixin-*;
+@forward './partials/variables' as var-*;
+@forward './partials/functions' as function-*;
+
+@use './partials/functions/rem';
+@use './styles/angular-material-theme';
+@use './fonts/proxima-nova';
+
+@import url('https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp|Material+Symbols+Outlined');
+// Default application styling
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  font-family: var(--theme-typography-font-family);
+  font-style: normal;
+  margin: 0;
+  box-sizing: border-box;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 0;
+  }
+
+  h1 {
+    font-size: rem.fromPx(30px);
+    font-weight: var(--theme-typography-font-weight-bold);
+  }
+
+  h2 {
+    font-size: var(--theme-typography-font-size-normal);
+    font-weight: var(--theme-typography-font-weight-bold);
+  }
+
+  h3 {
+    font-size: var(--theme-typography-font-size-small);
+    font-weight: var(--theme-typography-font-weight-bold);
+  }
+
+  b {
+    font-weight: var(--theme-typography-font-weight-bold);
+  }
+}
+
+body.modal-open {
+  overflow: hidden;
+}

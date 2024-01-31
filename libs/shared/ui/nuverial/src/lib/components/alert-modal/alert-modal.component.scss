@@ -1,0 +1,67 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/variables' as themeVars;
+
+:host {
+  .alert-modal {
+    padding: 40px;
+    max-width: 400px;
+    min-width: 300px;
+
+    @media screen and (max-width: themeVars.$layout-mobile-breakpoint) {
+      padding: 25px;
+      min-width: 200px;
+    }
+
+    .modal-header {
+      float: right;
+      position: relative;
+      bottom: 20px;
+      left: 20px;
+      cursor: pointer;
+    }
+
+    .warning-icon {
+      margin-bottom: 5px;
+      .nuverial-icon {
+        --nuverial-icon-size: #{rem.fromPx(35px)};
+        --nuverial-icon-color: var(--theme-color-tertiary);
+      }
+    }
+
+    .modal-title {
+      color: var(--theme-color-primary);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-text {
+      font-size: 0.8rem;
+      text-align: justify;
+    }
+
+    mat-dialog-content {
+      padding: 20px 0 20px 0;
+      width: 100%;
+    }
+
+    mat-dialog-actions {
+      padding: 0;
+      display: flex;
+      align-items: flex-end;
+      @media screen and (max-width: themeVars.$layout-mobile-breakpoint) {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+
+    .modal-btn {
+      ::ng-deep button {
+        text-transform: uppercase;
+        font-size: 13px;
+        height: 35px;
+      }
+    }
+  }
+}

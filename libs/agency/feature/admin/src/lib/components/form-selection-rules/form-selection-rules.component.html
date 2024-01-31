@@ -1,0 +1,113 @@
+<!-- eslint-disable @angular-eslint/template/no-call-expression -->
+<h1 class="title">Form Selection Rules</h1>
+<ng-container class="form-selection-rules-list">
+  <div class="form-selection-rules-list__actions">
+    <nuverial-button
+      class="new-rule-button"
+      ariaLabel="Add a new rule"
+      [loading]="false"
+      (click)="createNewFormSelectionRule()"
+      buttonStyle="outlined"
+      buttonType="submit"
+      colorTheme="primary"
+    >
+      <nuverial-icon class="black-icon" iconName="add" />
+      Add a new Rule
+    </nuverial-button>
+  </div>
+  <div class="form-selection-rules-list__table">
+    <form [formGroup]="form">
+      <ng-container *ngIf="formData$ | async as formData; else loading">
+        <ng-container>
+          <table
+            aria-describedby="form selection rules list table"
+            [dataSource]="dataSourceTable"
+            (cdkDropListDropped)="drop($event)"
+            cdkDropList
+            formArrayName="rules"
+            mat-table
+            matSort
+            multiTemplateDataRows
+          >
+            <ng-container *ngFor="let col of displayedColumns; let colIndex = index; trackBy: trackByFn" [matColumnDef]="col.value">
+              <th
+                class="form-selection-rules-list__table--header"
+                *matHeaderCellDef
+                [disabled]="col.sortable ? false : true"
+                [mat-sort-header]="col.sortable === true ? col.value : ''"
+                [style.width]="col.width || 'auto'"
+                mat-header-cell
+              >
+                {{ col.label }}
+              </th>
+              <ng-container [ngSwitch]="col.value">
+                <ng-container *ngSwitchCase="'reorder'">
+                  <td *matCellDef="let element" mat-cell>
+                    <div cdkDragHandle>=</div>
+                  </td>
+                </ng-container>
+                <ng-container *ngSwitchCase="'task'">
+                  <td *matCellDef="let element; " [formGroupName]="getIndex(element)" mat-cell>
+                    <nuverial-select
+                      class="editableRow"
+                      *ngIf="element.editing"
+                      [selectOptions]="formData.taskOptions"
+                      formControlName="task"
+                      placeholder="Select Task"
+                    />
+                    <span *ngIf="!element.editing"> {{ getDisplayText(getIndex(element), col.value, formData.taskOptions) }} </span>
+                  </td>
+                </ng-container>
+                <ng-container *ngSwitchCase="'viewer'">
+                  <td *matCellDef="let element;" [formGroupName]="getIndex(element)" mat-cell>
+                    <nuverial-select
+                      class="editableRow"
+                      *ngIf="element.editing"
+                      [selectOptions]="formData.viewerOptions"
+                      formControlName="viewer"
+                      placeholder="Select Viewer"
+                    />
+                    <span *ngIf="!element.editing"> {{ getDisplayText(getIndex(element), col.value, formData.viewerOptions) }} </span>
+                  </td>
+                </ng-container>
+                <ng-container *ngSwitchCase="'context'">
+                  <td *matCellDef="let element;" [formGroupName]="getIndex(element)" mat-cell>
+                    <nuverial-text-input class="editableRow" *ngIf="element.editing" formControlName="context" placeholder="Enter Context" />
+                    <span *ngIf="!element.editing"> {{ getDisplayText(getIndex(element), col.value) }} </span>
+                  </td>
+                </ng-container>
+                <ng-container *ngSwitchCase="'formConfigurationKey'">
+                  <td *matCellDef="let element;" [formGroupName]="getIndex(element)" mat-cell>
+                    <nuverial-select
+                      class="editableRow"
+                      *ngIf="element.editing"
+                      [required]="true"
+                      [selectOptions]="formData.formKeyOptions"
+                      formControlName="formConfigurationKey"
+                      placeholder="Select Form"
+                    />
+                    <span *ngIf="!element.editing"> {{ getDisplayText(getIndex(element), col.value, formData.formKeyOptions) }} </span>
+                  </td>
+                </ng-container>
+                <ng-container *ngSwitchCase="'edit'">
+                  <td *matCellDef="let element" mat-cell>
+                    <nuverial-button ariaLabel="Toggle Editing" (click)="toggleEditing(element)"
+                      ><nuverial-icon iconName="edit"></nuverial-icon
+                    ></nuverial-button>
+                  </td>
+                </ng-container>
+              </ng-container>
+            </ng-container>
+
+            <tr *matHeaderRowDef="displayColumnValues" mat-header-row></tr>
+
+            <tr *matRowDef="let row; columns: displayColumnValues" cdkDrag mat-row></tr>
+          </table>
+        </ng-container>
+      </ng-container>
+    </form>
+    <ng-template #loading>
+      <nuverial-spinner></nuverial-spinner>
+    </ng-template>
+  </div>
+</ng-container>

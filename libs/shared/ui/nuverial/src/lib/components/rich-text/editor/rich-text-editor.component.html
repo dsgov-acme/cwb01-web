@@ -1,0 +1,21 @@
+<mat-form-field [floatLabel]="label ? 'always' : 'auto'" [ngClass]="{'mdc-notched-outline--no-label': !label}" appearance="outline">
+  <mat-label>{{label}}</mat-label>
+  <textarea #formBaseInput [formControl]="formControl" matInput style="display: none"></textarea>
+  <div class="editor-wrapper">
+    <ngx-editor-menu [colorPresets]="colorPresets" [editor]="editor" [toolbar]="toolbar"> </ngx-editor-menu>
+    <ngx-editor
+      [attr.aria-invalid]="formControl.invalid"
+      [attr.aria-label]="ariaLabel"
+      [attr.disabled]="disabled"
+      [editor]="editor"
+      [formControl]="formControl"
+      [placeholder]="placeholder"
+      [required]="required"
+      (focusout)="onFocusOut()"
+      outputFormat="html"
+    ></ngx-editor>
+  </div>
+
+  <mat-hint *ngIf="hint" align="start">{{ hint }}</mat-hint>
+  <mat-error *ngIf="error$ | async as error"><nuverial-icon iconName="error_outline"></nuverial-icon>{{error}}</mat-error>
+</mat-form-field>

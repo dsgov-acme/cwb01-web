@@ -1,0 +1,36 @@
+<ng-container [ngSwitch]="mode">
+  <ng-container *ngSwitchCase="'edit'" [ngTemplateOutlet]="editTemplate"></ng-container>
+  <ng-container *ngSwitchCase="'review'" [ngTemplateOutlet]="reviewTemplate"></ng-container>
+  <ng-container *ngSwitchDefault>{{mode}} mode not implemented</ng-container>
+</ng-container>
+
+<ng-template #editTemplate>
+  <nuverial-file-upload
+    [documentTitle]="field.props.label"
+    [filePreview]="filePreview"
+    [fileStatus]="fileStatus"
+    [formControl]="formControl"
+    [loading]="loading"
+    [maxFileSize]="field.props.maxFileSize"
+    [multiple]="field.props.multiple || false"
+    (removeDocument)="onRemoveDocument($event)"
+    (uploadDocument)="onUploadDocument($event)"
+  ></nuverial-file-upload>
+</ng-template>
+
+<ng-template #reviewTemplate>
+  <ng-container *ngIf="documentList.length">
+    <div class="field-value-container">
+      <div class="field-label">{{ field.props.label }}</div>
+      <a
+        class="field-value"
+        *ngFor="let document of documentList; index as i; trackBy: trackByFn"
+        (click)="openDocument(i)"
+        (keyup.enter)="openDocument(i)"
+        tabindex="0"
+      >
+        {{ document.filename || document.documentId }}</a
+      >
+    </div>
+  </ng-container>
+</ng-template>

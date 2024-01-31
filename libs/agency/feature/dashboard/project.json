@@ -1,0 +1,31 @@
+{
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "name": "agency-feature-dashboard",
+  "prefix": "dsg",
+  "projectType": "library",
+  "sourceRoot": "libs/agency/feature/dashboard/src",
+  "tags": ["type:feature", "scope:agency"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/agency/feature/dashboard/**/*.ts", "libs/agency/feature/dashboard/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      },
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "libs/agency/feature/dashboard/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"]
+    }
+  }
+}

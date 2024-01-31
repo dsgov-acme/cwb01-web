@@ -1,0 +1,177 @@
+@use '../functions/rem';
+@use '../variables' as themeVars;
+
+@mixin styleTable() {
+  --mdc-typography-subtitle2-font-size: var(--theme-typography-font-size-small);
+  --mdc-typography-subtitle2-line-height: 16px;
+  --mdc-typography-subtitle2-font-weight: var(--theme-typography-font-weight-mid);
+  --mdc-typography-body2-font-size: var(--theme-typography-font-size-small);
+  --mdc-typography-body2-line-height: 16px;
+  --mdc-typography-body2-font-weight: var(--theme-typography-font-weight-normal);
+
+  --table-border-color: var(--theme-color-m3-neutral-90);
+  --table-header-background-color: var(--theme-color-m3-neutral-95);
+  --table-paginator-icon-color: var(--theme-color-secondary);
+
+  ::ng-deep .mat-sort-header-arrow {
+    color: var(--theme-color-m3-neutral-60);
+    .mat-sort-header-stem {
+      height: 2px;
+      background: transparent;
+    }
+  }
+
+  .mat-mdc-table {
+    border: 1px solid var(--table-border-color);
+    box-sizing: border-box;
+  }
+
+  mat-table.mdc-data-table__table {
+    min-width: calc(100% - 2px);
+  }
+
+  tr {
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  th {
+    cursor: auto;
+  }
+
+  .mat-mdc-table .mdc-data-table__header-row {
+    height: 55px;
+    background-color: var(--table-header-background-color);
+
+    ::ng-deep .mat-sort-header-arrow[style] .mat-sort-header-stem {
+      display: none;
+    }
+
+    [aria-sort='ascending'] ::ng-deep .mat-sort-header-arrow .mat-sort-header-indicator {
+      position: relative;
+      top: rem.fromPx(3px);
+    }
+
+    [aria-sort='descending'] ::ng-deep .mat-sort-header-arrow .mat-sort-header-indicator {
+      position: relative;
+      top: rem.fromPx(-3px);
+    }
+
+    [aria-sort='none'] ::ng-deep .mat-sort-header-arrow .mat-sort-header-indicator {
+      position: relative;
+      top: rem.fromPx(3px);
+    }
+  }
+
+  .mat-mdc-cell {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: rem.fromPx(10px);
+  }
+
+  .mat-mdc-row:hover {
+    background-color: var(--theme-color-m3-neutral-99);
+  }
+
+  ::ng-deep .mat-mdc-icon-button:not([disabled]) {
+    .mat-mdc-paginator-icon {
+      fill: var(--table-paginator-icon-color);
+    }
+  }
+
+  .mat-mdc-paginator {
+    border-style: solid;
+    border-color: var(--table-border-color);
+    border-width: 0 1px 1px 1px;
+    max-height: 52px;
+    font-weight: var(--theme-typography-font-weight-normal);
+    font-size: var(--theme-typography-font-size-x-small);
+    line-height: 16px;
+
+    ::ng-deep .mat-mdc-form-field-infix {
+      height: 26px;
+      min-height: 26px;
+    }
+
+    ::ng-deep .mat-mdc-text-field-wrapper.mdc-text-field--outlined .mat-mdc-form-field-infix {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+  }
+
+  @media screen and (max-width: themeVars.$layout-medium-screen-breakpoint) {
+    .mat-mdc-paginator {
+      max-height: unset;
+      ::ng-deep .mat-mdc-paginator-outer-container .mat-mdc-paginator-container {
+        margin-top: 1rem;
+        flex-direction: column;
+      }
+    }
+  }
+}
+
+/**
+The row layout for mobile results in a two column 'card' where columns maybe on the
+left/right side of the card. The layout relies the CSS classes create by Material for
+each column e.g. .mat-column-date. A SASS map is passed to function to style each column
+and supply optional 'before' content data.
+  $columns: (
+      claim: (content: 'Claim ID:', order: 2, justify-content: 'flex-end', width: 50%),
+      claimStatus: (order: 3, justify-content: 'flex-end', width: 50%),
+  )
+ */
+@mixin styleTableMobileColumns($columns) {
+  @each $key, $column in $columns {
+    .mat-column-#{$key} {
+      @each $colKey, $colValue in $column {
+        @if $colValue {
+          @if $colKey == 'justify-content' {
+            justify-content: #{$colValue};
+          }
+          @if $colKey == 'order' {
+            order: #{$colValue};
+          }
+          @if $colKey == 'width' {
+            flex: 1 0 #{$colValue};
+          }
+
+          @if $colKey == 'content' {
+            &:before {
+              content: '#{$colValue} ';
+              display: inline;
+              font-weight: normal;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@mixin styleTableMobile($columns) {
+  @media screen and (max-width: themeVars.$layout-medium-screen-breakpoint) {
+    @if $columns {
+      @include styleTableMobileColumns($columns);
+    }
+
+    .mat-mdc-header-row {
+      display: none;
+    }
+    .mat-mdc-table .mdc-data-table__row {
+      border-bottom: 1px solid var(--table-border-color);
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      height: auto;
+      overflow: hidden;
+      padding: 1rem;
+    }
+    .mat-mdc-cell {
+      border: 0 none;
+      display: flex;
+      margin: 0.25rem 0;
+      padding: 0;
+    }
+  }
+}

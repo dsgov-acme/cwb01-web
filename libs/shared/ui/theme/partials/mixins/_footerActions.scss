@@ -1,0 +1,47 @@
+@use '../functions/rem';
+@use '../variables' as themeVars;
+
+@mixin styleFooterActions() {
+  .footer-actions {
+    display: flex;
+    justify-content: center;
+    gap: rem.fromPx(24px);
+    z-index: 1;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: rem.fromPx(30px) 0;
+    background-color: var(--theme-color-white);
+    box-shadow: var(--theme-color-box-shadow-secondary);
+
+    &-button {
+      width: 100%;
+      max-width: rem.fromPx(360px);
+
+      ::ng-deep .mdc-button {
+        text-transform: uppercase;
+        font-weight: var(--theme-typography-font-weight-bold);
+        border-width: rem.fromPx(2px);
+      }
+    }
+
+    @media screen and (max-width: themeVars.$layout-mobile-breakpoint) {
+      gap: rem.fromPx(8px);
+      padding-top: rem.fromPx(16px);
+      padding-bottom: rem.fromPx(16px);
+
+      .nuverial-icon {
+        margin-right: 0 !important;
+        margin-left: 0 !important;
+      }
+
+      :first-child {
+        margin-left: rem.fromPx(8px);
+      }
+      :last-child {
+        margin-right: rem.fromPx(8px);
+      }
+    }
+  }
+}

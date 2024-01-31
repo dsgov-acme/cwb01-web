@@ -1,0 +1,18 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/variables' as themeVars;
+
+:host {
+  .nuverial-section-header-label {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: rem.fromPx(5px);
+    font-weight: var(--theme-typography-font-weight-bold);
+    font-size: var(--nuverial-card-font-size);
+  }
+
+  nuverial-divider {
+    border-top-width: rem.fromPx(1.6px);
+    border-top-color: var(--theme-color-primary);
+    padding-bottom: rem.fromPx(12px);
+  }
+}

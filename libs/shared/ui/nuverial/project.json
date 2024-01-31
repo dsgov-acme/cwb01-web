@@ -1,0 +1,56 @@
+{
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "name": "shared-ui-nuverial",
+  "prefix": "dsg",
+  "projectType": "library",
+  "sourceRoot": "libs/shared/ui/nuverial/src",
+  "tags": ["scope:shared", "type:ui"],
+  "targets": {
+    "build-storybook": {
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      },
+      "executor": "@storybook/angular:build-storybook",
+      "options": {
+        "browserTarget": "shared-ui-nuverial:build-storybook",
+        "compodoc": false,
+        "configDir": "libs/shared/ui/nuverial/.storybook",
+        "outputDir": "dist/storybook/shared-nuverial-ui"
+      },
+      "outputs": ["{options.outputDir}"]
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/shared/ui/nuverial/**/*.ts", "libs/shared/ui/nuverial/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "storybook": {
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      },
+      "executor": "@storybook/angular:start-storybook",
+      "options": {
+        "browserTarget": "shared-ui-nuverial:build-storybook",
+        "compodoc": true,
+        "compodocArgs": ["-e", "json", "-d", "libs/shared/ui/nuverial"],
+        "configDir": "libs/shared/ui/nuverial/.storybook",
+        "port": 4400,
+        "styles": ["libs/shared/ui/nuverial/.storybook/styles.scss"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "libs/shared/ui/nuverial/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"]
+    }
+  }
+}

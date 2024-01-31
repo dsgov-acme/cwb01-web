@@ -1,0 +1,33 @@
+<ng-container *ngIf="listEventUpdates.size > 0">
+  <ng-container *ngFor="let updates of listEventUpdates | keyvalue; trackBy: trackByFn">
+    <div class="activity-status">
+      <span class="label">{{updates.value[0].label}}</span>
+      <ul class="changes-list" attr.aria-label="File changes for {{updates.key}}">
+        <li class="change" *ngFor="let update of updates.value; trackBy: trackByFn">
+          <ng-container *ngIf="update.newState; else fileRemoved">
+            <span>Added '{{update.newState}}'</span>
+            <a
+              class="download-link"
+              *ngIf="update.newDocumentId"
+              (click)="openDocument(update.newDocumentId)"
+              (keyup.enter)="openDocument(update.newDocumentId)"
+              tabindex="0"
+              >View</a
+            >
+          </ng-container>
+          <ng-template #fileRemoved>
+            <span>Removed '{{update.oldState}}'</span>
+            <a
+              class="download-link"
+              *ngIf="update.oldDocumentId"
+              (click)="openDocument(update.oldDocumentId)"
+              (keyup.enter)="openDocument(update.oldDocumentId)"
+              tabindex="0"
+              >View</a
+            >
+          </ng-template>
+        </li>
+      </ul>
+    </div>
+  </ng-container>
+</ng-container>

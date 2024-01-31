@@ -1,0 +1,44 @@
+<h2>Table Style</h2>
+
+<div class="table-container">
+  <table aria-describedby="table style" [dataSource]="dataSourceTable" mat-table matSort>
+    <!-- Position Column -->
+    <ng-container matColumnDef="date">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>Date</th>
+      <td *matCellDef="let element" mat-cell>{{element.date}}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th *matHeaderCellDef mat-header-cell>Name</th>
+      <td *matCellDef="let element" mat-cell>{{element.name}}</td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="claim">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>Claim ID</th>
+      <td *matCellDef="let element" mat-cell>{{element.claim}}</td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="claimStatus">
+      <th *matHeaderCellDef mat-header-cell>Claim Status</th>
+      <td *matCellDef="let element" mat-cell>{{element.claimStatus}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th *matHeaderCellDef mat-header-cell>Email</th>
+      <td *matCellDef="let element" mat-cell>{{element.email}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="phone">
+      <th *matHeaderCellDef mat-header-cell>Phone</th>
+      <td *matCellDef="let element" mat-cell>{{element.phone}}</td>
+    </ng-container>
+
+    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+    <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+  </table>
+
+  <mat-paginator aria-label="Select page of Claim" #tablePaginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons> </mat-paginator>
+</div>

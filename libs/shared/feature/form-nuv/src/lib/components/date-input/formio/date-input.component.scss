@@ -1,0 +1,6 @@
+@use '@dsg/shared-theme/partials/mixins' as mixins;
+:host {
+  ::ng-deep {
+    @include mixins.formBuilder-mimicFormioStyles();
+  }
+}

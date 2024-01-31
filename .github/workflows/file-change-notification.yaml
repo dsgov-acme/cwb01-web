@@ -1,0 +1,36 @@
+name: File Change Notification
+
+on:
+  push:
+    paths:
+      - 'skaffold.yaml'
+      - 'skaffold.agency.yaml'
+      - 'skaffold.employer.yaml'
+      - 'skaffold.public.yaml'
+      - '.ci/cloudbuild-pull-request.yaml'
+      - '.ci/cloudbuild-push-request.yaml'
+      - '.ci/helm/web/agency/env.demo.yaml'
+      - '.ci/helm/web/agency/env.dev.yaml'
+      - '.ci/helm/web/employer/env.demo.yaml'
+      - '.ci/helm/web/employer/env.dev.yaml'
+      - '.ci/helm/web/public/env.demo.yaml'
+      - '.ci/helm/web/public/env.dev.yaml'
+      - '.ci/helm/web/values.agency.local.yaml'
+      - '.ci/helm/web/values.public.local.yaml'
+      - '.ci/helm/web/values.employer.local.yaml'
+
+    branches:    
+      - main
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Notify on File Change
+      run: python .github/scripts/notify_on_file_change.py
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.DSGOV_SLACK_WEBHOOK }}

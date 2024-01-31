@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Values.namespace | default "cwb01" }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  revisionHistoryLimit: {{ default "3" .Values.revisionHistoryLimit }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        roll: {{ randAlphaNum 5 | quote }}
+        sidecar.istio.io/rewriteAppHTTPProbers: "true"
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: {{ .Release.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ default "Always" .Values.image.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.applicationPort | default 80 }}
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: {{ .Values.net.readinessPath | default "/" }}
+            port: {{ .Values.applicationPort | default 80 }}
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources:
+          requests:
+            memory: {{ .Values.resources.mem.min }}
+          limits:
+            memory: {{ .Values.resources.mem.max }}
+        volumeMounts:
+          - name: environment-config
+            mountPath: /usr/share/nginx/html/environment.js
+            subPath: environment.js
+          - name: environment-config
+            mountPath: /etc/nginx/nginx.conf
+            subPath: nginx.conf
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      volumes:
+        - name: environment-config
+          configMap:
+            name: {{ .Release.Name }}-config

@@ -1,0 +1,95 @@
+{
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "affected": {
+    "defaultBase": "origin/main"
+  },
+  "cli": {
+    "packageManager": "yarn"
+  },
+  "defaultProject": "dsg-examples",
+  "generators": {
+    "@nx/angular:application": {
+      "e2eTestRunner": "cypress",
+      "linter": "eslint",
+      "setParserOptionsProject": true,
+      "style": "scss",
+      "tags": "type:app, scope:shared",
+      "unitTestRunner": "jest"
+    },
+    "@nx/angular:component": {
+      "changeDetection": "OnPush",
+      "displayBlock": true,
+      "standalone": true,
+      "style": "scss"
+    },
+    "@nx/angular:library": {
+      "changeDetection": "OnPush",
+      "linter": "eslint",
+      "setParserOptionsProject": true,
+      "style": "scss",
+      "tags": "type:feature, scope:shared",
+      "unitTestRunner": "jest"
+    },
+    "@nx/js:library": {
+      "buildable": false,
+      "setParserOptionsProject": true,
+      "tags": "type:feature, scope:shared"
+    },
+    "@nx/nest:application": {
+      "setParserOptionsProject": true,
+      "tags": "type:app, scope:shared"
+    },
+    "@nx/nest:library": {
+      "controller": true,
+      "service": true,
+      "setParserOptionsProject": true,
+      "tags": "type:feature, scope:shared"
+    },
+    "@schematics/angular:component": {
+      "changeDetection": "OnPush",
+      "style": "scss"
+    }
+  },
+  "namedInputs": {
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "production": [
+      "default",
+      "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
+      "!{projectRoot}/tsconfig.spec.json",
+      "!{projectRoot}/jest.config.[jt]s",
+      "!{projectRoot}/.eslintrc.json",
+      "!{projectRoot}/.storybook/**/*",
+      "!{projectRoot}/**/*.stories.@(js|jsx|ts|tsx|mdx)",
+      "!{projectRoot}/src/test-setup.[jt]s",
+      "!{projectRoot}/tsconfig.storybook.json"
+    ],
+    "sharedGlobals": ["{workspaceRoot}/.github/workflows/*", "{workspaceRoot}/.ci/**/cloudbuild-*.yaml"]
+  },
+  "npmScope": "dsg",
+  "targetDefaults": {
+    "build": {
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
+    },
+    "build-storybook": {
+      "inputs": ["default", "^production", "{workspaceRoot}/.storybook/**/*", "{projectRoot}/.storybook/**/*", "{projectRoot}/tsconfig.storybook.json"]
+    },
+    "e2e": {
+      "inputs": ["default", "^production"]
+    },
+    "lint": {
+      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"]
+    },
+    "test": {
+      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"]
+    }
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "options": {
+        "cacheableOperations": ["build", "lint", "test", "e2e", "build-storybook"]
+      },
+      "runner": "nx/tasks-runners/default"
+    }
+  }
+}

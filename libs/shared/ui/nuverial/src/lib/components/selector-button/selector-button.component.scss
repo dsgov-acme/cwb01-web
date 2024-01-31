@@ -1,0 +1,42 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+
+:host {
+  .pill-selector {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    height: rem.fromPx(50px);
+    background-color: var(--theme-color-m3-neutral-90);
+    border-radius: rem.fromPx(15px);
+    overflow: hidden;
+    padding-left: rem.fromPx(10px);
+    padding-right: rem.fromPx(10px);
+  }
+
+  .thumb {
+    z-index: 1;
+    position: absolute;
+    height: 80%;
+    width: calc(100% / 5); //5 is max number of buttons
+    background: var(--theme-color-m3-neutral-10);
+    border-radius: rem.fromPx(15px);
+    transition: transform 0.2s ease;
+  }
+
+  button {
+    position: relative;
+    z-index: 2;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--theme-color-m3-neutral-10);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: rem.fromPx(10px) rem.fromPx(20px);
+    &.selected {
+      color: white;
+    }
+  }
+}

@@ -1,0 +1,55 @@
+<h2>Text Area</h2>
+<div class="component-section">
+  <nuverial-text-area
+    ariaDescribedBy="desc...."
+    [required]="true"
+    [validationMessages]="{required: 'Ng Model test is required'}"
+    [(ngModel)]="inputTextModel"
+    placeholder="Ng Model placeholder"
+  ></nuverial-text-area>
+
+  <nuverial-text-area
+    [formControl]="inputTextFormControl"
+    [required]="true"
+    [validationMessages]="inputTextValidationMessages"
+    (validationErrors)="onValidationErrors($event)"
+    placeholder="Form Control Placeholder"
+  ></nuverial-text-area>
+
+  <nuverial-text-area
+    [disabled]="true"
+    [validationMessages]="{required: 'Ng Model test is required'}"
+    [(ngModel)]="inputTextModel"
+    placeholder="Ng Model disabled"
+  ></nuverial-text-area>
+</div>
+
+<div class="component-section">
+  <nuverial-text-area
+    [maxlength]="10"
+    [validationMessages]="{required: 'Ng Model test is required'}"
+    [(ngModel)]="inputTextModel"
+    placeholder="Ng Model max length"
+  ></nuverial-text-area>
+
+  <nuverial-text-area
+    [validationMessages]="{required: 'Ng Model test is required'}"
+    [(ngModel)]="inputTextModel"
+    hint="Ng Model hint"
+    placeholder="Ng Model hint"
+  ></nuverial-text-area>
+</div>
+
+<div class="component-section">
+  <nuverial-text-area [rows]="2" [(ngModel)]="inputTextModel" placeholder="2 rows"></nuverial-text-area>
+
+  <nuverial-text-area [autoSize]="true" [(ngModel)]="inputTextModel" placeholder="Autoincrement size"></nuverial-text-area>
+
+  <nuverial-text-area
+    [autoSize]="true"
+    [autoSizeMaxRows]="10"
+    [autoSizeMinRows]="5"
+    [(ngModel)]="inputTextModel"
+    placeholder="Autoincrement size with min and max rows"
+  ></nuverial-text-area>
+</div>

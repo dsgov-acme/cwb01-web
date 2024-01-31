@@ -1,0 +1,34 @@
+<ng-container [ngSwitch]="mode">
+  <ng-container *ngSwitchCase="'edit'" [ngTemplateOutlet]="editTemplate"></ng-container>
+  <ng-container *ngSwitchCase="'review'" [ngTemplateOutlet]="reviewTemplate"></ng-container>
+  <ng-container *ngSwitchDefault>{{mode}} mode not implemented</ng-container>
+</ng-container>
+
+<ng-template #editTemplate>
+  <nuverial-checkbox-card
+    [ariaLabel]="props.ariaLabel"
+    [checked]="props.checked || false"
+    [colorTheme]="props.colorTheme || 'primary'"
+    [disabled]="props.disabled!"
+    [displayError]="props.displayError || true"
+    [formControl]="formControl"
+    [imagePosition]="props.imagePosition || 'top'"
+    [invalid]="props.invalid || false"
+    [label]="props.label"
+    [pointValue]="props.pointValue || 0"
+    [required]="props.required!"
+    [validationMessages]="$any(field.validation?.messages)"
+    [value]="props.value || ''"
+  >
+    <img *ngIf="props.imagePath" alt="{{props.imageAltLabel}}" nuverialCardContentType="image" src="{{props.imagePath}}" />
+    <div *ngIf="props.cardTitle" nuverialCardContentType="title">{{props.cardTitle}}</div>
+    <div *ngIf="props.cardContent" nuverialCardContentType="content">{{props.cardContent}}</div>
+  </nuverial-checkbox-card>
+</ng-template>
+
+<ng-template #reviewTemplate>
+  <div class="field-value-container">
+    <div class="field-label">{{ props.cardTitle }}:</div>
+    <div class="field-value">{{ formControl.value }}</div>
+  </div>
+</ng-template>

@@ -1,0 +1,34 @@
+<div class="box">
+  <div>Normal Nuverial Select Usage</div>
+  <nuverial-selector-button-dropdown [menuItems]="selectOption" (buttonClickedEvent)="false" buttonText="New Application"></nuverial-selector-button-dropdown>
+</div>
+
+<div class="box">
+  <div>Basic Projection Usage</div>
+  <nuverial-selector-button-dropdown [maxHeight]="170" icon="notifications_outline">
+    <button *ngFor="let item of exampleNotificationsProjection; trackBy: trackByFn" (click)="false" mat-menu-item type="submit">{{ item.label }}</button>
+  </nuverial-selector-button-dropdown>
+</div>
+
+<div class="box">
+  <div>Complex Styled Projection Usage</div>
+  <nuverial-selector-button-dropdown [maxHeight]="600" icon="notifications_outline">
+    <div class="notifications-container">
+      <div class="notifications-top-bar">
+        <nuverial-button class="view-button" buttonStyle="text" colorTheme="primary">Notifications</nuverial-button>
+        <div style="margin-left: auto"><nuverial-button class="view-button" buttonStyle="text" colorTheme="primary">Mark as Read</nuverial-button></div>
+      </div>
+      <button *ngFor="let item of exampleNotificationsProjection; trackBy: trackByFn" (click)="false" mat-menu-item type="submit">
+        <div class="notification">
+          <nuverial-icon iconName="message"></nuverial-icon>
+          <div class="section">
+            <h2>{{ item.label }}</h2>
+            <i>Today</i>
+            <div>Description text for notification</div>
+            <nuverial-button class="view-button" buttonStyle="text" colorTheme="accent">View</nuverial-button>
+          </div>
+        </div>
+      </button>
+    </div>
+  </nuverial-selector-button-dropdown>
+</div>

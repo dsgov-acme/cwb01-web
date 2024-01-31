@@ -1,0 +1,31 @@
+<ng-container [ngSwitch]="activeComponent">
+  <ng-container *ngSwitchCase="'authentication-email'">
+    <dsg-authentication-email
+      [authenticationAction]="authenticationAction"
+      [authenticationActionSignIn]="authenticationActionSignIn"
+      [displayReset]="this.actionReset !== null"
+      [returnUrl]="returnUrl$ | async"
+      (changeAuthenticationAction)="onChangeAuthenticationProvider($event)"
+    ></dsg-authentication-email>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'authentication-email-complete'">
+    <dsg-authentication-email-complete
+      [returnUrl]="returnUrl$ | async"
+      (changeAuthenticationAction)="onChangeAuthenticationProvider($event)"
+    ></dsg-authentication-email-complete>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'authentication-signed-out'">
+    <dsg-authentication-signed-out
+      [authenticationAction]="authenticationAction"
+      [authenticationActionSignIn]="authenticationActionSignIn"
+      [returnUrl]="returnUrl$ | async"
+      (changeAuthenticationAction)="onChangeAuthenticationProvider($event)"
+    ></dsg-authentication-signed-out>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'authentication-redirect'">
+    <dsg-authentication-redirect (changeAuthenticationAction)="onChangeAuthenticationProvider($event)"></dsg-authentication-redirect>
+  </ng-container>
+</ng-container>

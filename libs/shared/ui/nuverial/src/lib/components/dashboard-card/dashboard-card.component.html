@@ -1,0 +1,17 @@
+<a class="card" [routerLink]="[route]">
+  <header class="card-header">
+    <div class="card-header-row">
+      <nuverial-icon class="card-header-icon" *ngIf="icon" [iconName]="icon" [outlined]="true"></nuverial-icon>
+      <div class="card-header-tags" *ngIf="tags && tags.length">
+        <ng-container *ngFor="let tag of tags; trackBy: trackByFn">
+          <nuverial-tag [tag]="tag"></nuverial-tag>
+        </ng-container>
+      </div>
+    </div>
+    <h3>{{name}}</h3>
+  </header>
+  <p class="card-description" *ngIf="description">{{description}}</p>
+  <footer class="card-footer" *ngIf="tooltip">
+    <nuverial-icon [iconName]="'info'" [outlined]="true" [tooltip]="tooltip" [tooltipDirection]="'left'"></nuverial-icon>
+  </footer>
+</a>

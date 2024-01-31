@@ -1,0 +1,55 @@
+<div class="actions">
+  <nuverial-button
+    class="new-message"
+    ariaLabel="New Message"
+    *dsgAuthorized="'transaction-conversation-create'"
+    [uppercaseText]="true"
+    (click)="goToNewMessage()"
+    buttonStyle="outlined"
+    colorTheme="primary"
+  >
+    <nuverial-icon [outlined]="true" iconName="edit_square"></nuverial-icon>
+    New Message
+  </nuverial-button>
+</div>
+
+<section
+  class="conversations-container"
+  [infiniteScrollDisabled]="disableScroll"
+  [infiniteScrollDistance]="scrollDistance"
+  [infiniteScrollThrottle]="throttle"
+  (scrolled)="loadMoreConversations()"
+  infinite-scroll
+>
+  <ng-container *ngIf="isLoadingConversations">
+    <nuverial-spinner></nuverial-spinner>
+  </ng-container>
+
+  <ng-container *ngIf="conversations$ | async as conversations">
+    <ng-container *ngIf="conversations.length; else emptyConversations">
+      <div class="conversation" *ngFor="let conversation of conversations; trackBy:trackByFn" role="button">
+        <div class="conversation__content">
+          <div>
+            <h3 class="conversation__title">
+              {{conversation.subject}}
+              <span class="conversation__total-messages"> {{conversation.totalMessages}} </span>
+            </h3>
+            <p class="conversation__created">
+              Created {{conversation.createdTimestamp | date: "MM/dd/yyyy"}}
+              <span class="conversation__sender">by {{conversation.createdByDisplayName}}</span>
+            </p>
+          </div>
+        </div>
+        <nuverial-tag *ngIf="conversation.unReadMessages" [tag]="newTag" />
+        <nuverial-icon iconName="keyboard_arrow_right" />
+      </div>
+    </ng-container>
+  </ng-container>
+</section>
+
+<ng-template #emptyConversations>
+  <div class="cta">
+    <nuverial-icon class="cta-icon" iconName="description-outline"></nuverial-icon>
+    <p class="cta-message">No messages have been sent regarding this request.</p>
+  </div>
+</ng-template>

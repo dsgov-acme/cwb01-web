@@ -1,0 +1,51 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "implicitDependencies": ["shared-ui-nuverial", "shared-ui-theme"],
+  "name": "storybook-host",
+  "prefix": "dsg",
+  "projectType": "library",
+  "sourceRoot": "libs/storybook-host/src",
+  "tags": ["type:app"],
+  "targets": {
+    "build-storybook": {
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      },
+      "executor": "@storybook/angular:build-storybook",
+      "options": {
+        "browserTarget": "storybook-host:build-storybook",
+        "compodoc": true,
+        "compodocArgs": ["-e", "json", "-d", "libs/storybook-host"],
+        "configDir": "libs/storybook-host/.storybook",
+        "outputDir": "dist/storybook/storybook-host",
+        "styles": ["libs/storybook-host/.storybook/styles.scss"]
+      },
+      "outputs": ["{options.outputDir}"]
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/storybook-host/**/*.ts", "libs/storybook-host/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "storybook": {
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      },
+      "executor": "@storybook/angular:start-storybook",
+      "options": {
+        "browserTarget": "storybook-host:build-storybook",
+        "compodoc": true,
+        "compodocArgs": ["-e", "json", "-d", "libs/storybook-host"],
+        "configDir": "libs/storybook-host/.storybook",
+        "port": 4400,
+        "styles": ["libs/storybook-host/.storybook/styles.scss"]
+      }
+    }
+  }
+}

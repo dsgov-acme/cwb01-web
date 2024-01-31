@@ -1,0 +1,37 @@
+<ng-container>
+  <h1 class="title">{{ transactionsDashboardTitle }}</h1>
+  <ng-container class="transactions-list">
+    <div class="transactions-list__actions">
+      <nuverial-text-input
+        class="filter"
+        ariaLabel="Search transactions"
+        [formControl]="searchInput"
+        [suffixIcon]="searchBoxIcon"
+        [type]="'text'"
+        (clickIcon)="clearSearch()"
+        (keyup.enter)="handleSearch()"
+        (keyup)="setSearchBoxIcon()"
+        placeholder="Search by Type"
+        style="width: 1000px"
+        suffixAriaLabel="Search transactions"
+      />
+    </div>
+    <ng-container *ngIf="transactionsList$ | async; else loading">
+      <nuverial-table
+        ariaLabel="transactions list table"
+        [dataSourceTable]="dataSourceTable"
+        [displayedColumns]="displayedColumns"
+        [listIsLoading]="transactionListIsLoading"
+        [pagingMetadata]="pagingMetadata"
+        [pagingRequestModel]="pagingRequestModel"
+        [sortDirection]="sortDirection"
+        (clickRow)="navigateToTransactionDetails($event.id)"
+        (setPage)="setPage($event)"
+        (sortData)="sortData($event)"
+      ></nuverial-table>
+    </ng-container>
+  </ng-container>
+</ng-container>
+<ng-template #loading>
+  <nuverial-spinner />
+</ng-template>

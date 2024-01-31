@@ -1,0 +1,46 @@
+<mat-form-field [floatLabel]="floatLabel" appearance="outline">
+  <mat-label *ngIf="label !== undefined">{{label}}</mat-label>
+  <mat-date-range-input
+    [attr.aria-label]="ariaLabel || label"
+    [dateFilter]="dateFilter"
+    [disabled]="disabled"
+    [formGroup]="dateRange"
+    [max]="maxDate"
+    [min]="minDate"
+    [rangePicker]="dateRangePicker"
+    [required]="required"
+    [separator]="separator"
+  >
+    <input
+      aria-label="Start Date"
+      [attr.aria-invalid]="formControl.invalid"
+      [errorStateMatcher]="dateRangeErrorStateMatcher"
+      [placeholder]="startDatePlaceholder"
+      formControlName="startDate"
+      matStartDate
+      nuverialDateMask
+    />
+    <input
+      aria-label="End Date"
+      [attr.aria-invalid]="formControl.invalid"
+      [errorStateMatcher]="dateRangeErrorStateMatcher"
+      [placeholder]="endDatePlaceholder"
+      formControlName="endDate"
+      matEndDate
+      nuverialDateMask
+    />
+  </mat-date-range-input>
+  <mat-hint *ngIf="hint">{{hint}}</mat-hint>
+  <mat-datepicker-toggle [for]="dateRangePicker" matIconSuffix></mat-datepicker-toggle>
+  <mat-date-range-picker
+    #dateRangePicker
+    [dateClass]="dateClass"
+    [disabled]="disabled"
+    [opened]="opened"
+    [panelClass]="panelClass"
+    [restoreFocus]="restoreFocus"
+    [startAt]="startAt"
+    [startView]="startView"
+  ></mat-date-range-picker>
+  <mat-error *ngIf="error$ | async as error"><nuverial-icon iconName="error_outline"></nuverial-icon>{{error}}</mat-error>
+</mat-form-field>

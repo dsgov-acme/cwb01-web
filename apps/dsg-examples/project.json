@@ -1,0 +1,69 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "dsg-examples",
+  "prefix": "dsg",
+  "projectType": "application",
+  "sourceRoot": "apps/dsg-examples/src",
+  "tags": [],
+  "targets": {
+    "build-app": {
+      "configurations": {
+        "development": {
+          "buildOptimizer": false,
+          "extractLicenses": false,
+          "namedChunks": true,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "budgets": [
+            {
+              "maximumError": "2mb",
+              "maximumWarning": "1.5mb",
+              "type": "initial"
+            },
+            {
+              "maximumError": "20kb",
+              "maximumWarning": "15kb",
+              "type": "anyComponentStyle"
+            }
+          ],
+          "outputHashing": "all"
+        }
+      },
+      "defaultConfiguration": "production",
+      "executor": "@angular-devkit/build-angular:browser",
+      "options": {
+        "assets": ["apps/dsg-examples/src/assets"],
+        "index": "apps/dsg-examples/src/index.html",
+        "inlineStyleLanguage": "scss",
+        "main": "apps/dsg-examples/src/main.ts",
+        "outputPath": "dist/apps/dsg-examples",
+        "polyfills": ["zone.js"],
+        "scripts": [],
+        "styles": ["apps/dsg-examples/src/styles.scss"],
+        "tsConfig": "apps/dsg-examples/tsconfig.app.json"
+      },
+      "outputs": ["{options.outputPath}"]
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "dsg-examples:build-app"
+      }
+    },
+    "serve": {
+      "configurations": {
+        "development": {
+          "browserTarget": "dsg-examples:build-app:development"
+        },
+        "production": {
+          "browserTarget": "dsg-examples:build-app:production"
+        }
+      },
+      "defaultConfiguration": "development",
+      "executor": "@angular-devkit/build-angular:dev-server"
+    }
+  }
+}

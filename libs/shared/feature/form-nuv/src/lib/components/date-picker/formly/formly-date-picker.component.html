@@ -1,0 +1,35 @@
+<ng-container [ngSwitch]="mode">
+  <ng-container *ngSwitchCase="'edit'" [ngTemplateOutlet]="editTemplate"></ng-container>
+  <ng-container *ngSwitchCase="'review'" [ngTemplateOutlet]="reviewTemplate"></ng-container>
+  <ng-container *ngSwitchDefault>{{mode}} mode not implemented</ng-container>
+</ng-container>
+
+<ng-template #editTemplate>
+  <nuverial-date-picker
+    [ariaDescribedBy]="props.ariaDescribedBy || ''"
+    [ariaLabel]="props.ariaLabel || ''"
+    [autocomplete]="props.autocomplete"
+    [displayError]="props.displayError || false"
+    [formControl]="formControl"
+    [hint]="props.hint || ''"
+    [inputLabel]="props.label || ''"
+    [maxDate]="props.maxDate!"
+    [minDate]="props.minDate!"
+    [opened]="props.opened || false"
+    [placeholder]="props.placeholder || ''"
+    [relativeMaxDate]="props.relativeMaxDate!"
+    [relativeMinDate]="props.relativeMinDate!"
+    [required]="props.required || false"
+    [startAt]="props.startAt!"
+    [startView]="props.startView || 'month'"
+    [validationMessages]="$any(field.validation?.messages)"
+  >
+  </nuverial-date-picker>
+</ng-template>
+
+<ng-template #reviewTemplate>
+  <div class="field-value-container">
+    <div class="field-label">{{ props.label }}:</div>
+    <div class="field-value">{{ formControl.value | date:"MM/dd/yyyy" }}</div>
+  </div>
+</ng-template>

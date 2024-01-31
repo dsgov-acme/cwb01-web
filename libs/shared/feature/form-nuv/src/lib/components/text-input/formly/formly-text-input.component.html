@@ -1,0 +1,36 @@
+<ng-container [ngSwitch]="mode">
+  <ng-container *ngSwitchCase="'edit'" [ngTemplateOutlet]="editTemplate"></ng-container>
+  <ng-container *ngSwitchCase="'review'" [ngTemplateOutlet]="reviewTemplate"></ng-container>
+  <ng-container *ngSwitchDefault>{{mode}} mode not implemented</ng-container>
+</ng-container>
+
+<ng-template #editTemplate>
+  <nuverial-text-input
+    [ariaLabel]="props.ariaLabel"
+    [autocomplete]="props.autocomplete || ''"
+    [formControl]="formControl"
+    [formlyAttributes]="field"
+    [hint]="props.hint"
+    [label]="props.label"
+    [maskPattern]="props.mask!"
+    [maxlength]="props.showMaxLength && props.maxLength || 0"
+    [placeholder]="props.placeholder!"
+    [prefixAriaLabel]="props.prefixAriaLabel!"
+    [prefixIcon]="props.prefixIcon"
+    [required]="props.required!"
+    [suffixAriaLabel]="props.suffixAriaLabel!"
+    [suffixIcon]="props.suffixIcon"
+    [togglePassword]="props.togglePassword"
+    [tooltip]="props.tooltip"
+    [type]="props.type || 'text'"
+    [validationMessages]="$any(field.validation?.messages)"
+  ></nuverial-text-input>
+</ng-template>
+
+<ng-template #reviewTemplate>
+  <div class="field-value-container">
+    <div class="field-label">{{ props.label }}</div>
+    <div class="field-value" *ngIf="formControl.value">{{ props.mask ? (formControl.value | mask: props.mask) : formControl.value }}</div>
+    <div class="field-value" *ngIf="!formControl.value">-</div>
+  </div>
+</ng-template>

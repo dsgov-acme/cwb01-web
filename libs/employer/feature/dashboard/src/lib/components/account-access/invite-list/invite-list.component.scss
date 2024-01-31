@@ -1,0 +1,38 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+
+:host {
+  .invite-list {
+    &__actions {
+      padding-right: 1.5rem;
+      margin-bottom: 1rem;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+
+      nuverial-text-input {
+        min-width: 340px;
+      }
+    }
+
+    &__invite {
+      position: absolute;
+      right: rem.fromPx(30px);
+      top: rem.fromPx(30px);
+      transform: translateY(calc(-100% + 35px));
+
+      ::ng-deep .mdc-button {
+        font-weight: var(--theme-typography-font-weight-bold);
+        width: 150px;
+        background-color: var(--theme-color-white);
+      }
+    }
+
+    &__table {
+      ::ng-deep {
+        .nuverial-table .mat-mdc-table {
+          border-right: none !important;
+        }
+      }
+    }
+  }
+}

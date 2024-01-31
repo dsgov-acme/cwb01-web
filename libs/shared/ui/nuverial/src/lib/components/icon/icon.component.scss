@@ -1,0 +1,30 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+
+:host {
+  --nuverial-icon-size: 24px; // #{rem.fromPx(24px)};
+  --nuverial-icon-font-size: var(--nuverial-icon-size);
+  --nuverial-icon-height: var(--nuverial-icon-size);
+  --nuverial-icon-line-height: var(--nuverial-icon-size);
+  --nuverial-icon-width: var(--nuverial-icon-size);
+  --nuverial-icon-color: var(--theme-color-m3-neutral-30);
+
+  display: inline-flex;
+
+  > .mat-icon {
+    font-size: var(--nuverial-icon-font-size);
+    height: var(--nuverial-icon-height);
+    line-height: var(--nuverial-icon-line-height);
+    width: var(--nuverial-icon-size);
+    color: var(--nuverial-icon-color);
+  }
+
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+  }
+}
+
+:host-context(mat-error.mat-mdc-form-field-error) {
+  .mat-icon {
+    color: var(--mdc-theme-error, var(--theme-color-error));
+  }
+}

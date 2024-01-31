@@ -1,0 +1,12 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+
+@mixin styleTransactionDetailHeader() {
+  .header {
+    padding: 0 0 30px;
+    background-color: var(--theme-color-m3-neutral-95);
+
+    .header-title {
+      font-size: rem.fromPx(26px);
+    }
+  }
+}

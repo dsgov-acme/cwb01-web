@@ -1,0 +1,29 @@
+<div class="transaction-container">
+  <ng-container *ngIf="loading">
+    <nuverial-spinner class="overlay"></nuverial-spinner>
+  </ng-container>
+  <div class="header-wrapper">
+    <div class="left-section">
+      <span class="key">{{metaData?.key}}</span>
+      <div class="name-icon-wrapper">
+        <h1 class="name" aria-label="name">{{metaData?.name}}</h1>
+        <div class="icon-container">
+          <nuverial-button ariaLabel="edit" (click)="open()" buttonStyle="icon-no-border">
+            <nuverial-icon class="material-symbols-outlined" [iconName]="'edit'" [outlined]="true"></nuverial-icon>
+          </nuverial-button>
+        </div>
+      </div>
+      <div class="description" *ngIf="metaData?.description">{{metaData?.description}}</div>
+    </div>
+    <div class="container">
+      <div class="column">
+        <div class="label">Created By:</div>
+        <b class="user">{{createdByDisplay}}</b>
+      </div>
+      <div class="column">
+        <div class="label">Last Updated By:</div>
+        <b class="user">{{lastUpdatedDisplay}}</b>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/variables' as themeVars;
+
+:host {
+  align-items: center;
+  background-color: var(--theme-color-m3-neutral-95);
+  color: var(--theme-color-m3-neutral-30);
+  display: flex;
+  min-height: rem.fromPx(80px);
+  justify-content: flex-start;
+  padding: rem.fromPx(20px) rem.fromPx(40px);
+
+  @media screen and (max-width: themeVars.$layout-medium-screen-breakpoint) {
+    align-items: flex-start;
+    flex-direction: column;
+    min-height: auto;
+  }
+}

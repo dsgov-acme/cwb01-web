@@ -1,0 +1,31 @@
+{
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "name": "shared-feature-app-state",
+  "prefix": "dsg",
+  "projectType": "library",
+  "sourceRoot": "libs/shared/feature/app-state/src",
+  "tags": ["type:feature", "scope:shared"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/shared/feature/app-state/**/*.ts", "libs/shared/feature/app-state/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      },
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "libs/shared/feature/app-state/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"]
+    }
+  }
+}

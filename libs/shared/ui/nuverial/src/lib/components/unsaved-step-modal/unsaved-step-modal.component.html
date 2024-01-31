@@ -1,0 +1,31 @@
+<div class="unsaved-step-modal">
+  <div class="modal-header" mat-dialog-close><span class="material-symbols-outlined"> close </span></div>
+  <mat-dialog-content class="modal-title">
+    <div class="warning-icon">
+      <nuverial-icon iconName="warning_amber"></nuverial-icon>
+    </div>
+    <h2 class="modal-title">Unsaved Progress</h2>
+    <p class="modal-text">You have unsaved changes in this page. Save your progress before you proceed or your changes will be lost.</p>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <nuverial-button
+      class="modal-btn cancel-btn"
+      ariaLabel="PROCEED WITHOUT SAVING"
+      (click)="proceedWithoutChanges()"
+      buttonStyle="outlined"
+      colorTheme="primary"
+      mat-dialog-close
+      >PROCEED WITHOUT SAVING</nuverial-button
+    >
+    <nuverial-button
+      class="modal-btn"
+      ariaLabel="SAVE & CONTINUE"
+      [mat-dialog-close]="true"
+      (click)="saveAndcontinue()"
+      buttonStyle="filled"
+      colorTheme="primary"
+    >
+      SAVE & CONTINUE
+    </nuverial-button>
+  </mat-dialog-actions>
+</div>

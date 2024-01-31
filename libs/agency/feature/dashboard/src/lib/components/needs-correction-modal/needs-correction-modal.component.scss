@@ -1,0 +1,51 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/variables' as themeVars;
+
+:host {
+  display: block;
+
+  .needs-correction-modal {
+    margin: 25px 25px 25px 10px;
+    width: 500px;
+
+    &--title {
+      padding: 15px 0;
+      color: var(--theme-color-primary);
+    }
+
+    &__reason {
+      cursor: pointer;
+
+      &--selected {
+        border-radius: 10px;
+        border: 1px solid var(--theme-color-tertiary);
+        color: var(--theme-color-tertiary);
+        font-size: var(--theme-typography-font-size-small);
+        padding: 7px;
+        margin: 5px 5px;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+
+        &--unselect {
+          font-size: var(--theme-typography-font-size-x-large);
+          font-family: monospace;
+          padding: 0 5px;
+          cursor: pointer;
+          text-align: center;
+          margin-left: auto;
+
+          .nuverial-icon {
+            --nuverial-icon-size: 1rem;
+            --nuverial-icon-color: var(--theme-color-tertiary);
+            display: flex;
+          }
+        }
+
+        .tag-text {
+          padding-left: 5px;
+        }
+      }
+    }
+  }
+}

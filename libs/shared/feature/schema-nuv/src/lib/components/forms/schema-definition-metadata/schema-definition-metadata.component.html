@@ -1,0 +1,44 @@
+<div class="modal">
+  <div class="modal-header">
+    <h1>Edit Schema</h1>
+    <div class="close-icon" mat-dialog-close><span class="material-symbols-outlined"> close </span></div>
+  </div>
+  <mat-dialog-content>
+    <div class="form">
+      <form [formGroup]="formGroup">
+        <nuverial-text-input ariaLabel="Key" formControlName="key" label="Key" placeholder="Key"></nuverial-text-input>
+        <nuverial-text-input
+          ariaLabel="Name"
+          [validationMessages]="{ maxlength : 'Invalid maximum length' }"
+          formControlName="name"
+          label="Name"
+          nuverialTrimInput
+          placeholder="Name"
+        ></nuverial-text-input>
+        <div class="text-area">
+          <nuverial-text-area
+            ariaLabel="Description"
+            [maxlength]="200"
+            formControlName="description"
+            label="Description(optional)"
+            placeholder="Form Description"
+          ></nuverial-text-area>
+        </div>
+        <nuverial-button class="modal__actions--cancel" ariaLabel="Cancel" buttonStyle="outlined" colorTheme="primary" mat-dialog-close>
+          CANCEL
+        </nuverial-button>
+        <nuverial-button
+          class="modal__actions--save"
+          ariaLabel="Submit"
+          [disabled]="loading"
+          (click)="onSave()"
+          buttonStyle="filled"
+          buttonType="submit"
+          colorTheme="primary"
+        >
+          SAVE
+        </nuverial-button>
+      </form>
+    </div>
+  </mat-dialog-content>
+</div>

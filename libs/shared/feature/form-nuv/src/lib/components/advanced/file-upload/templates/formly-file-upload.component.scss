@@ -1,0 +1,54 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/mixins' as mixins;
+
+:host {
+  display: block;
+
+  ::ng-deep {
+    p {
+      margin-top: 0;
+    }
+
+    .mat-expansion-panel,
+    .mat-expansion-panel-header {
+      background-color: var(--theme-color-m3-neutral-99) !important;
+    }
+    .suffixHeaderText {
+      color: var(--theme-color-blue-20);
+      font-size: var(--theme-typography-font-size-small);
+      font-weight: var(--theme-typography-font-weight-mid);
+    }
+    .mat-expanded {
+      .mat-expansion-indicator {
+        margin-top: 16px;
+      }
+    }
+    .mat-expansion-indicator {
+      margin-left: 10px;
+      margin-bottom: 20px;
+      transform-origin: initial;
+      &:after {
+        padding: 0.26rem;
+        border-width: 0px 2px 2px 0px;
+      }
+    }
+    nuverial-accordion {
+      --nuverial-accordion-expansion-indicator-color: var(--theme-color-blue-20) !important;
+    }
+    nuverial-icon {
+      color: var(--theme-color-m3-neutral-65);
+      padding-right: 5px;
+    }
+  }
+
+  .field-flex-wrapper {
+    @include mixins.dynamicForms-styleAdvancedFields();
+
+    &.multiple {
+      flex-direction: column;
+    }
+  }
+  .field-section-header {
+    padding-bottom: 2rem;
+  }
+}

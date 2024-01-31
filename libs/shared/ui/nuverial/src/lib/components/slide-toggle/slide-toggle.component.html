@@ -1,0 +1,4 @@
+<div class="slide-toggle-container" [ngClass]="{'toggled-container': checked}">
+  <ng-content></ng-content>
+  <mat-slide-toggle [checked]="checked" (change)="onChange()"></mat-slide-toggle>
+</div>

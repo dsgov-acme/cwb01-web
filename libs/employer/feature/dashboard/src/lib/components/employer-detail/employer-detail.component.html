@@ -1,0 +1,60 @@
+<ng-container *ngIf="loadSubCategories$ | async as subCategories; else loading">
+  <ng-container *ngIf="loadTransaction$ | async">
+    <section class="employer-details" *ngIf="employer$ | async as employer">
+      <div class="sub-section">
+        <nuverial-breadcrumb [breadCrumbs]="breadCrumbs"></nuverial-breadcrumb>
+        <p class="transaction-name" *ngIf="transaction">{{transaction.transactionDefinitionName}}</p>
+        <h1 class="user-name">{{employer.displayName || 'N/A'}}</h1>
+        <div *ngIf="transaction">
+          <div class="pill-container"><nuverial-pill>{{transaction.status | titlecase}}</nuverial-pill></div>
+          <div class="transaction-submitted-on">
+            <i>Submitted On: {{transaction.submittedOn ? (transaction.submittedOn | date: 'MM/dd/yyyy, h:mm:ss a') : 'N/A'}}</i>
+          </div>
+        </div>
+        <div class="employer-id">
+          <span [title]="employer.accountId">
+            UI Account ID: {{ employer.accountId!.length > 10 ? (employer.accountId | slice:0:10)+'...':(employer.accountId)}}
+          </span>
+          <nuverial-copy-button [copyText]="employer.accountId" beforeCopyTooltipText="Copy User ID" tooltipText="User ID copied!" />
+        </div>
+      </div>
+
+      <div class="sub-section">
+        <div class="details-container" *ngIf="employer.email">
+          <a class="details" href="mailto:{{employer.email}}"><nuverial-icon iconName="email-outline"></nuverial-icon> {{employer.email}}</a>
+        </div>
+        <div class="details-container" *ngIf="employer.preferences.preferredLanguage">
+          <div class="details">
+            <nuverial-icon iconName="language"></nuverial-icon>
+            {{employer.preferences.preferredLanguage}}
+          </div>
+        </div>
+        <div class="details-container" *ngIf="employer.preferences.preferredCommunicationMethod">
+          <div class="details">
+            <nuverial-icon iconName="contacts"></nuverial-icon>
+            {{employer.preferences.preferredCommunicationMethod}}
+          </div>
+        </div>
+      </div>
+
+      <ng-container *ngIf="(agentsSelectOptions$ | async) as agentsSelectOptions">
+        <div class="assign-container">
+          <div class="assign-label">Assigned Agent:</div>
+          <nuverial-select class="no-error-height" [formControl]="assignedToControl" [selectOptions]="agentsSelectOptions"></nuverial-select>
+        </div>
+      </ng-container>
+
+      <div class="detail-menu">
+        <nuverial-navigable-tabs [baseRoute]="baseRoute" [tabs]="subCategories"></nuverial-navigable-tabs>
+      </div>
+    </section>
+  </ng-container>
+
+  <div class="detail-content">
+    <router-outlet></router-outlet>
+  </div>
+</ng-container>
+
+<ng-template #loading>
+  <nuverial-spinner></nuverial-spinner>
+</ng-template>

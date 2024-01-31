@@ -1,0 +1,27 @@
+<ng-container *ngIf="singleEventUpdates.size > 0">
+  <ng-container *ngFor="let updates of singleEventUpdates | keyvalue trackBy: trackByFn">
+    <div class="activity-status">
+      <span class="label">{{updates.value.label}}</span> <span class="italic">from</span>
+      '{{updates.value.oldState}}'
+      <a
+        class="download-link"
+        *ngIf="updates.value.oldDocumentId"
+        (click)="openDocument(updates.value.oldDocumentId)"
+        (keyup.enter)="openDocument(updates.value.oldDocumentId)"
+        tabindex="0"
+        >View</a
+      >
+      <span class="italic">to</span> '{{updates.value.newState}}'
+      <a
+        class="download-link"
+        *ngIf="updates.value.newDocumentId"
+        (click)="openDocument(updates.value.newDocumentId)"
+        (keyup.enter)="openDocument(updates.value.newDocumentId)"
+        tabindex="0"
+        >View</a
+      >
+    </div>
+  </ng-container>
+</ng-container>
+
+<dsg-transaction-list-data-changed [formConfiguration]="formConfiguration" [newStates]="newStates" [oldStates]="oldStates"></dsg-transaction-list-data-changed>

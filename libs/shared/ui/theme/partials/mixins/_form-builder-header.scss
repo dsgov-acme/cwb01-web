@@ -1,0 +1,87 @@
+@use '../functions/rem';
+
+@mixin formBuilderHeaderStyles() {
+  .transaction-container {
+    background-color: var(--theme-color-m3-neutral-95);
+    padding: rem.fromPx(24px);
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+    border-radius: 10px;
+  }
+
+  .header-wrapper {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .left-section {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  .name-icon-wrapper {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .key {
+    font-size: rem.fromPx(14px);
+    line-height: rem.fromPx(16px);
+  }
+
+  .name {
+    margin-top: rem.fromPx(14px);
+    margin-bottom: rem.fromPx(11px);
+  }
+
+  .description {
+    font-size: rem.fromPx(16px);
+    line-height: rem.fromPx(19px);
+    color: var(--theme-color-secondary);
+  }
+
+  .icon-container {
+    display: flex;
+    align-items: flex-start;
+    margin-left: rem.fromPx(26px);
+    .nuverial-button {
+      margin-top: rem.fromPx(-16px);
+    }
+    ::ng-deep nuverial-icon {
+      .mat-icon {
+        color: var(--theme-color-m3-neutral-10) !important;
+        font-size: rem.fromPx(26px);
+      }
+    }
+  }
+
+  .container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    overflow-x: auto;
+    gap: 4px;
+  }
+
+  .column {
+    margin-right: rem.fromPx(30px);
+  }
+
+  .label {
+    display: block;
+    font-size: rem.fromPx(14px);
+    line-height: rem.fromPx(20px);
+  }
+
+  .user {
+    display: block;
+    font-size: rem.fromPx(16px);
+    line-height: rem.fromPx(24px);
+  }
+}

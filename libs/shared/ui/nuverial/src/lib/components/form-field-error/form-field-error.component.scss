@@ -1,0 +1,21 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+
+:host {
+  --nuverial-form-field-icon-size: #{rem.fromPx(10px)};
+
+  color: var(--nuverial-form-field-error-color);
+  display: flex;
+
+  ::ng-deep .nuverial-icon {
+    --nuverial-icon-size: var(--nuverial-form-field-icon-size);
+    padding-right: 0.25rem;
+  }
+
+  .nuverial-form-field-error {
+    align-items: center;
+    display: flex;
+    font-weight: var(--theme-typography-font-size-x-small);
+    font-size: var(--theme-typography-font-size-x-small);
+    line-height: var(--nuverial-form-field-error-font-size);
+  }
+}

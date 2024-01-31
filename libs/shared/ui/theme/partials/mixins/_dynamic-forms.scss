@@ -1,0 +1,89 @@
+@use '../functions/flex';
+@use '../functions/rem';
+@use '../variables' as themeVars;
+
+$formFieldGap: 1rem;
+
+@mixin styleFormlyFields() {
+  display: flex;
+  gap: $formFieldGap;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+
+  & > formly-field {
+    flex: 0 flex.flexBasisWithGap(2, $formFieldGap);
+
+    &.flex-full {
+      flex: 0 100%;
+    }
+
+    &.flex-half {
+      flex: 0 flex.flexBasisWithGap(2, $formFieldGap);
+    }
+
+    &.flex-third {
+      flex: 0 flex.flexBasisWithGap(3, $formFieldGap);
+      max-width: flex.flexBasisWithGap(3, $formFieldGap);
+    }
+
+    &.flex-quarter {
+      flex: 0 flex.flexBasisWithGap(4, $formFieldGap);
+      max-width: flex.flexBasisWithGap(4, $formFieldGap);
+    }
+
+    @media screen and (max-width: themeVars.$layout-mobile-breakpoint) {
+      flex: 0 100% !important;
+      max-width: 100% !important;
+    }
+  }
+}
+
+@mixin styleAdvancedFields() {
+  display: flex;
+  gap: $formFieldGap;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+
+  & > .flex-full {
+    flex: 0 100%;
+  }
+
+  & > .flex-half {
+    flex: 0 flex.flexBasisWithGap(2, $formFieldGap);
+  }
+
+  & > .flex-third {
+    flex: 0 flex.flexBasisWithGap(3, $formFieldGap);
+    max-width: flex.flexBasisWithGap(3, $formFieldGap);
+  }
+
+  & > .flex-quarter {
+    flex: 0 flex.flexBasisWithGap(4, $formFieldGap);
+    max-width: flex.flexBasisWithGap(4, $formFieldGap);
+  }
+
+  @media screen and (max-width: themeVars.$layout-mobile-breakpoint) {
+    & > [class*='flex-'] {
+      flex: 0 100% !important;
+      max-width: 100% !important;
+    }
+  }
+}
+
+@mixin styleReviewFields() {
+  .field-value-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .field-label {
+    font-size: var(--theme-typography-font-size-small);
+    font-weight: var(--theme-typography-font-weight-normal);
+    margin-bottom: rem.fromPx(8px);
+  }
+
+  .field-value {
+    font-size: var(--theme-typography-font-size-normal);
+    font-weight: var(--theme-typography-font-weight-bold);
+  }
+}

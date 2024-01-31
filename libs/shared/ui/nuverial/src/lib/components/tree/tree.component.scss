@@ -1,0 +1,216 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/variables' as themeVars;
+
+$node-height: rem.fromPx(28px);
+$node-half-height: calc($node-height / 2);
+$sublist-indent: rem.fromPx(40px);
+$gap-size: rem.fromPx(8px);
+$end-line-height: calc($node-height + $gap-size);
+
+:host {
+  --tree-node-box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+  --disabled-node-box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.1);
+
+  display: block;
+
+  ::ng-deep .tree-view {
+    &__internal {
+      .nuverial-icon {
+        --nuverial-icon-size: #{rem.fromPx(16px)};
+        --nuverial-icon-color: var(--theme-color-white);
+      }
+
+      // Layout
+      width: fit-content;
+      align-items: center;
+      display: inline-flex;
+      gap: $gap-size;
+      justify-content: center;
+      padding: rem.fromPx(6px) rem.fromPx(8px);
+      z-index: 1;
+
+      // Style
+      border-radius: 20px;
+      background: var(--theme-color-black);
+      box-shadow: var(--tree-node-box-shadow);
+      border: 1px solid transparent;
+      cursor: pointer;
+
+      &__text {
+        color: var(--theme-color-white);
+        font-size: var(--theme-typography-font-size-x-small);
+        font-style: normal;
+        font-weight: var(--theme-typography-font-weight-mid);
+        line-height: rem.fromPx(16px);
+        letter-spacing: rem.fromPx(0.3px);
+      }
+
+      &:hover {
+        background: var(--theme-color-white);
+        border: 1px solid var(--theme-color-primary);
+
+        .tree-view__internal__text {
+          color: var(--theme-color-primary);
+        }
+
+        .nuverial-icon {
+          --nuverial-icon-color: var(--theme-color-primary);
+        }
+      }
+
+      &.selected {
+        background: var(--theme-color-white);
+        border: 1px dashed var(--theme-color-tertiary);
+        box-shadow: none;
+
+        .tree-view__internal__text {
+          color: var(--theme-color-tertiary);
+        }
+
+        .nuverial-icon {
+          --nuverial-icon-color: var(--theme-color-tertiary);
+        }
+      }
+
+      &.disabled {
+        pointer-events: none;
+      }
+
+      .thin-text {
+        font-weight: 300;
+      }
+    }
+
+    &__leaf {
+      .nuverial-icon {
+        --nuverial-icon-size: #{rem.fromPx(16px)};
+        --nuverial-icon-color: var(--theme-color-primary);
+      }
+
+      // Layout
+      width: fit-content;
+      display: inline-flex;
+      padding: rem.fromPx(6px) rem.fromPx(8px);
+      align-items: center;
+      gap: $gap-size;
+      z-index: 1;
+
+      // Style
+      border-radius: 4px;
+      background: var(--theme-color-m3-neutral-90);
+      box-shadow: var(--tree-node-box-shadow);
+      border: 1px solid transparent;
+      cursor: pointer;
+
+      &__text {
+        min-width: rem.fromPx(95px);
+
+        color: var(--theme-color-primary);
+        font-size: var(--theme-typography-font-size-x-small);
+        font-weight: var(--theme-typography-font-weight-mid);
+        line-height: rem.fromPx(16px);
+        letter-spacing: rem.fromPx(0.3px);
+
+        &--contentType {
+          min-width: none;
+          font-weight: var(--theme-typography-font-weight-normal);
+          padding-left: 0.5rem;
+        }
+      }
+
+      &:hover {
+        background: var(--theme-color-white);
+        border: 1px solid var(--theme-color-m3-neutral-30);
+
+        .tree-view__leaf__text {
+          color: var(--theme-color-m3-neutral-30);
+        }
+
+        .nuverial-icon {
+          --nuverial-icon-color: var(--theme-color-m3-neutral-30);
+        }
+      }
+
+      &.selected {
+        background: var(--theme-color-white);
+        border: 1px dashed var(--theme-color-tertiary);
+        box-shadow: none;
+
+        .tree-view__leaf__text {
+          color: var(--theme-color-tertiary);
+        }
+
+        .nuverial-icon {
+          --nuverial-icon-color: var(--theme-color-tertiary);
+        }
+      }
+
+      &.disabled {
+        background: var(--theme-color-m3-neutral-95);
+        pointer-events: none;
+        box-shadow: var(--disabled-node-box-shadow);
+
+        .tree-view__leaf__text {
+          color: var(--theme-color-m3-neutral-65);
+        }
+
+        .nuverial-icon {
+          --nuverial-icon-color: var(--theme-color-m3-neutral-65);
+        }
+      }
+    }
+
+    ul.sublist {
+      list-style: none;
+      position: relative;
+      padding: 0;
+      padding-top: rem.fromPx(22px);
+      margin-left: $sublist-indent;
+      margin-top: 0;
+    }
+
+    ul.sublist li {
+      position: relative;
+    }
+
+    li.item:not(:last-child) {
+      margin-bottom: $gap-size;
+    }
+
+    ul.sublist li.item::before {
+      content: '';
+      height: calc(100% + 8px);
+      width: calc($sublist-indent / 2);
+
+      position: absolute;
+      left: calc($sublist-indent / -2);
+      bottom: $node-half-height;
+
+      z-index: 0;
+      border-left: 1px solid var(--theme-color-black);
+    }
+
+    ul.sublist li.item:last-child::before {
+      content: '';
+      height: $end-line-height;
+      width: calc($sublist-indent / 2);
+
+      position: absolute;
+      left: calc($sublist-indent / -2);
+      top: calc($node-half-height - $end-line-height);
+
+      border-left: 1px solid var(--theme-color-black);
+    }
+
+    ul.sublist li.item span.arrow-anchor::before {
+      content: '';
+      height: $node-half-height;
+      width: calc($sublist-indent / 2);
+
+      position: absolute;
+      left: calc($sublist-indent / -2);
+
+      border-bottom: 1px solid var(--theme-color-black);
+    }
+  }
+}

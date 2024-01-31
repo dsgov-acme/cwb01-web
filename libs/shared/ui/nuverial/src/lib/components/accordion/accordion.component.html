@@ -1,0 +1,22 @@
+<mat-accordion [multi]="multiExpansion">
+  <ng-container *ngFor="let item of panelList; trackBy: trackByFn;">
+    <mat-expansion-panel [attr.aria-label]="item.ariaLabel" [disabled]="item.disabled" [(expanded)]="item.expanded" (closed)="onClosed()" (opened)="onOpened()">
+      <mat-expansion-panel-header>
+        <ng-content select="[panel-header]"></ng-content>
+        <ng-container *ngIf="item.panelTitle || item.panelDescription">
+          <mat-panel-title>
+            <nuverial-icon *ngIf="prefixIconName" [iconName]="prefixIconName"></nuverial-icon>
+            {{ item.panelTitle }}
+          </mat-panel-title>
+          <ng-container *ngIf=""></ng-container>
+          <span class="warningText" *ngIf="warningHeaderText">{{ warningHeaderText }}</span>
+          <span class="suffixHeaderText" *ngIf="openSuffixHeaderText && isOpen">{{openSuffixHeaderText}}</span>
+          <span class="suffixHeaderText" *ngIf="closeSuffixHeaderText && !isOpen">{{closeSuffixHeaderText}}</span>
+          <mat-panel-description *ngIf="item.panelDescription">{{ item.panelDescription }}</mat-panel-description>
+        </ng-container>
+      </mat-expansion-panel-header>
+      <p *ngIf="item.panelContent">{{ item.panelContent }}</p>
+      <ng-container *ngIf="bodyTemplateRef" [ngTemplateOutlet]="bodyTemplateRef" [ngTemplateOutletContext]="{$implicit:item}"> </ng-container>
+    </mat-expansion-panel>
+  </ng-container>
+</mat-accordion>

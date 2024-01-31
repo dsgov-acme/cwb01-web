@@ -1,0 +1,58 @@
+@use '@dsg/shared-theme/partials/mixins' as mixins;
+
+@mixin icon($name: '') {
+  .fa-#{$name}::before {
+    content: '#{$name}' !important;
+    font-family: 'Material Icons Outlined' !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    font-weight: unset !important;
+  }
+}
+
+:host {
+  @include mixins.formBuilder-formBuilderStyles();
+  ::ng-deep {
+    .drag-container {
+      padding: 10px !important;
+      border: dotted 2px #e8e8e8 !important;
+    }
+
+    .builder-component {
+      max-width: 300px;
+    }
+
+    .component-btn-group {
+      right: -170px;
+      top: -15px;
+    }
+
+    .drag-and-drop-alert.alert.alert-info.no-drag {
+      font-size: 0;
+      padding: 20px var(--bs-alert-padding-x);
+
+      &::before {
+        content: 'Drag and Drop an attribute component';
+        display: block;
+        text-align: center;
+        font-size: 1rem;
+      }
+    }
+
+    .schema-attribute {
+      width: 400px !important;
+    }
+
+    @include mixins.schemaBuilder-attributeIcon();
+  }
+}
+
+::ng-deep {
+  @include mixins.formBuilder-dialogStyles();
+
+  .formio-dialog {
+    .component-edit-tabs {
+      min-height: 450px;
+    }
+  }
+}

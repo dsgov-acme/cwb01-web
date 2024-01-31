@@ -1,0 +1,73 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/variables' as themeVars;
+
+:host {
+  max-width: 100vw;
+
+  .vertical {
+    ::ng-deep .mat-step-header {
+      padding-left: 0;
+      padding-right: 0;
+
+      .mat-ripple-element {
+        display: none;
+      }
+    }
+
+    ::ng-deep .mat-expansion-panel-body {
+      padding-left: rem.fromPx(16px);
+      padding-right: rem.fromPx(16px);
+    }
+
+    ::ng-deep .mat-stepper-vertical-line::before {
+      display: none;
+    }
+
+    ::ng-deep .mat-vertical-content-container {
+      margin-left: 0;
+
+      .mat-vertical-content {
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+
+    ::ng-deep formly-field {
+      flex: 0 100% !important;
+      max-width: 100% !important;
+    }
+  }
+
+  ::ng-deep .mat-step-icon-state-done {
+    background-color: var(--theme-color-white);
+    border: 1px solid var(--theme-color-tertiary);
+    color: var(--theme-color-tertiary);
+  }
+
+  ::ng-deep .mat-step-icon-state-done:hover {
+    background-color: var(--theme-color-tertiary);
+    color: var(--theme-color-white);
+  }
+
+  ::ng-deep .mat-step-header:hover {
+    background-color: transparent !important;
+  }
+
+  ::ng-deep .cdk-focused {
+    background-color: transparent !important;
+  }
+
+  ::ng-deep .cdk-program-focused {
+    background-color: transparent !important;
+  }
+
+  ::ng-deep .mat-horizontal-stepper-header::before {
+    border-top-color: rgba(0, 0, 0, 0.4) !important;
+  }
+  ::ng-deep .mat-horizontal-stepper-header::after {
+    border-top-color: rgba(0, 0, 0, 0.4) !important;
+  }
+  ::ng-deep .mat-stepper-horizontal-line {
+    border-top-color: rgba(0, 0, 0, 0.4) !important;
+  }
+}

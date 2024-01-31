@@ -1,0 +1,17 @@
+<section class="new-message">
+  <nuverial-form-errors class="new-message__errors" *ngIf="formErrors.length" [formErrors]="formErrors" />
+  <h3 class="new-message__title">Create New Message</h3>
+  <p class="new-message__subtitle">All fields are required unless noted</p>
+
+  <form class="new-message__form" [formGroup]="newConversationForm">
+    <nuverial-text-input class="new-message__form__title" ariaLabel="Subject" [id]="formConfigs.subject.id" formControlName="subject" label="Subject" />
+    <nuverial-rich-text-editor class="new-message__form__message" ariaLabel="Message" [id]="formConfigs.body.id" formControlName="body" label="Message" />
+  </form>
+
+  <nuverial-button class="new-message__attachment-action" ariaLabel="Attachment">
+    <nuverial-icon iconName="attach_file" />
+    Attachment
+  </nuverial-button>
+
+  <nuverial-footer-actions class="new-message__actions" [footerActions]="actions" (actionSelected)="onActionClick($event)" />
+</section>

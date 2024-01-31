@@ -1,0 +1,15 @@
+<span
+  class="nuverial-copy-button"
+  #copyButtonTooltip="matTooltip"
+  [matTooltip]="tooltipText"
+  [matTooltipDisabled]="true"
+  [title]="beforeCopyTooltipText"
+  (click)="copy()"
+  (keyup.enter)="copy()"
+  matTooltipClass="copy-button__tooltip"
+  matTooltipHideDelay="2000"
+  matTooltipPosition="right"
+  tabindex="0"
+>
+  <nuverial-icon iconName="content_copy"></nuverial-icon>
+</span>

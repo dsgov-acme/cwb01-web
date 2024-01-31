@@ -1,0 +1,43 @@
+<h2>Radio Cards</h2>
+<div class="component-section">
+  <nuverial-radio-card (change)="onCardChange($event)" formControlName="testGroupControl1">
+    <div nuverialCardContentType="title">{{ checkboxHeader }}</div>
+    <div nuverialCardContentType="content">{{ checkboxContent }}</div>
+  </nuverial-radio-card>
+  <nuverial-radio-card>
+    <div nuverialCardContentType="title">{{ checkboxHeader }}</div>
+    <div nuverialCardContentType="content">
+      <div>{{ checkboxContent }}</div>
+      <div>Duis aute irure dolor in <b>reprehenderit</b> in voluptate velit esse cillum dolore eu fugiat</div>
+    </div>
+  </nuverial-radio-card>
+</div>
+
+<div class="component-section">
+  <nuverial-radio-card>
+    <div nuverialCardContentType="title">{{ checkboxHeader }}</div>
+    <div nuverialCardContent>{{ checkboxContent }}</div>
+  </nuverial-radio-card>
+  <nuverial-radio-card>
+    <div nuverialCardContentType="title">{{ checkboxHeader }}</div>
+  </nuverial-radio-card>
+  <nuverial-radio-card></nuverial-radio-card>
+</div>
+
+<div class="component-section">
+  <nuverial-radio-card imagePosition="before">
+    <img alt="big ben" nuverialCardContentType="image" src="/assets/images/child-performer.jpg" />
+    <div nuverialCardContentType="title">{{ checkboxHeader }}</div>
+    <div nuverialCardContentType="content">
+      <p>{{ checkboxContent }}</p>
+      <p>{{ checkboxContent }}</p>
+      <p>{{ checkboxContent }}</p>
+    </div>
+  </nuverial-radio-card>
+
+  <nuverial-radio-card [disabled]="true" imagePosition="top">
+    <img alt="big ben" nuverialCardContentType="image" src="/assets/images/child-performer.jpg" />
+    <div nuverialCardContentType="title">{{ checkboxHeader }}</div>
+    <div nuverialCardContent>{{ checkboxContent }}</div>
+  </nuverial-radio-card>
+</div>

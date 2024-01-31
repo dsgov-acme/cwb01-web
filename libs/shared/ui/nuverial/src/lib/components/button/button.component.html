@@ -1,0 +1,75 @@
+<ng-container [ngSwitch]="buttonStyle">
+  <button
+    class="nuverial-button-text"
+    *ngSwitchCase="'text'"
+    [attr.aria-describedby]="ariaDescribedBy"
+    [attr.aria-label]="ariaLabel"
+    [color]="$any(colorTheme)"
+    [disabled]="loading || disabled"
+    [ngClass]="{'uppercaseText': uppercaseText}"
+    [type]="buttonType"
+    (click)="onClick($event)"
+    mat-button
+  >
+    <ng-container *ngTemplateOutlet="buttonTemplate"></ng-container>
+  </button>
+  <button
+    class="nuverial-button-outlined"
+    *ngSwitchCase="'outlined'"
+    [attr.aria-describedby]="ariaDescribedBy"
+    [attr.aria-label]="ariaLabel"
+    [color]="$any(colorTheme)"
+    [disabled]="loading || disabled"
+    [ngClass]="{'uppercaseText': uppercaseText}"
+    [type]="buttonType"
+    (click)="onClick($event)"
+    mat-stroked-button
+  >
+    <ng-container *ngTemplateOutlet="buttonTemplate"></ng-container>
+  </button>
+  <button
+    class="nuverial-button-filled"
+    *ngSwitchCase="'filled'"
+    [attr.aria-describedby]="ariaDescribedBy"
+    [attr.aria-label]="ariaLabel"
+    [color]="$any(colorTheme)"
+    [disabled]="loading || disabled"
+    [ngClass]="{'uppercaseText': uppercaseText}"
+    [type]="buttonType"
+    (click)="onClick($event)"
+    mat-flat-button
+  >
+    <ng-container *ngTemplateOutlet="buttonTemplate"></ng-container>
+  </button>
+  <button
+    class="nuverial-button nuverial-button-icon"
+    *ngSwitchCase="'icon'"
+    [attr.aria-describedby]="ariaDescribedBy"
+    [attr.aria-label]="ariaLabel"
+    [color]="$any(colorTheme)"
+    [disabled]="loading || disabled"
+    [type]="buttonType"
+    (click)="onClick($event)"
+    mat-icon-button
+  >
+    <ng-container *ngTemplateOutlet="buttonTemplate"></ng-container>
+  </button>
+  <button
+    class="nuverial-button nuverial-button-icon-no-border"
+    *ngSwitchCase="'icon-no-border'"
+    [attr.aria-describedby]="ariaDescribedBy"
+    [attr.aria-label]="ariaLabel"
+    [color]="$any(colorTheme)"
+    [disabled]="loading || disabled"
+    [type]="buttonType"
+    (click)="onClick($event)"
+    mat-icon-button
+  >
+    <ng-container *ngTemplateOutlet="buttonTemplate"></ng-container>
+  </button>
+</ng-container>
+
+<ng-template #buttonTemplate>
+  <span class="nuverial-button-label"><ng-content></ng-content></span>
+  <mat-spinner class="nuverial-button-spinner" *ngIf="loading" [diameter]="20"></mat-spinner>
+</ng-template>

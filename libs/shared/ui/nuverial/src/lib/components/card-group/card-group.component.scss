@@ -1,0 +1,29 @@
+@use '@dsg/shared-theme/partials/functions/flex';
+
+$formFieldGap: 1rem;
+
+:host {
+  --nuverial-card-group-card-layout-direction: column;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  .nuverial-card-group-card-container {
+    display: flex;
+    flex-direction: var(--nuverial-card-group-card-layout-direction);
+    gap: 1rem;
+    row-gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .nuverial-card-group-cols {
+    ::ng-deep .radio-card {
+      flex: 0 calc((100% / var(--cards-col)) - $formFieldGap) !important;
+    }
+
+    ::ng-deep .nuverial-radio-card-container {
+      min-width: 50px !important;
+    }
+  }
+}

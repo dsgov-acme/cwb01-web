@@ -1,0 +1,33 @@
+/* my-component.component.css */
+
+:host {
+  display: block;
+}
+
+.activity-status {
+  padding-bottom: 0.5rem;
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.label {
+  font-weight: var(--theme-typography-font-weight-bold);
+}
+
+.download-link {
+  color: var(--theme-color-tertiary);
+  text-decoration: underline;
+  cursor: pointer;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.italic {
+  font-style: italic;
+  padding-left: 0.25rem;
+}
+
+.changes-list {
+  margin: 0;
+  margin-top: 0.5rem;
+}

@@ -1,0 +1,43 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/variables';
+
+:host {
+  display: block;
+
+  .confirmation-modal {
+    padding: 16px;
+    width: 450px;
+
+    &__close {
+      float: right;
+      position: relative;
+      cursor: pointer;
+    }
+
+    &__title {
+      padding: 0 24px;
+      font-size: rem.fromPx(24px);
+      color: var(--theme-color-m3-neutral-30);
+      font-weight: var(--theme-typography-font-weight-bold);
+      line-height: rem.fromPx(34px);
+      margin-bottom: 24px;
+    }
+
+    &__content {
+      padding: 0 24px;
+      margin-bottom: 24px;
+
+      > p {
+        color: var(--theme-color-black);
+        font-size: var(--theme-typography-font-size-normal);
+        font-weight: var(--theme-typography-font-weight-normal);
+        line-height: rem.fromPx(24px);
+      }
+    }
+
+    &__actions {
+      padding: 32px 24px 16px;
+      gap: rem.fromPx(12px);
+    }
+  }
+}

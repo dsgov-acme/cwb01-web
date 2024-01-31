@@ -1,0 +1,26 @@
+<nuverial-button [ariaLabel]="ariaLabel!" [matMenuTriggerFor]="menu" buttonStyle="icon"
+  ><nuverial-icon [iconName]="buttonIcon"></nuverial-icon
+></nuverial-button>
+<mat-menu #menu="matMenu" [aria-label]="menuAriaLabel!" [class]="overlayPanelClass">
+  <ng-container *ngFor="let item of menuItemList; trackBy: trackByFn;">
+    <button
+      class="menu-button"
+      [attr.aria-label]="item.label"
+      [class.border-top]="item.key === 'logout'"
+      [disabled]="item.disabled"
+      (click)="onMenuClick(item.key)"
+      mat-menu-item
+      type="button"
+    >
+      <div class="icon-container">
+        <nuverial-icon class="menu-icon" [iconName]="item.icon"></nuverial-icon>
+        <div class="text-container">
+          <span>{{item.label | titlecase}}</span>
+          <div *ngIf="item.subTitle">
+            <span class="menu-item-subtitle">{{item.subTitle}}</span>
+          </div>
+        </div>
+      </div>
+    </button>
+  </ng-container>
+</mat-menu>

@@ -1,0 +1,67 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/mixins' as mixins;
+
+:host {
+  display: block;
+
+  @include mixins.footer-styleFooterActions();
+
+  .schema-header {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: rem.fromPx(30px);
+    padding-bottom: rem.fromPx(30px);
+  }
+
+  .schema-form {
+    display: flex;
+    flex: 1;
+    flex-flow: column nowrap;
+    padding-left: 25%;
+    padding-right: 25%;
+    padding-top: rem.fromPx(20px);
+    padding-bottom: 25%;
+
+    &-header {
+      display: flex;
+      flex-flow: column nowrap;
+      gap: rem.fromPx(15px);
+
+      &-title {
+        margin-top: rem.fromPx(10px);
+        font-size: var(--theme-typography-font-size-xx-large);
+      }
+
+      &-subtitle {
+        margin: 0;
+        color: var(--theme-color-m3-neutral-30);
+      }
+    }
+
+    &-fields {
+      display: flex;
+      flex-flow: row wrap;
+      gap: 1rem;
+      margin-top: rem.fromPx(30px);
+    }
+
+    &-field {
+      flex: 1;
+
+      &-full {
+        flex: 1 1 100%;
+      }
+    }
+
+    ::ng-deep .footer-actions {
+      z-index: 3;
+    }
+  }
+
+  .breadcrumb-container {
+    margin-top: -1.5rem;
+    margin-left: 1.5rem;
+  }
+}

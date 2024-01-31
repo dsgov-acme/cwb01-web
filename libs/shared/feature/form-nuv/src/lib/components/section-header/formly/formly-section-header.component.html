@@ -1,0 +1,19 @@
+<ng-container [ngSwitch]="mode">
+  <ng-container *ngSwitchCase="'edit'" [ngTemplateOutlet]="editTemplate"></ng-container>
+  <ng-container *ngSwitchCase="'review'" [ngTemplateOutlet]="reviewTemplate"></ng-container>
+  <ng-container *ngSwitchDefault>{{mode}} mode not implemented</ng-container>
+</ng-container>
+
+<ng-template #editTemplate>
+  <nuverial-section-header>
+    <h2 nuverialCardContentType="label">{{props.label}}</h2>
+  </nuverial-section-header>
+</ng-template>
+
+<ng-template #reviewTemplate>
+  <div class="review-template">
+    <nuverial-section-header>
+      <b nuverialCardContentType="label">{{ props.label }}</b>
+    </nuverial-section-header>
+  </div>
+</ng-template>

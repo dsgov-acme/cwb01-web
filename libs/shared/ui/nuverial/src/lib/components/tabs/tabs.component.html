@@ -1,0 +1,7 @@
+<mat-tab-group [(selectedIndex)]="activeTabIndex" (selectedTabChange)="handleActiveTabChange($event)">
+  <ng-container *ngFor="let tab of tabs; trackBy: trackByFn;">
+    <mat-tab [attr.aria-label]="tab.label" [disabled]="tab.disabled" [label]="tab.label">
+      <ng-template [ngTemplateOutlet]="tab.template!"></ng-template>
+    </mat-tab>
+  </ng-container>
+</mat-tab-group>

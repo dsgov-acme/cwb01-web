@@ -1,0 +1,59 @@
+<div class="tree-view">
+  <ng-container *ngTemplateOutlet="root?.label ? internal : null; context:{node: root}"></ng-container>
+
+  <ng-template #tree let-root="root">
+    <ng-container *ngTemplateOutlet="root.children.length ? internal : leaf; context:{node: root}"></ng-container>
+  </ng-template>
+
+  <!-- internal -->
+  <ng-template #internal let-node="node">
+    <div
+      class="tree-view__internal"
+      [attr.aria-label]="node.label"
+      [ngClass]="{ 'selected': node?.selected, 'disabled': node?.disabled }"
+      (click)="onSelect(node)"
+      (keyup.enter)="onSelect(node)"
+      tabindex="0"
+    >
+      <nuverial-icon [iconName]="node.icon ?? 'schema'" [outlined]="true"></nuverial-icon>
+      <span class="tree-view__internal__text" [ngSwitch]="attributeName && node?.label === rootLabel">
+        <ng-container *ngSwitchCase="undefined || ''">{{node.label}}</ng-container>
+        <ng-container *ngSwitchDefault>{{attributeName}} <span class="thin-text">({{node.label}})</span></ng-container>
+      </span>
+    </div>
+
+    <ng-container *ngIf="node.children.length">
+      <ng-container *ngTemplateOutlet="children; context:{children: node.children}"></ng-container>
+    </ng-container>
+  </ng-template>
+
+  <!-- leaf -->
+  <ng-template #leaf let-node="node">
+    <div
+      class="tree-view__leaf"
+      [attr.aria-label]="node.label"
+      [ngClass]="{ 'selected': node?.selected, 'disabled': node?.disabled }"
+      (click)="onSelect(node)"
+      (keyup.enter)="onSelect(node)"
+      tabindex="0"
+    >
+      <nuverial-icon [iconName]="node.icon ?? 'short_text'" [outlined]="true"></nuverial-icon>
+      <span class="tree-view__leaf__text">
+        {{node.label}}
+        <span class="tree-view__leaf__text tree-view__leaf__text--contentType" *ngIf="node.contentType && node.type === 'List'">
+          ({{node.contentType === "DynamicEntity" ? node.entitySchema : node.contentType }})
+        </span>
+      </span>
+    </div>
+  </ng-template>
+
+  <!-- children -->
+  <ng-template #children let-children="children">
+    <ul class="sublist">
+      <li class="item" *ngFor="let child of children; trackBy: trackByFn">
+        <span class="arrow-anchor"></span>
+        <ng-container *ngTemplateOutlet="tree; context:{root: child}"></ng-container>
+      </li>
+    </ul>
+  </ng-template>
+</div>

@@ -1,0 +1,286 @@
+@use '@dsg/shared-theme/partials/variables' as themeVars;
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/mixins' as mixins;
+
+:host {
+  display: block;
+  box-sizing: border-box;
+
+  @include mixins.formField-styleFormField();
+
+  .file-upload {
+    min-height: auto;
+    outline: 2px dashed var(--theme-color-m3-neutral-90);
+    background-color: var(--theme-color-white);
+    outline-offset: 0px;
+    padding: 2rem rem.fromPx(40px) 2rem rem.fromPx(40px);
+    margin-top: 2px;
+
+    &.has-files,
+    &.list-visible {
+      padding-bottom: 1rem;
+    }
+
+    .mobile {
+      display: block;
+      .nuverial-button {
+        background-color: white;
+        width: 100%;
+      }
+      .nuverial-button:first-child {
+        margin-bottom: 10px;
+      }
+      ::ng-deep .nuverial-icon {
+        margin-left: 10px;
+        mat-icon {
+          color: var(--theme-color-black) !important;
+        }
+        --nuverial-icon-size: #{rem.fromPx(20px)} !important;
+      }
+    }
+
+    .upload-text {
+      .drag-drop-message {
+        margin: 0px;
+        color: var(--theme-color-black);
+      }
+    }
+    ::ng-deep {
+      label {
+        cursor: default;
+      }
+      .upload-input {
+        text-align: center;
+        position: static;
+        display: inline;
+        height: 100%;
+
+        .nuverial-icon {
+          mat-icon {
+            color: var(--theme-color-m3-neutral-85);
+          }
+          --nuverial-icon-size: #{rem.fromPx(40px)};
+        }
+      }
+    }
+
+    .pending {
+      background: var(--theme-color-m3-neutral-81);
+      border-radius: 16px;
+    }
+    .image-error {
+      background: var(--theme-color-white);
+      font-weight: var(--theme-typography-font-weight-bold);
+      color: var(--theme-color-m3-neutral-40);
+      display: flex;
+      align-items: center; /* Vertically center the contents */
+      justify-content: center;
+      .no-preview-container {
+        text-align: center;
+      }
+    }
+    .success {
+      width: 100%;
+      height: rem.fromPx(170px);
+      margin-bottom: 3px;
+      text-align: center;
+
+      .preview-image {
+        max-width: 100%;
+        max-height: 100%;
+      }
+    }
+
+    .button-container {
+      color: var(--theme-color-black);
+      display: flex;
+      justify-content: space-around;
+
+      ::ng-deep {
+        .nuverial-button {
+          flex: 1;
+
+          .nuverial-button-label {
+            font-size: var(--theme-typography-font-size-xx-small);
+            text-wrap: nowrap;
+          }
+          .nuverial-icon {
+            --nuverial-icon-size: #{rem.fromPx(16px)};
+          }
+        }
+      }
+    }
+  }
+
+  .document-title {
+    font-weight: var(--theme-typography-font-weight-bold);
+    color: var(--theme-color-black);
+    text-align: center;
+    font-size: var(--theme-typography-font-size-normal);
+    padding-bottom: rem.fromPx(16px);
+    height: rem.fromPx(20px);
+  }
+
+  .file-size {
+    color: var(--theme-color-m3-neutral-35);
+    font-size: var(--theme-typography-font-size-small);
+  }
+
+  .browse {
+    color: var(--theme-color-link);
+    font-weight: var(--theme-typography-font-weight-mid);
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+
+  .overlay-background {
+    background-color: var(--theme-color-white);
+    outline: 1px solid var(--theme-color-m3-neutral-90);
+    ::ng-deep .upload-input {
+      margin-left: 0px !important;
+    }
+  }
+
+  .mobile-file-upload {
+    padding: rem.fromPx(13px) rem.fromPx(20px) rem.fromPx(0px) rem.fromPx(20px);
+
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+    outline: none;
+    background-color: transparent;
+  }
+
+  .pending-upload {
+    background-color: var(--theme-color-m3-neutral-90);
+  }
+
+  .upload-container {
+    box-sizing: border-box;
+
+    &.mobile-container {
+      width: auto;
+      max-width: 100%;
+    }
+  }
+
+  input {
+    display: none;
+  }
+  .loading-preview {
+    width: 100%;
+    height: rem.fromPx(170px);
+    margin-top: 3px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+    align-items: center; /* Vertically center the contents */
+    justify-content: center;
+  }
+  .no-preview {
+    width: 100%;
+    height: rem.fromPx(120px);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center; /* Vertically center the contents */
+    row-gap: 8px;
+    font-weight: var(--theme-typography-font-weight-bold);
+    color: var(--theme-color-m3-neutral-30);
+    .nuverial-icon {
+      --nuverial-icon-size: 30px;
+    }
+  }
+
+  .upload-status {
+    &.multiple {
+      &--true {
+        margin-top: 24px;
+        border-radius: 8px;
+      }
+
+      &--false {
+        margin: 0 0 8px 0px;
+        border-radius: 4px;
+      }
+    }
+
+    padding: 8px;
+    font-size: var(--theme-typography-font-size-small);
+    display: flex;
+    align-items: center;
+
+    &.success-status {
+      .nuverial-icon {
+        --nuverial-icon-size: 24px;
+      }
+
+      background-color: var(--theme-color-success-secondary);
+      color: var(--theme-color-success);
+      font-weight: var(--theme-typography-font-weight-bold);
+
+      ::ng-deep mat-icon {
+        color: var(--theme-color-success);
+      }
+    }
+
+    &.processing-status {
+      .nuverial-icon {
+        --nuverial-icon-size: 24px;
+      }
+
+      background-color: var(--theme-color-blue-opaque-16);
+      color: var(--theme-color-blue);
+
+      ::ng-deep mat-icon {
+        color: var(--theme-color-blue);
+      }
+    }
+
+    &.failure-status {
+      .nuverial-icon {
+        --nuverial-icon-size: 24px;
+      }
+      background-color: var(--theme-color-red-opaque-4);
+      color: var(--theme-color-red);
+      font-weight: var(--theme-typography-font-weight-bold);
+      ::ng-deep mat-icon {
+        color: var(--theme-color-red);
+      }
+    }
+
+    ::ng-deep .nuverial-icon {
+      --nuverial-icon-size: #{rem.fromPx(16px)};
+    }
+
+    .status-message {
+      padding-left: 5px;
+    }
+
+    .processing-tooltip-wrapper {
+      margin-left: auto;
+    }
+  }
+
+  ::ng-deep .progress {
+    width: 100%;
+    background-color: var(--theme-color-m3-neutral-86);
+    overflow: hidden;
+    margin-top: rem.fromPx(10px);
+    margin-bottom: rem.fromPx(3px);
+
+    .progress-bar {
+      width: 0%;
+      height: 100%;
+      border: 2px solid var(--theme-color-blue);
+      transition: width 0.3s;
+      border-radius: rem.fromPx(2px);
+    }
+  }
+}

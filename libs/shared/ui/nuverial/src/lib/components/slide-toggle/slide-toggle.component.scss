@@ -1,0 +1,57 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/variables' as themeVars;
+
+:host {
+  display: block;
+
+  ::ng-deep mat-slide-toggle {
+    --mdc-switch-unselected-focus-state-layer-color: var(--theme-color-tertiary);
+    --mdc-switch-unselected-pressed-state-layer-color: var(--theme-color-tertiary);
+    --mdc-switch-unselected-hover-state-layer-color: var(--theme-color-tertiary);
+    --mdc-switch-unselected-icon-color: var(--theme-color-white);
+    --mdc-switch-unselected-handle-color: var(--theme-color-white);
+    --mdc-switch-unselected-pressed-handle-color: var(--theme-color-white);
+    --mdc-switch-unselected-hover-handle-color: var(--theme-color-white);
+    --mdc-switch-unselected-focus-handle-color: var(--theme-color-white);
+    --mdc-switch-unselected-track-color: var(--theme-color-m3-neutral-65);
+    --mdc-switch-unselected-hover-track-color: var(--theme-color-m3-neutral-65);
+    --mdc-switch-unselected-pressed-track-color: var(--theme-color-m3-neutral-65);
+    --mdc-switch-unselected-focus-track-color: var(--theme-color-m3-neutral-65);
+
+    --mdc-switch-selected-icon-color: var(--theme-color-tertiary);
+    --mdc-switch-selected-handle-color: var(--theme-color-tertiary);
+    --mdc-switch-selected-pressed-handle-color: var(--theme-color-tertiary);
+    --mdc-switch-selected-hover-handle-color: var(--theme-color-tertiary);
+    --mdc-switch-selected-focus-handle-color: var(--theme-color-tertiary);
+    --mdc-switch-selected-track-color: var(--theme-color-tertiary-opaque-38);
+    --mdc-switch-selected-hover-track-color: var(--theme-color-tertiary-opaque-38);
+    --mdc-switch-selected-pressed-track-color: var(--theme-color-tertiary-opaque-38);
+    --mdc-switch-selected-focus-track-color: var(--theme-color-tertiary-opaque-38);
+    --mdc-switch-selected-focus-state-layer-color: var(--theme-color-white);
+    --mdc-switch-selected-pressed-state-layer-color: var(--theme-color-white);
+    --mdc-switch-selected-hover-state-layer-color: var(--theme-color-white);
+
+    .mdc-switch__icons {
+      display: none;
+    }
+  }
+
+  .slide-toggle-container {
+    display: flex;
+    flex-direction: row;
+    min-width: fit-content;
+    height: rem.fromPx(20px);
+    gap: rem.fromPx(6px);
+    border-radius: rem.fromPx(8px);
+    padding: rem.fromPx(10px);
+    margin: rem.fromPx(5px);
+    justify-content: center;
+    white-space: nowrap;
+    background-color: var(--theme-color-m3-neutral-92);
+  }
+
+  .toggled-container {
+    background-color: var(--theme-color-black) !important;
+    color: var(--theme-color-white);
+  }
+}

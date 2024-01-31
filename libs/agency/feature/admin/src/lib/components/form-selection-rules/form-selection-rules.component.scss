@@ -1,0 +1,83 @@
+@use '@dsg/shared-theme/partials/mixins' as mixins;
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/variables' as themeVars;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem;
+  flex: 1;
+
+  .title {
+    font-size: rem.fromPx(24px);
+  }
+
+  .form-selection-rules-list {
+    &__actions {
+      position: absolute;
+      right: 75px;
+      padding-bottom: 10px;
+
+      .new-rule-button {
+        height: 48px;
+        transform: translateY(-3px);
+
+        ::ng-deep .mdc-button {
+          font-weight: var(--theme-typography-font-weight-bold);
+          width: 205px;
+          height: auto;
+        }
+      }
+
+      .black-icon {
+        ::ng-deep .mat-icon {
+          color: var(--theme-color-black);
+          margin-right: 3px;
+          margin-left: 3px;
+        }
+      }
+
+      ::ng-deep .mat-mdc-form-field-icon-suffix {
+        padding-right: 1rem;
+
+        .nuverial-button.mat-mdc-icon-button:hover {
+          padding: 1.5rem;
+          position: relative;
+          left: 0.75rem;
+        }
+      }
+    }
+
+    &__table {
+      margin-top: 22px;
+      padding-right: 75px;
+      flex-direction: column;
+      flex: 1;
+      @include mixins.table-styleTable();
+
+      &--header {
+        color: var(--theme-color-secondary);
+      }
+
+      &--filter {
+        width: 25%;
+        float: right;
+        margin: -10px 0 -20px 0;
+        min-width: 250px;
+        top: -55px;
+        position: relative;
+      }
+
+      .editableRow {
+        ::ng-deep .mdc-text-field {
+          margin-top: 22px;
+        }
+      }
+    }
+  }
+
+  .hidden {
+    display: none;
+  }
+}

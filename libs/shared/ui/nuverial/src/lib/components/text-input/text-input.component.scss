@@ -1,0 +1,42 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/mixins' as mixins;
+
+:host {
+  .mat-icon {
+    $iconSize: 18px;
+    height: rem.fromPx($iconSize);
+    width: rem.fromPx($iconSize);
+    font-size: rem.fromPx($iconSize);
+  }
+  nuverial-button {
+    --nuverial-button-icon-size: #{rem.fromPx(24px)};
+  }
+
+  ::ng-deep .mat-mdc-form-field-icon-suffix {
+    margin-right: rem.fromPx(16px);
+  }
+
+  ::ng-deep .mat-mdc-form-field-icon-prefix {
+    margin-left: rem.fromPx(10px);
+    margin-right: rem.fromPx(12px);
+  }
+
+  .nuverial-icon {
+    --nuverial-icon-size: #{rem.fromPx(24px)};
+  }
+
+  ::ng-deep .mat-mdc-form-field-icon-prefix > .mat-icon {
+    padding-right: 6px;
+  }
+
+  .nuverial-text-input-tooltip {
+    display: inline-flex;
+    margin-left: 12px;
+  }
+
+  .nuverial-text-input-error {
+    min-height: 1.5rem;
+  }
+
+  @include mixins.formField-styleFormField();
+}

@@ -1,0 +1,7 @@
+<ng-container *ngIf="(loadCategory$ | async) && !loading; else loadingSpinner">
+  <router-outlet #category></router-outlet>
+</ng-container>
+
+<ng-template #loadingSpinner>
+  <nuverial-spinner></nuverial-spinner>
+</ng-template>

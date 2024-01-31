@@ -1,0 +1,58 @@
+<h2>Stepper</h2>
+
+<div class="component-section">
+  <nuverial-stepper #stepper [steps]="steps">
+    <ng-template let-form nuverialStepperKey="userInfo">
+      <form [formGroup]="userInfo">
+        <nuverial-section-header>
+          <div nuverialCardContentType="label">Basic User Information</div>
+        </nuverial-section-header>
+        <br />
+        <nuverial-text-input formControlName="firstName" label="First Name"></nuverial-text-input>
+        <nuverial-text-input formControlName="middleName" label="Middle Name"></nuverial-text-input>
+        <nuverial-text-input formControlName="lastName" label="Last Name"></nuverial-text-input>
+      </form>
+    </ng-template>
+    <ng-template let-form nuverialStepperKey="addressInfo">
+      <form [formGroup]="addressInfo">
+        <nuverial-section-header>
+          <div nuverialCardContentType="label">Basic Address Information</div>
+        </nuverial-section-header>
+        <br />
+        <nuverial-text-input formControlName="city" label="City"></nuverial-text-input>
+        <nuverial-text-input formControlName="country" label="Country"></nuverial-text-input>
+        <nuverial-text-input formControlName="state" label="State"></nuverial-text-input>
+        <nuverial-text-input formControlName="street" label="Street"></nuverial-text-input>
+      </form>
+    </ng-template>
+    <ng-template let-form nuverialStepperKey="confirmation">
+      <h5>Form is complete</h5>
+    </ng-template>
+  </nuverial-stepper>
+
+  <nuverial-footer>
+    <nuverial-button
+      ariaLabel="Back"
+      *ngIf="!nuvStepper?.isFirstStep"
+      (click)="nuvStepper.stepper.previous()"
+      buttonStyle="outlined"
+      buttonType="button"
+      colorTheme="primary"
+    >
+      {{'Back' | uppercase}}
+    </nuverial-button>
+    <nuverial-button
+      ariaLabel="Save & continue"
+      *ngIf="!nuvStepper?.isLastStep"
+      (click)="nuvStepper.stepper.next()"
+      buttonStyle="filled"
+      buttonType="button"
+      colorTheme="primary"
+    >
+      {{'Save & Continue' | uppercase}}
+    </nuverial-button>
+    <nuverial-button ariaLabel="Submit" *ngIf="nuvStepper?.isLastStep" (click)="submit()" buttonStyle="filled" buttonType="button" colorTheme="primary">
+      {{'Submit' | uppercase}}
+    </nuverial-button>
+  </nuverial-footer>
+</div>

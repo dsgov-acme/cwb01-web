@@ -1,0 +1,37 @@
+<nuverial-header class="header">
+  <a class="header_logo" [routerLink]="['/dashboard']" nuverial-header-content-left>
+    <!-- appending unique time stamp to svg path below to cache bust previously cached svg -->
+    <img [src]="'assets/images/employer-logo.svg?'+ currentTimestamp" alt="App logo" />
+  </a>
+
+  <nuverial-menu
+    ariaLabel="profile menu"
+    *ngIf="(userAuthenticated$ | async)"
+    [menuItemList]="profileMenuItemList"
+    (menuItemEvent)="onMenuItemSelect($event)"
+    buttonAriaLabel="Open profile menu"
+    buttonIcon="account_circle-outline"
+    menuTemplate="'profileMenu'"
+    nuverial-header-content-right
+  >
+  </nuverial-menu>
+</nuverial-header>
+
+<main class="main">
+  <ng-container *ngIf="!isDashboard">
+    <nuverial-side-nav-menu *ngIf="(userAuthenticated$ | async)" [navBarMenuItemList]="menuItemList" [navBarReturnHome]="true"></nuverial-side-nav-menu>
+  </ng-container>
+
+  <section class="page-container">
+    <router-outlet></router-outlet>
+
+    <nuverial-footer class="footer">
+      <a href="https://nuvalence.io/#">Digital Suite for Government</a>
+      <a href="https://nuvalence.io/#">Resources</a>
+      <a href="https://nuvalence.io/#">Privacy Policy</a>
+      <a href="https://nuvalence.io/#">Accessibility Policy</a>
+    </nuverial-footer>
+  </section>
+</main>
+
+<nuverial-spinner *ngIf="(loading$ | async) === true"></nuverial-spinner>

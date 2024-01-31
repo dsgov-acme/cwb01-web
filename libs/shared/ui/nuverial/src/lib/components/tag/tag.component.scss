@@ -1,0 +1,39 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/variables';
+
+:host {
+  flex: 0 1 auto;
+  min-width: 0;
+  .nuverial-tag {
+    border-radius: 999px;
+    padding: 0.125rem 0.5rem;
+    background-color: var(--theme-color-tertiary);
+    max-width: 100%;
+    box-sizing: border-box;
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 4px;
+
+    p {
+      color: var(--theme-color-white);
+      font-size: rem.fromPx(11px);
+      font-weight: var(--theme-typography-font-weight-mid);
+      line-height: rem.fromPx(16px);
+      margin: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    ::ng-deep nuverial-icon {
+      .mat-icon {
+        color: var(--theme-color-white) !important;
+        --nuverial-icon-size: 1rem;
+        font-size: 1rem;
+        position: relative;
+      }
+    }
+  }
+}

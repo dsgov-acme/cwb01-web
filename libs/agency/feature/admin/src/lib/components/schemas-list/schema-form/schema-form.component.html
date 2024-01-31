@@ -1,0 +1,41 @@
+<ng-container>
+  <div class="breadcrumb-container">
+    <nuverial-breadcrumb [breadCrumbs]="breadCrumbs"></nuverial-breadcrumb>
+  </div>
+
+  <section class="schema-form">
+    <header *ngIf="formErrors.length"><nuverial-form-errors [formErrors]="formErrors"></nuverial-form-errors></header>
+
+    <header class="schema-form-header">
+      <h1 class="schema-form-header-title">Create Schema</h1>
+    </header>
+
+    <div class="schema-form-fields" [formGroup]="schemaFormGroup">
+      <nuverial-text-input class="schema-form-field" ariaLabel="Key" formControlName="key" label="Key" placeholder="Key"></nuverial-text-input>
+      <nuverial-text-input
+        class="schema-form-field"
+        ariaLabel="Name"
+        formControlName="name"
+        label="Name"
+        nuverialTrimInput
+        placeholder="Name"
+      ></nuverial-text-input>
+      <nuverial-text-area
+        class="schema-form-field-full"
+        ariaLabel="Description"
+        [maxlength]="200"
+        [required]="false"
+        [rows]="4"
+        formControlName="description"
+        label="Description"
+        placeholder="Description (optional)"
+      ></nuverial-text-area>
+    </div>
+
+    <nuverial-footer-actions [footerActions]="actions" (actionSelected)="onActionClick($event)"></nuverial-footer-actions>
+  </section>
+</ng-container>
+
+<ng-container *ngIf="loading">
+  <nuverial-spinner></nuverial-spinner>
+</ng-container>

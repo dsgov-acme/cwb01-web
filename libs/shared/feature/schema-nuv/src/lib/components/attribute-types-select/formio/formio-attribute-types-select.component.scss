@@ -1,0 +1,8 @@
+@use '@dsg/shared-theme/partials/mixins' as mixins;
+
+:host {
+  @include mixins.schemaBuilder-attributeStyles();
+  ::ng-deep {
+    @include mixins.formBuilder-mimicFormioStyles();
+  }
+}

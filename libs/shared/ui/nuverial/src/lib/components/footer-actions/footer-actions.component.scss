@@ -1,0 +1,11 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/mixins' as mixins;
+
+::ng-deep.footer-actions-menu-overlay {
+  @include mixins.menu-styleMenuAction();
+}
+
+:host {
+  display: flex;
+  @include mixins.footer-styleFooterActions();
+}

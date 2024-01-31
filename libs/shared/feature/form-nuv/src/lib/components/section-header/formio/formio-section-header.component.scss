@@ -1,0 +1,10 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+
+:host {
+  display: block;
+
+  h2 {
+    font-size: var(--theme-typography-font-size-normal) !important;
+    font-weight: var(--theme-typography-font-weight-bold);
+  }
+}

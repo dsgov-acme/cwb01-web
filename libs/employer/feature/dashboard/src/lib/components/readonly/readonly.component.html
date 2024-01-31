@@ -1,0 +1,13 @@
+<section class="readonly-transaction">
+  <ng-container *ngIf="transaction$ | async as transaction; else loading">
+    <dsg-form-renderer
+      class="readonly-transaction__form"
+      [fields$]="reviewFormFields$"
+      [model$]="formData$"
+      [options]="reviewRendererOptions"
+    ></dsg-form-renderer>
+  </ng-container>
+  <ng-template #loading>
+    <nuverial-spinner></nuverial-spinner>
+  </ng-template>
+</section>

@@ -1,0 +1,23 @@
+@use '@dsg/shared-theme/partials/variables' as themeVars;
+
+:host {
+  flex: 1;
+
+  .readonly-transaction {
+    margin: 0.625rem auto;
+    padding: 0 3.25rem;
+    font-family: var(--theme-typography-font-family);
+
+    &__form {
+      margin: 2rem auto;
+    }
+
+    ::ng-deep .mat-expansion-panel {
+      background-color: var(--theme-color-white);
+    }
+
+    ::ng-deep .review-panel-container {
+      margin: 1rem !important;
+    }
+  }
+}

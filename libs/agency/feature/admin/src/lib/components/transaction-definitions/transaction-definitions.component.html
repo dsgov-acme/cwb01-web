@@ -1,0 +1,44 @@
+<h1 class="title">Transaction Configurations</h1>
+<ng-container class="transactions-list">
+  <div class="transactions-list__actions">
+    <nuverial-text-input
+      class="filter"
+      ariaLabel="Search transaction definitions"
+      [formControl]="searchInput"
+      [suffixIcon]="searchBoxIcon"
+      [type]="'text'"
+      (clickIcon)="clearSearch()"
+      (keyup.enter)="handleSearch()"
+      (keyup)="setSearchBoxIcon()"
+      placeholder="Search by Name"
+      style="width: 1000px"
+      suffixAriaLabel="Search transaction definitions"
+    />
+    <nuverial-button
+      class="new-transaction-button"
+      ariaLabel="Submit"
+      [loading]="false"
+      (click)="navigateToCreateTransactionDefinition()"
+      buttonStyle="filled"
+      buttonType="submit"
+      colorTheme="primary"
+    >
+      <nuverial-icon class="white-icon" iconName="add" />
+      NEW TRANSACTION
+    </nuverial-button>
+  </div>
+  <ng-container *ngIf="transactionDefinitionsList$ | async">
+    <nuverial-table
+      ariaLabel="transactions list table"
+      [dataSourceTable]="dataSourceTable"
+      [displayedColumns]="displayedColumns"
+      [listIsLoading]="transactionListIsLoading"
+      [pagingMetadata]="pagingMetadata"
+      [pagingRequestModel]="pagingRequestModel"
+      [sortDirection]="sortDirection"
+      (clickRow)="navigateToTransactionDefinition($event.key)"
+      (setPage)="setPage($event)"
+      (sortData)="sortData($event)"
+    ></nuverial-table>
+  </ng-container>
+</ng-container>

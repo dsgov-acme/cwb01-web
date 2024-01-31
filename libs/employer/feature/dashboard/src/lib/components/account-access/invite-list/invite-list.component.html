@@ -1,0 +1,15 @@
+<ng-container *ngIf="invitesList$ | async">
+  <div class="invite-list__table">
+    <nuverial-table
+      ariaLabel="Users List Table"
+      [dataSourceTable]="dataSourceTable"
+      [displayedColumns]="displayedColumns"
+      [pagingMetadata]="pagingMetadata"
+      [pagingRequestModel]="pagingRequestModel"
+      [sortDirection]="sortDirection"
+      (clickAction)="handleInviteAction($event)"
+      (setPage)="setPage($event)"
+      (sortData)="sortData($event)"
+    ></nuverial-table>
+  </div>
+</ng-container>

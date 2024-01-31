@@ -1,0 +1,14 @@
+<div class="pill-selector">
+  <div class="thumb" [style.width]="thumbWidth" [@thumbTranslate]="{ value: 'right', params: { shiftPosition: shiftPosition } }"></div>
+
+  <button
+    #tabButton
+    *ngFor="let tab of tabs; let i = index; trackBy: trackByFn"
+    [class.selected]="tab.key === selectedTabKey"
+    (click)="onSelect(tab.key)"
+    type="button"
+    value="tab.key"
+  >
+    {{ tab.label }}
+  </button>
+</div>

@@ -1,0 +1,42 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/variables' as themeVars;
+
+:host {
+  --nuverial-card-background-color: var(--theme-color-white);
+  --nuverial-card-border-color: var(--theme-color-m3-neutral-80);
+  --nuverial-card-box-shadow: var(--theme-color-box-shadow);
+  --nuverial-card-font-size: rem.fromPx(30px);
+
+  background-color: var(--nuverial-card-background-color);
+  border: none;
+  box-shadow: var(--theme-color-box-shadow);
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  max-width: rem.fromPx(448px);
+  min-width: rem.fromPx(288px);
+  padding: rem.fromPx(36px) rem.fromPx(117px) rem.fromPx(36px) rem.fromPx(117px);
+
+  @media screen and (max-width: themeVars.$layout-medium-screen-breakpoint) {
+    max-width: unset;
+    min-width: unset;
+    padding: rem.fromPx(40px) rem.fromPx(24px) rem.fromPx(40px) rem.fromPx(24px);
+    box-shadow: unset;
+  }
+
+  .nuverial-card-title {
+    display: flex;
+    padding-bottom: rem.fromPx(16px);
+    font-weight: var(--theme-typography-font-weight-bold);
+    font-size: var(--nuverial-card-font-size);
+  }
+
+  .nuverial-card-content {
+    flex: 1 0 auto;
+  }
+
+  .nuverial-card-footer {
+    display: flex;
+    padding-top: rem.fromPx(22px);
+  }
+}

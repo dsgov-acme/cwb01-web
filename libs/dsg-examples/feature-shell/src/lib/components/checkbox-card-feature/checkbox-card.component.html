@@ -1,0 +1,53 @@
+<h2>Checkbox Cards</h2>
+<div class="component-section" [formGroup]="formGroup">
+  <nuverial-checkbox-card
+    [checked]="true"
+    [validationMessages]="validationMessages"
+    (change)="onCardChange($event)"
+    (validationErrors)="onValidationErrors($event)"
+    formControlName="testGroupControl1"
+  >
+    <div nuverialCardContentType="title">{{ checkboxHeader }}</div>
+    <div nuverialCardContentType="content">{{ checkboxContent }}</div>
+  </nuverial-checkbox-card>
+  <nuverial-checkbox-card [indeterminate]="true" colorTheme="accent">
+    <div nuverialCardContentType="title">{{ checkboxHeader }}</div>
+    <div nuverialCardContentType="content">
+      <div>{{ checkboxContent }}</div>
+      <div>Duis aute irure dolor in <b>reprehenderit</b> in voluptate velit esse cillum dolore eu fugiat</div>
+    </div>
+  </nuverial-checkbox-card>
+  <nuverial-checkbox-card [disabled]="true" contentPosition="before">
+    <div nuverialCardContentType="title">{{ checkboxHeader }}</div>
+    <div nuverialCardContentType="content">{{ checkboxContent }}</div>
+  </nuverial-checkbox-card>
+</div>
+
+<div class="component-section">
+  <nuverial-checkbox-card [formControl]="formControl" [required]="true">
+    <div nuverialCardContentType="title">{{ checkboxHeader }}</div>
+    <div nuverialCardContentType="content">{{ checkboxContent }}</div>
+  </nuverial-checkbox-card>
+  <nuverial-checkbox-card as p>
+    <div nuverialCardContentType="title">{{ checkboxHeader }}</div>
+  </nuverial-checkbox-card>
+  <nuverial-checkbox-card></nuverial-checkbox-card>
+</div>
+
+<div class="component-section">
+  <nuverial-checkbox-card [formControl]="imageFormControl" [required]="true" imagePosition="before">
+    <img alt="big ben" nuverialCardContentType="image" src="/assets/images/big-ben.webp" />
+    <div nuverialCardContentType="title">{{ checkboxHeader }}</div>
+    <div nuverialCardContentType="content">
+      <p>{{ checkboxContent }}</p>
+      <p>{{ checkboxContent }}</p>
+      <p>{{ checkboxContent }}</p>
+    </div>
+  </nuverial-checkbox-card>
+
+  <nuverial-checkbox-card [disabled]="true" imagePosition="top">
+    <img alt="big ben" nuverialCardContentType="image" src="/assets/images/painted-hall.webp" />
+    <div nuverialCardContentType="title">{{ checkboxHeader }}</div>
+    <div nuverialCardContentType="content">{{ checkboxContent }}</div>
+  </nuverial-checkbox-card>
+</div>

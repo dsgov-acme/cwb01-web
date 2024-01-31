@@ -1,0 +1,4 @@
+<nuverial-rich-text-viewer
+  *ngIf="!props.hideInReviewPage || (props.hideInReviewPage && mode !== formStateMode.Review)"
+  [content]="props.content"
+></nuverial-rich-text-viewer>

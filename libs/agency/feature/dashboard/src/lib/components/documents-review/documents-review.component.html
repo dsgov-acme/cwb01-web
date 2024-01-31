@@ -1,0 +1,67 @@
+<div class="documents-review">
+  <ng-container *ngIf="(customerDocuments$ | async) as documentsArray">
+    <ng-container *ngIf="loading">
+      <nuverial-spinner></nuverial-spinner>
+    </ng-container>
+    <div class="documents-review__document" *ngFor="let documents of documentsArray; trackBy: trackByFn">
+      <ng-container *ngIf="documents.customerProvidedDocuments.length === 1">
+        <ng-container
+          *ngTemplateOutlet="singleDocument; context: { document: documents.customerProvidedDocuments[0], index: 0, displayParent: true }"
+        ></ng-container>
+      </ng-container>
+      <div class="documents-review__document--multiple-documents-container" *ngIf="documents.customerProvidedDocuments.length > 1">
+        <ng-container *ngTemplateOutlet="multipleDocuments; context: { documents: documents }"></ng-container>
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+<ng-template #singleDocument let-displayParent="displayParent" let-document="document" let-index="index" let-listFiles="listFiles">
+  <div class="documents-review__left">
+    <h4 class="documents-review__document--title" *ngIf="listFiles || !document.label; else displayTitle">{{'Document ' + (index + 1)}}</h4>
+    <ng-template #displayTitle>
+      <h4 class="documents-review__document--title">
+        {{ displayParent && document.parentLabel !== document.label ? document.parentLabel + ' - ' + document.label : document.label}}
+      </h4>
+    </ng-template>
+    <div class="documents-review__document--reasons" *ngIf="document.rejectionReasons && document.rejectionReasons.length > 0">
+      <span>Reasons:</span>
+      <ul>
+        <li *ngFor="let reason of document.rejectionReasons; let i = index; trackBy: trackByFn">{{rejectedReasonsLabels[reason]}}</li>
+      </ul>
+    </div>
+    <div class="documents-review__document--reviewed-by" *ngIf="document.reviewedBy">
+      {{document.reviewedByDisplayName}} reviewed on {{document.reviewedOn | date:"MM/dd/yy, h:mm:ss a" }}
+    </div>
+  </div>
+
+  <span class="documents-review__document--error" *ngIf="document.shouldDisplayErrors && document.processingResult">
+    <nuverial-file-processor-tooltip [processors]="document.processingResult"></nuverial-file-processor-tooltip>
+  </span>
+
+  <nuverial-selector-button-dropdown
+    class="documents-review__document--status"
+    *ngIf="reviewReasonsSelectOptions$ | async as reviewOptions"
+    [buttonText]="document.reviewStatus | titlecase"
+    [menuItems]="reviewOptions"
+    (buttonClickedEvent)="handleReviewStatus($event, document)"
+  ></nuverial-selector-button-dropdown>
+
+  <a class="documents-review__document--link" (click)="openDocument(document.id)" (keyup.enter)="openDocument(document.id)" tabindex="0">View</a>
+</ng-template>
+
+<ng-template #multipleDocuments let-documents="documents">
+  <nuverial-accordion
+    class="expansion-panel"
+    [panelList]="[{ panelTitle: documents.customerProvidedDocuments[0].parentLabel, expanded: true }]"
+    [warningHeaderText]="documents.hasIssues ? 'Document Issues' : ''"
+  >
+    <ng-template #body let-panel>
+      <div class="documents-review__indented-document" *ngFor="let document of documents.customerProvidedDocuments; let index = index; trackBy trackByFn">
+        <ng-container
+          *ngTemplateOutlet="singleDocument; context: { document: document, index: index, listFiles: documents.isMultipleFileUpload, displayParent: false }"
+        ></ng-container>
+      </div>
+    </ng-template>
+  </nuverial-accordion>
+</ng-template>

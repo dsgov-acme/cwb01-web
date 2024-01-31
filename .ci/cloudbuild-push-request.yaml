@@ -1,0 +1,258 @@
+timeout: 2000s
+logsBucket: "gs://${_ARTIFACT_BUCKET_NAME}/cloudbuild-logs/app-${_SERVICE_NAME}-push-request-trigger"
+options:
+  machineType: 'E2_HIGHCPU_32'
+  env:
+    - YARN_CACHE=/usr/local/share/.cache/yarn/v6
+  volumes:
+    - name: 'cache'
+      path: '/usr/local/share/.cache/'
+availableSecrets:
+  secretManager:
+    - versionName: ${_DEPLOY_KEY_SECRET}
+      env: "DEPLOY_SSH_KEY"
+    # This secret at this time is manually created from SonarQube's admin UI and saved to Google Secrets Manager
+    - versionName: "projects/$PROJECT_ID/secrets/${_SONARQUBE_TOKEN_SECRET_NAME}/versions/latest"
+      env: 'SONARQUBE_TOKEN'
+steps:
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:alpine'
+    id: 'Restore cache'
+    entrypoint: '/bin/sh'
+    args: ['-c', '.ci/scripts/restore_cache.sh -b ${_ARTIFACT_BUCKET_NAME}']
+
+  - id: "Install DEPLOY SSH Key"
+    name: "gcr.io/cloud-builders/git"
+    secretEnv: ["DEPLOY_SSH_KEY"]
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        echo "$$DEPLOY_SSH_KEY" >> /root/.ssh/id_rsa
+        chmod 400 /root/.ssh/id_rsa
+        ssh-keyscan -t rsa github.com > /root/.ssh/known_hosts
+    volumes:
+      - name: "ssh"
+        path: /root/.ssh
+
+  - id: "Clone full repo copy"
+    name: "gcr.io/cloud-builders/git"
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        rm -rf * .*
+        git clone git@github.com:dsgov-acme/cwb01-web.git . -b ${BRANCH_NAME}
+    volumes:
+      - name: "ssh"
+        path: /root/.ssh
+
+  - id: "Install dependencies"
+    name: "node:16"
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        max_attempts=3
+        base_sleep=5  # Initial sleep time in seconds
+        attempt=1
+
+        while [ $attempt -le $max_attempts ]; do
+            echo "Attempt $attempt: Running npm install..."
+            yarn install --frozen-lockfile
+
+            if [ $? -eq 0 ]; then
+                echo "npm install succeeded on attempt $attempt"
+                break
+            else
+                echo "npm install failed on attempt $attempt"
+                if [ $attempt -lt $max_attempts ]; then
+                    sleep_duration=$((base_sleep ** attempt))
+                    echo "Retrying in $sleep_duration seconds..."
+                    ((attempt++))
+                    sleep $sleep_duration
+                else
+                    echo "Max attempts reached. Exiting."
+                    exit 1
+                fi
+            fi
+        done
+
+  - id: "Linting the code"
+    name: "node:16"
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        yarn lint:ci --base=origin/$BRANCH_NAME~1 --head=origin/$BRANCH_NAME --parallel=3
+
+  - id: "Unit Tests"
+    name: "node:16"
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        yarn test:all --ci --parallel=3 --runInBand
+
+  - id: "Publish Report to SonarQube"
+    secretEnv: ['SONARQUBE_TOKEN']
+    name: "${_GAR_BUILDER_URL}/cloudbuild-nodejs16"
+    waitFor:
+      - "Unit Tests"
+    entrypoint: bash
+    args:
+        - '-c'
+        - |
+          SONAR_HOST=$(gcloud compute instances list --filter 'name~sonarqube' --format 'value(name)')
+          SONAR_ZONE=$(gcloud compute instances list --filter 'name~sonarqube' --format 'value(zone)')
+          gcloud compute ssh sonarqube@$$SONAR_HOST --zone $$SONAR_ZONE
+          gcloud compute ssh sonarqube@$$SONAR_HOST  \
+            --zone $$SONAR_ZONE \
+            --tunnel-through-iap \
+            --project $PROJECT_ID \
+            -- -NL 9000:localhost:9000 &
+          PID=$?
+          ELAPSED=0
+          TIMEOUT=10
+          echo "Establishing tunnel..."
+          until curl -s http://localhost:9000
+            do
+            sleep 1
+            if (( ELAPSED > TIMEOUT ))
+              then
+              echo "establishing tunnel timed out. exiting."
+              kill $$PID
+              exit 1
+            fi
+            ELAPSED=$(( ELAPSED + 1 ))
+          done
+          echo "Tunnel has been established"
+          yarn add sonar-scanner
+          echo "Attempting to chmod the sonar-scanner binary"
+          chmod +x /workspace/node_modules/sonar-scanner/bin/sonar-scanner
+          echo "Permissions updated for sonar-scanner"
+          yarn sonar -Dsonar.login=$$SONARQUBE_TOKEN \
+            -Dsonar.projectKey=${REPO_NAME} \
+            -Dsonar.projectName=${REPO_NAME} \
+            -Dsonar.host.url=http://localhost:9000
+
+          kill $$PID
+
+  - id: "Build Builder Image and Push"
+    name: "gcr.io/cloud-builders/docker"
+    waitFor:
+      - "Clone full repo copy"
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        docker build -t node-builder:${SHORT_SHA} \
+                     -t ${_GAR_BUILDER_URL}/node-builder:${SHORT_SHA} \
+                     -t ${_GAR_BUILDER_URL}/node-builder:latest \
+                     --cache-from ${_GAR_BUILDER_URL}/node-builder:latest \
+                     -f docker/builder.Dockerfile .
+        docker push ${_GAR_BUILDER_URL}/node-builder:${SHORT_SHA}
+        docker push ${_GAR_BUILDER_URL}/node-builder:latest
+
+  - id: "Build Agency Client"
+    name: "gcr.io/cloud-builders/docker"
+    waitFor:
+      - "Build Builder Image and Push"
+      - "Unit Tests"
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        docker build -t agency \
+                      -t ${_GAR_URL}/agency:${SHORT_SHA} \
+                      --build-arg NODE_BUILDER=${_GAR_BUILDER_URL}/node-builder:${SHORT_SHA} \
+                      --build-arg APP=agency \
+                      --build-arg ENVIRONMENT=production \
+                      -f docker/nginx.Dockerfile .
+        docker push ${_GAR_URL}/agency:${SHORT_SHA}
+
+  - id: "Build Public Client"
+    name: "gcr.io/cloud-builders/docker"
+    waitFor:
+      - "Build Builder Image and Push"
+      - "Unit Tests"
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        docker build -t public \
+                      -t ${_GAR_URL}/public:${SHORT_SHA} \
+                      --build-arg NODE_BUILDER=${_GAR_BUILDER_URL}/node-builder:${SHORT_SHA} \
+                      --build-arg APP=public \
+                      --build-arg ENVIRONMENT=production \
+                      -f docker/nginx.Dockerfile .
+        docker push ${_GAR_URL}/public:${SHORT_SHA}
+
+  - id: "Build Employer Client"
+    name: "gcr.io/cloud-builders/docker"
+    waitFor:
+      - "Build Builder Image and Push"
+      - "Unit Tests"
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        docker build -t employer \
+                      -t ${_GAR_URL}/employer:${SHORT_SHA} \
+                      --build-arg NODE_BUILDER=${_GAR_BUILDER_URL}/node-builder:${SHORT_SHA} \
+                      --build-arg APP=employer \
+                      --build-arg ENVIRONMENT=production \
+                      -f docker/nginx.Dockerfile .
+        docker push ${_GAR_URL}/employer:${SHORT_SHA}
+
+  - id: "Agency - Cloud Deploy Release"
+    name: "google/cloud-sdk"
+    waitFor:
+      - "Build Agency Client"
+    entrypoint: bash
+    args:
+      - "-c"
+      - |
+        gcloud deploy releases create "$(echo ${REPO_NAME} | cut -d- -f2-)-agency-${SHORT_SHA}" \
+          --project=cwb01-services \
+          --region=us-east4 \
+          --delivery-pipeline="${REPO_NAME}-agency" \
+          --gcs-source-staging-dir=gs://cwb01-application-pipeline_clouddeploy/source \
+          --skaffold-file skaffold.agency.yaml \
+          --images=agency=${_GAR_URL}/agency:${SHORT_SHA}
+
+  - id: "Public - Cloud Deploy Release"
+    name: "google/cloud-sdk"
+    waitFor:
+      - "Build Public Client"
+    entrypoint: bash
+    args:
+      - "-c"
+      - |
+        gcloud deploy releases create "$(echo ${REPO_NAME} | cut -d- -f2-)-public-${SHORT_SHA}" \
+          --project=cwb01-services \
+          --region=us-east4 \
+          --delivery-pipeline="${REPO_NAME}-public" \
+          --gcs-source-staging-dir=gs://cwb01-application-pipeline_clouddeploy/source \
+          --skaffold-file skaffold.public.yaml \
+          --images=public=${_GAR_URL}/public:${SHORT_SHA}
+
+  - id: "Employer - Cloud Deploy Release"
+    name: "google/cloud-sdk"
+    waitFor:
+      - "Build Employer Client"
+    entrypoint: bash
+    args:
+      - "-c"
+      - |
+        gcloud deploy releases create "$(echo ${REPO_NAME} | cut -d- -f2-)-employer-${SHORT_SHA}" \
+          --project=cwb01-services \
+          --region=us-east4 \
+          --delivery-pipeline="${REPO_NAME}-employer" \
+          --gcs-source-staging-dir=gs://cwb01-application-pipeline_clouddeploy/source \
+          --skaffold-file skaffold.employer.yaml \
+          --images=employer=${_GAR_URL}/employer:${SHORT_SHA}
+
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:alpine'
+    id: 'Save cache'
+    entrypoint: '/bin/sh'
+    args: ['-c', '.ci/scripts/save_cache.sh -b ${_ARTIFACT_BUCKET_NAME}']

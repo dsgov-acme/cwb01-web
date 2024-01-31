@@ -1,0 +1,52 @@
+<div class="needs-correction-modal">
+  <mat-dialog-content class="needs-correction-modal">
+    <h1 class="needs-correction-modal--title">Rejection Reason</h1>
+    <div [formGroup]="formGroup">
+      <nuverial-select
+        class="needs-correction-modal__reason"
+        ariaLabel="Rejection Reason"
+        *ngIf="rejectionReasonSelectOptions && rejectionReasonSelectOptions.length > 0"
+        [required]="true"
+        [selectedClearable]="false"
+        [selectOptions]="rejectionReasonSelectOptions"
+        formControlName="rejectionReason"
+        matInput
+        no-border
+        placeholder="Select reason(s)"
+      >
+      </nuverial-select>
+      <div class="needs-correction-modal__reason--selected" *ngFor="let reason of selectedReasons; trackBy: trackByFn">
+        <span class="tag-text">{{reason.displayTextValue}}</span>
+        <span
+          class="needs-correction-modal__reason--selected--unselect"
+          (click)="removeSelectedReason(reason)"
+          (keyup.enter)="removeSelectedReason(reason)"
+          tabindex="0"
+        >
+          <nuverial-icon iconName="close"></nuverial-icon>
+        </span>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <nuverial-button
+      class="needs-correction-modal__actions"
+      ariaLabel="Cancel"
+      (click)="onCancelClick()"
+      buttonStyle="outlined"
+      colorTheme="primary"
+      mat-dialog-close
+      >Cancel</nuverial-button
+    >
+    <nuverial-button
+      class="needs-correction-modal__actions"
+      ariaLabel="Save"
+      [disabled]="selectedReasons.length === 0"
+      [mat-dialog-close]="true"
+      (click)="saveNeedsCorrection()"
+      buttonStyle="filled"
+      colorTheme="primary"
+      >Save</nuverial-button
+    >
+  </mat-dialog-actions>
+</div>

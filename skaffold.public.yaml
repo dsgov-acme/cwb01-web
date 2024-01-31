@@ -1,0 +1,75 @@
+apiVersion: skaffold/v3
+kind: Config
+metadata:
+  name: public
+profiles:
+  - name: dev
+    build:
+      local:
+        useDockerCLI: false
+        useBuildkit: false
+      artifacts:
+        - image: node-builder
+          docker:
+            dockerfile: docker/builder.Dockerfile
+        - image: public
+          requires:
+            - image: node-builder
+              alias: NODE_BUILDER
+          docker:
+            dockerfile: docker/nginx.Dockerfile
+            buildArgs:
+              APP: public
+              ENVIRONMENT: production
+    deploy:
+      helm:
+        releases:
+          - name: public
+            createNamespace: true
+            chartPath: .ci/helm/web
+            # Ref: https://skaffold.dev/docs/deployers/helm/#image-configuration
+            setValueTemplates:
+              image.repository: "{{.IMAGE_REPO_public}}"
+              image.tag: "{{.IMAGE_TAG_public}}@{{.IMAGE_DIGEST_public}}"
+            setValues:
+              environment: dev
+              image:
+                pullPolicy: IfNotPresent
+            valuesFiles:
+              - .ci/helm/web/public/values.yaml
+              - .ci/helm/web/public/dev.yaml
+  - name: prod
+    build:
+      local:
+        useDockerCLI: false
+        useBuildkit: false
+      artifacts:
+        - image: node-builder
+          docker:
+            dockerfile: docker/builder.Dockerfile
+        - image: public
+          requires:
+            - image: node-builder
+              alias: NODE_BUILDER
+          docker:
+            dockerfile: docker/nginx.Dockerfile
+            buildArgs:
+              APP: public
+              ENVIRONMENT: production
+    deploy:
+      helm:
+        releases:
+          - name: public
+            createNamespace: true
+            chartPath: .ci/helm/web
+            # Ref: https://skaffold.dev/docs/deployers/helm/#image-configuration
+            setValueTemplates:
+              image.repository: "{{.IMAGE_REPO_public}}"
+              image.tag: "{{.IMAGE_TAG_public}}@{{.IMAGE_DIGEST_public}}"
+            setValues:
+              environment: prod
+              image:
+                pullPolicy: IfNotPresent
+            valuesFiles:
+              - .ci/helm/web/public/values.yaml
+              - .ci/helm/web/public/prod.yaml

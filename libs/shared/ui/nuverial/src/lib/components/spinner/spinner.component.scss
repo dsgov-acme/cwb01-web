@@ -1,0 +1,30 @@
+@use '@dsg/shared-theme/partials/mixins' as mixins;
+
+:host {
+  display: flex;
+
+  .overlay {
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.3;
+  }
+
+  &.app-spinner {
+    @include mixins.layout-absolute-xy-center;
+  }
+}
+
+:host-context(.position-fixed) {
+  &:host {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+  }
+}

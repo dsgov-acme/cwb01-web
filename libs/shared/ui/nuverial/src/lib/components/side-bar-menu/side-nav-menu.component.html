@@ -1,0 +1,41 @@
+<mat-sidenav-container class="sidenav-container {{theme}}">
+  <mat-sidenav class="sidenav" mode="side" opened>
+    <mat-nav-list class="mat-nav-list-container">
+      <div class="top-nav-container">
+        <ng-container *ngIf="navBarReturnHome">
+          <mat-list-item class="nav-home" [matTooltipPosition]="tooltipPosition" [routerLink]="['/']" mat-list-item matTooltip="Home">
+            <nuverial-icon class="material-symbols-outlined" class="icon" [outlined]="true" iconName="home"></nuverial-icon>
+          </mat-list-item>
+        </ng-container>
+
+        <ng-container *ngFor="let navMenuItem of navBarMenuItemList; trackBy: trackByFn">
+          <mat-list-item
+            [matTooltip]="navMenuItem.label || ''"
+            [matTooltipPosition]="tooltipPosition"
+            [queryParams]="navMenuItem.navigationParams"
+            [routerLink]="[navMenuItem.navigationRoute]"
+            (click)="onMenuClick(navMenuItem)"
+            mat-list-item
+            routerLinkActive="selected"
+          >
+            <nuverial-icon class="material-symbols-outlined" class="icon" [iconName]="navMenuItem.icon" [outlined]="true"></nuverial-icon>
+          </mat-list-item>
+        </ng-container>
+      </div>
+
+      <ng-container *ngIf="navBarMenuBottomItem">
+        <div class="bottom-nav-container">
+          <mat-list-item
+            class="last-item"
+            [matTooltip]="navBarMenuBottomItem.label || ''"
+            [matTooltipPosition]="tooltipPosition"
+            [routerLink]="[navBarMenuBottomItem.navigationRoute]"
+            mat-list-item
+          >
+            <nuverial-icon class="material-symbols-outlined" class="icon" [iconName]="navBarMenuBottomItem.icon" [outlined]="true"></nuverial-icon>
+          </mat-list-item>
+        </div>
+      </ng-container>
+    </mat-nav-list>
+  </mat-sidenav>
+</mat-sidenav-container>

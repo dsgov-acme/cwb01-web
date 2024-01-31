@@ -1,0 +1,10 @@
+<header class="header">
+  <ng-container *ngIf="hasBreadcrumb | async; else messagesTitle">
+    <nuverial-breadcrumb class="messages-breadcrumb" [breadCrumbs]="breadCrumbs"></nuverial-breadcrumb>
+  </ng-container>
+  <ng-template #messagesTitle>
+    <h2 class="header-title">Messages</h2>
+  </ng-template>
+</header>
+
+<router-outlet />

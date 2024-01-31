@@ -1,0 +1,32 @@
+<footer class="footer-actions">
+  <ng-container *ngFor="let action of buttonActionsList; trackBy: trackByFn; index as i">
+    <nuverial-button
+      class="footer-actions-button"
+      [ariaLabel]="action.key"
+      [attr.data-testId]="'action-button-'+i"
+      [buttonStyle]="$any(action.buttonProps?.style)"
+      [class.adverse]="action.uiClass === 'Adverse'"
+      [colorTheme]="$any(action.buttonProps?.color)"
+      [disabled]="buttonsDisabled"
+      (click)="onActionClick(action.key)"
+    >
+      {{action.uiLabel}}
+    </nuverial-button>
+  </ng-container>
+
+  <ng-container *ngIf="menuActionsList.length">
+    <nuverial-menu
+      class="footer-actions-menu"
+      ariaLabel="action list"
+      [attr.data-testId]="'menu-action-list'"
+      [menuItemList]="menuActionsList"
+      [overlayPanelClass]="'footer-actions-menu-overlay'"
+      (menuItemEvent)="onActionClick($event)"
+      buttonAriaLabel="Open action list"
+      buttonIcon="more_horiz"
+      menuTemplate="'profileMenu'"
+      nuverial-header-content-right
+    >
+    </nuverial-menu>
+  </ng-container>
+</footer>

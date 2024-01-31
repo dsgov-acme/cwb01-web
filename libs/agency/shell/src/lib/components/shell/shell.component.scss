@@ -1,0 +1,70 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/variables' as themeVars;
+
+:host {
+  background-color: var(--theme-color-white);
+  color: var(--theme-color-black);
+  height: 100vh;
+  width: 100%;
+  max-width: 100vw;
+  display: flex;
+  flex-direction: column;
+
+  & > .main {
+    flex: 1 0 auto;
+    display: flex;
+
+    .page-container {
+      margin-top: 2.5rem;
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+    }
+  }
+
+  .header {
+    .header_logo {
+      display: flex;
+      max-width: 300px;
+      height: 100%;
+
+      img {
+        height: 100%;
+        width: 100%;
+      }
+    }
+
+    ::ng-deep {
+      .nuverial-icon {
+        --nuverial-icon-size: #{rem.fromPx(35px)};
+        --nuverial-icon-color: var(--theme-color-header-profile-icon);
+      }
+
+      .nuverial-button-icon {
+        --nuverial-button-icon-color: var(--theme-color-white);
+      }
+    }
+  }
+
+  .footer {
+    a {
+      padding-left: rem.fromPx(14px);
+      padding-right: rem.fromPx(14px);
+    }
+
+    a:not(:last-of-type) {
+      border-right: solid 1px var(--theme-color-m3-neutral-80);
+    }
+
+    @media screen and (max-width: themeVars.$layout-medium-screen-breakpoint) {
+      a {
+        padding: rem.fromPx(14px) 0 rem.fromPx(14px) rem.fromPx(14px);
+        border-right: none;
+      }
+
+      a:not(:last-of-type) {
+        border-right: none;
+      }
+    }
+  }
+}

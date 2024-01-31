@@ -1,0 +1,20 @@
+<ng-container>
+  <div>
+    <ng-container *ngIf="documentStatus$ | async as documentStatus">
+      <div class="row">
+        <div class="docName">
+          <span class="label">{{documentStatus.documentName}}</span>
+          <a class="download-link" (click)="openDocument(documentStatus.documentId)" (keyup.enter)="openDocument(documentStatus.documentId)" tabindex="0"
+            >View</a
+          >
+        </div>
+        <div class="rejected-reasons-container" *ngIf="documentStatus.rejectedReasons.length > 0">
+          Reasons:
+          <ul class="rejected-reasons-list">
+            <li *ngFor="let rejectedReason of documentStatus.rejectedReasons; trackBy: trackByFn">{{rejectedReason}}</li>
+          </ul>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>

@@ -1,0 +1,48 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/variables' as themeVars;
+
+:host {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 676px;
+  align-items: stretch;
+
+  font-size: var(--theme-typography-font-size-normal);
+
+  @media screen and (max-width: themeVars.$layout-medium-screen-breakpoint) {
+    min-width: unset;
+  }
+
+  .dsg-authentication-email-content-container {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .dsg-authentication-email-content-instructions {
+    line-height: rem.fromPx(24px);
+    padding-bottom: rem.fromPx(24px);
+  }
+  .dsg-authentication-email-content-controls {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .dsg-authentication-email-footer-container {
+    padding-top: rem.fromPx(112px);
+    line-height: rem.fromPx(24px);
+    span:first-of-type {
+      padding-right: 0.5rem;
+    }
+  }
+
+  .dsg-authentication-email-loading-container {
+    align-items: center;
+    flex: 1;
+    display: flex;
+  }
+}

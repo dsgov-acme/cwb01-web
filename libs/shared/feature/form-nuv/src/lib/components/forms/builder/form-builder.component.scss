@@ -1,0 +1,9 @@
+@use '@dsg/shared-theme/partials/mixins' as mixins;
+
+:host {
+  @include mixins.formBuilder-formBuilderStyles();
+}
+
+::ng-deep {
+  @include mixins.formBuilder-dialogStyles();
+}

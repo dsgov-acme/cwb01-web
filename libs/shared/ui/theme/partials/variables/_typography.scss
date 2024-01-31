@@ -1,0 +1,20 @@
+@use '../functions/rem';
+/*
+Define typography for Material theme as theme generation does not fully support not support CSS
+ */
+$font-family: ProximaNova, Arial, sans-serif;
+:root {
+  --theme-typography-font-family: #{$font-family};
+
+  --theme-typography-font-weight-normal: 400;
+  --theme-typography-font-weight-mid: 600;
+  --theme-typography-font-weight-bold: 700;
+
+  --theme-typography-font-size-xx-small: #{rem.fromPx(10px)};
+  --theme-typography-font-size-x-small: #{rem.fromPx(12px)};
+  --theme-typography-font-size-small: #{rem.fromPx(14px)};
+  --theme-typography-font-size-normal: #{rem.fromPx(16px)};
+  --theme-typography-font-size-large: #{rem.fromPx(18px)};
+  --theme-typography-font-size-x-large: #{rem.fromPx(20px)};
+  --theme-typography-font-size-xx-large: #{rem.fromPx(22px)};
+}

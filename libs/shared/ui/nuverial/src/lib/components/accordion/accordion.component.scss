@@ -1,0 +1,41 @@
+@use '@dsg/shared-theme/partials/variables' as themeVars;
+
+:host {
+  --nuverial-accordion-expansion-indicator-color: var(--theme-color-tertiary);
+
+  display: block;
+
+  .mat-expansion-panel {
+    margin-bottom: 8px !important;
+    box-shadow: none;
+    border: solid 1px var(--theme-color-m3-neutral-95);
+
+    .mat-expansion-panel-header-title {
+      font-size: var(--theme-typography-font-size-normal);
+    }
+
+    .mat-expansion-panel-header {
+      background: var(--theme-color-m3-neutral-95);
+    }
+
+    .warningText {
+      margin-right: auto;
+      padding-right: 16px;
+      font-size: var(--theme-typography-font-size-normal);
+      color: var(--theme-color-priority-high);
+      font-weight: 600;
+    }
+  }
+
+  ::ng-deep .mat-expansion-panel-header-title {
+    font-weight: var(--theme-typography-font-weight-bold);
+  }
+
+  ::ng-deep .mat-expansion-indicator {
+    &:after {
+      color: var(--nuverial-accordion-expansion-indicator-color);
+      padding: 0.35rem;
+      border-width: 0 3px 3px 0;
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "arrowParens": "avoid",
+  "attributeGroups": [
+    "^class$",
+    "^(id|name)$",
+    "^aria",
+    "^data-",
+    "^#",
+    "$ANGULAR_STRUCTURAL_DIRECTIVE",
+    "$ANGULAR_INPUT",
+    "$ANGULAR_TWO_WAY_BINDING",
+    "$ANGULAR_OUTPUT",
+    "$DEFAULT"
+  ],
+  "attributeSort": "ASC",
+  "bracketSpacing": true,
+  "jsonRecursiveSort": true,
+  "overrides": [
+    {
+      "files": "*.html",
+      "options": {
+        "parser": "html"
+      }
+    }
+  ],
+  "plugins": ["prettier-plugin-organize-attributes"],
+  "printWidth": 160,
+  "proseWrap": "never",
+  "quoteProps": "consistent",
+  "singleQuote": true,
+  "trailingComma": "all"
+}

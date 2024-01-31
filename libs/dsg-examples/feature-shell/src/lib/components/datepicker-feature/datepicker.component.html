@@ -1,0 +1,36 @@
+<h2>Date Picker</h2>
+<nuverial-date-picker
+  [maxDate]="maxDate"
+  [minDate]="minDate"
+  [required]="true"
+  [validationMessages]="{required: 'Ng Model test is required'}"
+  [(ngModel)]="datePickerModel"
+  inputLabel="Ng Model"
+  placeholder="Ng Model placeholder"
+></nuverial-date-picker>
+
+<nuverial-date-picker
+  [formControl]="formControl"
+  [maxDate]="maxDate"
+  [minDate]="minDate"
+  [required]="true"
+  [validationMessages]="{required: 'Ng Model test is required'}"
+  inputLabel="NgControl"
+  placeholder="Ng Control placeholder"
+></nuverial-date-picker>
+
+<nuverial-date-range-picker
+  [required]="true"
+  endDatePlaceholder="End Date"
+  inputLabel="Date Range"
+  startDatePlaceholder="Start Date"
+></nuverial-date-range-picker>
+<nuverial-date-range-picker
+  [formControl]="dateRangeControl"
+  [maxDate]="maxDate"
+  [minDate]="minDate"
+  [required]="true"
+  endDatePlaceholder="End Date"
+  inputLabel="Date Range"
+  startDatePlaceholder="Start Date"
+></nuverial-date-range-picker>

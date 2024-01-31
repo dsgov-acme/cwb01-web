@@ -1,0 +1,85 @@
+<div class="profile" *ngIf="profile$ | async">
+  <header *ngIf="formErrors.length"><nuverial-form-errors [formErrors]="formErrors"></nuverial-form-errors></header>
+  <span class="profile__header"><h1>Profile</h1></span>
+  <div class="profile__form" *ngIf="inputTextFormGroup" [formGroup]="inputTextFormGroup">
+    <nuverial-text-input
+      class="profile__form__input"
+      [ariaLabel]="formConfigs.firstName.label"
+      [id]="formConfigs.firstName.id"
+      [label]="formConfigs.firstName.label"
+      [type]="'text'"
+      formControlName="firstName"
+    ></nuverial-text-input>
+    <nuverial-text-input
+      class="profile__form__input"
+      ariaLabel="Middle Name (optional)"
+      [type]="'text'"
+      formControlName="middleName"
+      label="Middle Name (optional)"
+    ></nuverial-text-input>
+    <nuverial-text-input
+      class="profile__form__input"
+      [ariaLabel]="formConfigs.lastName.label"
+      [id]="formConfigs.lastName.id"
+      [label]="formConfigs.lastName.label"
+      [type]="'text'"
+      formControlName="lastName"
+    ></nuverial-text-input>
+    <nuverial-text-input class="profile__form__input--hidden" formControlName="lastName"></nuverial-text-input>
+    <nuverial-text-input
+      class="profile__form__input"
+      [ariaLabel]="formConfigs.email.label"
+      [label]="formConfigs.email.label"
+      [type]="'text'"
+      formControlName="email"
+    ></nuverial-text-input>
+    <nuverial-text-input
+      class="profile__form__input"
+      [ariaLabel]="formConfigs.phoneNumber.label"
+      [id]="formConfigs.phoneNumber.id"
+      [label]="formConfigs.phoneNumber.label"
+      [type]="'text'"
+      formControlName="phoneNumber"
+      maskPattern="(000) 000-0000"
+      placeholder="(000) 000-0000"
+    ></nuverial-text-input>
+    <div class="sub-section">
+      <nuverial-section-header>
+        <div nuverialCardContentType="label">Communication Preference</div>
+      </nuverial-section-header>
+      <div id="communication-preference">How would you like to be contacted?</div>
+      <br />
+      <nuverial-card-group
+        aria-labelledby="communication-preference"
+        [id]="formConfigs.communicationMethod.id"
+        [validationMessages]="requiredCommunicationMsg"
+        (changeCard)="communicationMethodChange($event)"
+        formControlName="communicationMethod"
+      >
+        <nuverial-radio-card
+          class="profile__form__input"
+          *ngFor="let option of communicationMethodOptions; trackBy: trackByFn"
+          [ariaLabel]="option.value"
+          [value]="option.value"
+        >
+          <div nuverialCardContentType="title">{{ option.label }}</div>
+        </nuverial-radio-card>
+      </nuverial-card-group>
+      <br />
+      <nuverial-checkbox
+        [ariaLabel]="formConfigs.smsAgreement.label"
+        [hidden]="inputTextFormGroup.value.communicationMethod !== 'sms'"
+        [id]="formConfigs['smsAgreement'].id"
+        formControlName="smsAgreement"
+      >
+        <div nuverialCardContentType="label">By choosing Text (SMS), I understand that carrier charges may apply.</div>
+      </nuverial-checkbox>
+    </div>
+  </div>
+</div>
+<div class="profile__actions">
+  <nuverial-button class="profile__actions--skip" ariaLabel="Skip for now" buttonStyle="outlined" colorTheme="primary" routerLink="/dashboard">
+    SKIP FOR NOW
+  </nuverial-button>
+  <nuverial-button class="profile__actions--save" ariaLabel="Save" (click)="saveProfile()" buttonStyle="filled" colorTheme="primary"> SAVE </nuverial-button>
+</div>

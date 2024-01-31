@@ -1,0 +1,33 @@
+<ng-container [ngSwitch]="mode">
+  <ng-container *ngSwitchCase="'edit'" [ngTemplateOutlet]="editTemplate"></ng-container>
+  <ng-container *ngSwitchCase="'review'" [ngTemplateOutlet]="reviewTemplate"></ng-container>
+  <ng-container *ngSwitchDefault>{{mode}} mode not implemented</ng-container>
+</ng-container>
+
+<ng-template #editTemplate>
+  <nuverial-date-range-picker
+    [ariaDescribedBy]="props.ariaDescribedBy || ''"
+    [ariaLabel]="props.ariaLabel || ''"
+    [disabled]="props.disabled!"
+    [displayError]="props.displayError || false"
+    [endDatePlaceholder]="props.endDatePlaceholder || ''"
+    [formControl]="formControl"
+    [hint]="props.hint || ''"
+    [label]="props.label || ''"
+    [maxDate]="props.maxDate!"
+    [minDate]="props.minDate!"
+    [opened]="props.opened || false"
+    [required]="props.required || false"
+    [startAt]="props.startAt!"
+    [startDatePlaceholder]="props.startDatePlaceholder || ''"
+    [startView]="props.startView || 'month'"
+  >
+  </nuverial-date-range-picker>
+</ng-template>
+
+<ng-template #reviewTemplate>
+  <div class="field-value-container">
+    <div class="field-label">{{ props.label }}</div>
+    <div class="field-value">{{ formControl.value | json }}</div>
+  </div>
+</ng-template>

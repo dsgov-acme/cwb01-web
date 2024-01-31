@@ -1,0 +1,60 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/variables' as themeVars;
+
+:host {
+  ::ng-deep .ace_gutter {
+    z-index: 0;
+  }
+
+  ::ng-deep .ace-jsoneditor {
+    .ace_string {
+      color: rgb(3, 106, 7) !important;
+    }
+
+    .ace_variable {
+      color: rgb(49, 132, 149) !important;
+    }
+
+    .ace_boolean {
+      color: rgb(88, 92, 246) !important;
+    }
+
+    .ace_numeric {
+      color: rgb(0, 0, 205) !important;
+    }
+
+    .ace_text-layer {
+      color: var(--theme-color-black) !important;
+    }
+
+    .ace_fold {
+      background-color: rgb(107, 114, 230) !important;
+    }
+  }
+
+  ::ng-deep json-editor,
+  ::ng-deep json-editor .jsoneditor,
+  ::ng-deep json-editor > div,
+  ::ng-deep json-editor .jsoneditor-contextmenu {
+    .jsoneditor-type-modes {
+      background-color: var(--theme-color-white);
+      &.jsoneditor-selected {
+        background-color: var(--theme-color-tertiary);
+        color: var(--theme-color-white);
+      }
+    }
+  }
+
+  ::ng-deep .jsoneditor-menu {
+    background-color: var(--theme-color-secondary);
+    border-bottom: var(--theme-color-secondary);
+  }
+
+  ::ng-deep json-editor,
+  ::ng-deep json-editor .jsoneditor,
+  ::ng-deep json-editor > div,
+  ::ng-deep json-editor jsoneditor-outer {
+    height: 100%;
+    border-color: var(--theme-color-secondary);
+  }
+}

@@ -1,0 +1,46 @@
+@use '@dsg/shared-theme/partials/mixins' as mixins;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem;
+  flex: 1;
+
+  .table-container {
+    flex-direction: column;
+    flex: 1;
+    @include mixins.table-styleTable();
+
+    $columns: (
+      date: (
+        order: 1,
+        width: 50%,
+      ),
+      claim: (
+        content: 'Claim ID:',
+        order: 2,
+        justify-content: 'flex-end',
+        width: 50%,
+      ),
+      claimStatus: (
+        order: 3,
+        justify-content: 'flex-end',
+        width: 50%,
+      ),
+      email: (
+        order: 4,
+        width: 100%,
+      ),
+      name: (
+        order: 5,
+        width: 100%,
+      ),
+      phone: (
+        order: 6,
+        width: 100%,
+      ),
+    );
+    @include mixins.table-styleTableMobile($columns);
+  }
+}

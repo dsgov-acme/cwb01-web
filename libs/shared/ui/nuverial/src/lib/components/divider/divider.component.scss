@@ -1,0 +1,18 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+
+:host {
+  --nuverial-divider-border-width: 1px;
+  --nuverial-divider-border-width-vertical: 2px;
+  --nuverial-divider-border-color: var(--theme-color-m3-neutral-90);
+
+  display: block;
+  border-top-style: solid;
+  border-top-color: var(--nuverial-divider-border-color);
+  border-top-width: var(--nuverial-divider-border-width);
+
+  &.nuverial-divider-vertical {
+    border-top: 0;
+    border-right-width: var(--nuverial-divider-border-width-vertical);
+    border-right-style: solid;
+  }
+}

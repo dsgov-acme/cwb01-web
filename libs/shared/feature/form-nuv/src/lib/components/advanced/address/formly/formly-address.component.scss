@@ -1,0 +1,8 @@
+@use '@dsg/shared-theme/partials/mixins' as mixins;
+
+:host {
+  display: flex;
+
+  @include mixins.dynamicForms-styleFormlyFields();
+  @include mixins.dynamicForms-styleReviewFields();
+}

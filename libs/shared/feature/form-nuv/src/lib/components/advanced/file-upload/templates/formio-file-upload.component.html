@@ -1,0 +1,19 @@
+<nuverial-accordion
+  [panelList]="[{expanded: true, panelTitle: props.label}]"
+  closeSuffixHeaderText="SHOW MORE"
+  openSuffixHeaderText="SHOW LESS"
+  prefixIconName="cloud_upload_outline"
+>
+  <ng-template #body let-panel>
+    <div class="uploader-container">
+      <div [innerHTML]="props.content" [ngClass]="fullWidth ? 'flex-full' : 'flex-half'"></div>
+      <div class="uploader" *ngFor="let component of components; trackBy: trackByFn" [ngClass]="multiple ? 'flex-full' : 'flex-half'">
+        <nuverial-file-upload
+          [documentTitle]="component['props']?.label"
+          [maxFileSize]="component['props']?.maxFileSize"
+          [multiple]="multiple"
+        ></nuverial-file-upload>
+      </div>
+    </div>
+  </ng-template>
+</nuverial-accordion>

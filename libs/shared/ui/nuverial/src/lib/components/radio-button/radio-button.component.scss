@@ -1,0 +1,19 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/variables' as themeVars;
+
+:host {
+  display: block;
+
+  ::ng-deep mat-radio-button {
+    --mat-mdc-radio-checked-ripple-color: var(--theme-color-tertiary) !important;
+    --mat-mdc-radio-ripple-color: var(--theme-color-tertiary) !important;
+    --mdc-radio-unselected-focus-icon-color: var(--theme-color-m3-neutral-80) !important;
+    --mdc-radio-unselected-hover-icon-color: var(--theme-color-m3-neutral-80) !important;
+    --mdc-radio-unselected-icon-color: var(--theme-color-m3-neutral-80) !important;
+    --mdc-radio-unselected-pressed-icon-color: var(--theme-color-m3-neutral-80) !important;
+    --mdc-radio-selected-focus-icon-color: var(--theme-color-tertiary) !important;
+    --mdc-radio-selected-hover-icon-color: var(--theme-color-tertiary) !important;
+    --mdc-radio-selected-icon-color: var(--theme-color-tertiary) !important;
+    --mdc-radio-selected-pressed-icon-color: var(--theme-color-tertiary) !important;
+  }
+}

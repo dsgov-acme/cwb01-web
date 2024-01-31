@@ -1,0 +1,21 @@
+replicaCount: 1
+revisionHistoryLimit: 3
+
+namespace: "cwb01"
+isGke: true
+createIngress: false
+
+image:
+  repository: agency
+  pullPolicy: Always
+  tag: latest
+
+net:
+  applicationPort: 80
+  readinessPath: /nginx-health
+  livenessPath: /nginx-health
+
+resources:
+  mem:
+    min: 10Mi
+    max: 100Mi

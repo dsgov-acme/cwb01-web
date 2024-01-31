@@ -1,0 +1,70 @@
+<h2>Text Input</h2>
+<div class="component-section">
+  <nuverial-text-input
+    ariaDescribedBy="desc...."
+    [required]="true"
+    [validationMessages]="{required: 'Ng Model test is required'}"
+    [(ngModel)]="inputTextModel"
+    label="Ng Model"
+    placeholder="Ng Model placeholder"
+  ></nuverial-text-input>
+
+  <nuverial-text-input
+    [formControl]="inputTextFormControl"
+    [required]="true"
+    [validationMessages]="inputTextValidationMessages"
+    (validationErrors)="onValidationErrors($event)"
+    label="Form Control"
+    placeholder="Form Control Placeholder"
+    prefixIcon="search_outlined"
+  ></nuverial-text-input>
+
+  <nuverial-text-input
+    [disabled]="true"
+    [validationMessages]="{required: 'Ng Model test is required'}"
+    [(ngModel)]="inputTextModel"
+    label="Ng Model disabled"
+    placeholder="Ng Model placeholder"
+  ></nuverial-text-input>
+</div>
+
+<div class="component-section">
+  <nuverial-text-input
+    [maxlength]="10"
+    [validationMessages]="{required: 'Ng Model test is required'}"
+    [(ngModel)]="inputTextModel"
+    label="Ng Model max length"
+    placeholder="Ng Model placeholder"
+  ></nuverial-text-input>
+
+  <nuverial-text-input
+    [validationMessages]="{required: 'Ng Model test is required'}"
+    [(ngModel)]="inputTextModel"
+    hint="Ng Model hint"
+    label="Ng Model hint"
+    placeholder="Ng Model placeholder"
+  ></nuverial-text-input>
+</div>
+<div class="component-section" [formGroup]="inputTextFormGroup">
+  <nuverial-text-input
+    [required]="true"
+    [validationMessages]="{required: 'Something is required'}"
+    formControlName="testGroupControl1"
+    label="Form Control Name"
+    placeholder="Form Control Name Placeholder"
+    suffixIcon="search_outlined"
+  >
+  </nuverial-text-input>
+  <nuverial-text-input
+    [required]="true"
+    [validationMessages]="{required: 'Something is required'}"
+    formControlName="testGroupControl2"
+    label="Form Control Name"
+    placeholder="Form Control Name Placeholder"
+    tooltip="Form Control Name tooltip"
+  >
+  </nuverial-text-input>
+</div>
+<div class="component-section">
+  <nuverial-text-input [(ngModel)]="inputTextModel" label="Text Input Mask" maskPattern="(000) 000-0000" placeholder="(000) 000-0000"></nuverial-text-input>
+</div>

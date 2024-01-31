@@ -1,0 +1,30 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+
+:host {
+  background-color: var(--theme-color-header-background);
+  border-bottom: 4px solid var(--theme-color-tertiary);
+  color: var(--theme-color-white);
+  min-height: rem.fromPx(95px);
+  height: rem.fromPx(95px);
+  padding: rem.fromPx(20px) rem.fromPx(40px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  z-index: 99;
+
+  .nuverial-header-content-left,
+  .nuverial-header-content-right {
+    flex: 1;
+    display: flex;
+    height: 100%;
+    align-items: center;
+  }
+
+  .nuverial-header-content-left {
+    justify-content: flex-start;
+  }
+  .nuverial-header-content-right {
+    justify-content: flex-end;
+  }
+}

@@ -1,0 +1,96 @@
+@use '@dsg/shared-theme/partials/variables' as themeVars;
+
+:host {
+  flex: 1;
+
+  .confirmation {
+    &__actions {
+      background-color: white;
+      bottom: 0;
+      box-shadow: 0px -4px 3px #eee;
+      display: block;
+      height: 100px;
+      left: 0;
+      margin: auto;
+      position: fixed;
+      text-align: center;
+      width: 100%;
+
+      &--back {
+        margin-top: 25px;
+        width: 30%;
+        max-width: 400px;
+        @media screen and (max-width: themeVars.$layout-mobile-breakpoint) {
+          width: 85%;
+        }
+      }
+    }
+
+    &__message {
+      margin-top: 20px;
+      padding: 0 3.25rem;
+
+      &--header {
+        margin: 20px 0;
+        display: flex;
+        grid-gap: 10px;
+        align-items: center;
+
+        h3 {
+          font-size: 25px;
+        }
+      }
+
+      ::ng-deep .mat-icon {
+        color: var(--theme-color-success);
+      }
+
+      &--print {
+        margin: 20px 0;
+        background-color: var(--theme-color-m3-neutral-95);
+        border-radius: 8px;
+        padding: 20px;
+
+        & span {
+          float: right;
+        }
+
+        ::ng-deep .mat-icon {
+          color: var(--theme-color-link);
+        }
+      }
+
+      &--print-button {
+        cursor: pointer;
+      }
+
+      &--icon {
+        position: relative;
+        top: -2px;
+        vertical-align: middle;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: themeVars.$layout-mobile-breakpoint) {
+  .confirmation {
+    &__message {
+      &--print {
+        display: flex;
+      }
+
+      &--header {
+        flex-direction: column-reverse;
+        display: flex;
+        text-align: center;
+
+        nuverial-icon {
+          margin: auto;
+          padding-bottom: 10px;
+          --nuverial-icon-size: 70px;
+        }
+      }
+    }
+  }
+}

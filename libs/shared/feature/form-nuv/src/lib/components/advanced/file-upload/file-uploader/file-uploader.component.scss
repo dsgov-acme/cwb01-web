@@ -1,0 +1,13 @@
+@use '@dsg/shared-theme/partials/variables' as themeVars;
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/mixins' as mixins;
+
+:host {
+  display: block;
+  @include mixins.dynamicForms-styleReviewFields();
+
+  a {
+    color: var(--theme-color-link);
+    cursor: pointer;
+  }
+}

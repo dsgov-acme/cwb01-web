@@ -1,0 +1,11 @@
+@use '@dsg/shared-theme/partials/mixins' as mixins;
+
+:host {
+  display: block;
+
+  ::ng-deep {
+    .mat-mdc-text-field-wrapper {
+      background-color: var(--theme-color-white);
+    }
+  }
+}

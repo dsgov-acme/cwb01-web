@@ -1,0 +1,124 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/mixins' as mixins;
+
+:host {
+  flex: 1;
+  display: flex;
+  margin: rem.fromPx(-40px) 0 0 0;
+
+  & > .user-details {
+    display: flex;
+    flex-direction: column;
+    gap: rem.fromPx(10px);
+    flex: 0 0 rem.fromPx(200px);
+    margin: rem.fromPx(10px) rem.fromPx(25px) rem.fromPx(40px);
+
+    .pill-container {
+      padding-bottom: rem.fromPx(10px);
+
+      ::ng-deep .nuverial-pill {
+        font-weight: var(--theme-typography-font-weight-bold);
+        letter-spacing: rem.fromPx(0.5px);
+      }
+    }
+
+    & > .transaction-name {
+      font-weight: var(--theme-typography-font-weight-mid);
+    }
+
+    & .copy-user-id {
+      cursor: pointer;
+      vertical-align: sub;
+
+      ::ng-deep .mat-icon {
+        color: var(--theme-color-tertiary);
+        font-size: var(--theme-typography-font-size-x-large);
+      }
+    }
+
+    & > .transaction-submitted-on {
+      color: var(--theme-color-m3-neutral-30);
+      font-size: var(--theme-typography-font-size-small);
+    }
+
+    & > .user-email {
+      a {
+        display: flex;
+        gap: 0.3rem;
+        align-items: center;
+      }
+
+      ::ng-deep {
+        .nuverial-icon {
+          --nuverial-icon-size: 1rem;
+        }
+      }
+    }
+
+    & > .user-name--not-found {
+      color: var(--theme-color-m3-neutral-30);
+      font-size: var(--theme-typography-font-size-small);
+      margin-top: -15px;
+    }
+
+    & > .detail-menu {
+      margin: 0 rem.fromPx(-25px);
+    }
+
+    & > .priority {
+      display: flex;
+      align-items: baseline;
+
+      ::ng-deep .mat-mdc-form-field-flex {
+        height: rem.fromPx(25px);
+
+        .mat-mdc-form-field-infix {
+          padding: 0px;
+          align-items: start;
+          height: rem.fromPx(30px);
+        }
+      }
+
+      & .priority--select {
+        ::ng-deep * {
+          font-weight: var(--theme-typography-font-weight-bold);
+        }
+        width: 160px;
+      }
+    }
+  }
+
+  & > .detail-container {
+    background: var(--theme-color-m3-neutral-95);
+    padding: rem.fromPx(27px);
+    padding-bottom: 0;
+    flex: 1;
+    display: flex;
+
+    & .detail-content {
+      background: var(--theme-color-white);
+      display: flex;
+      flex: 1;
+
+      &-tabs,
+      &-tab {
+        display: flex;
+        flex: 1;
+        flex-flow: column nowrap;
+      }
+    }
+  }
+
+  .assign-container {
+    padding-bottom: rem.fromPx(10px);
+
+    .assign-label {
+      padding-bottom: rem.fromPx(10px);
+    }
+
+    ::ng-deep .mat-mdc-form-field-infix {
+      height: rem.fromPx(45px);
+      min-height: auto;
+    }
+  }
+}

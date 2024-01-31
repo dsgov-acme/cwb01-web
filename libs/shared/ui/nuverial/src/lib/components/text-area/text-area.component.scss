@@ -1,0 +1,10 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/mixins' as mixins;
+
+:host {
+  .nuverial-text-area-error {
+    min-height: 1.5rem;
+  }
+
+  @include mixins.formField-styleFormField();
+}

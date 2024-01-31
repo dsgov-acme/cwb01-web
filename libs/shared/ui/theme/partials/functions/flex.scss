@@ -1,0 +1,4 @@
+// Calculate the flex basis accounting for gap
+@function flexBasisWithGap($items, $gap) {
+  @return calc((100% - (($items - 1) * $gap)) / $items);
+}

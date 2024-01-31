@@ -1,0 +1,29 @@
+<header class="employer-profile-header">
+  <div class="display-name">
+    <h1 class="portal-title">Employer UI Portal:</h1>
+    <h1 class="employer-name">{{ currentEmployer }}</h1>
+  </div>
+  <div class="dropdown-container">
+    <ng-container *ngIf="employerProfiles$ | async as employerProfiles">
+      <span class="dropdown-label" *ngIf="employerProfiles.length > 1;else displayNoEmployer">Select Employer</span>
+      <mat-form-field *ngIf="employerProfiles.length > 1;else displayNoEmployer" appearance="fill">
+        <mat-select [(value)]="selectedEmployerId" (selectionChange)="onEmployerSelect($event.value)" panelClass="employer-dashboard-select-panel">
+          <mat-select-trigger> {{currentEmployer}} </mat-select-trigger>
+          <mat-option *ngFor="let profile of employerProfiles; trackBy: trackByFn" [value]="profile.id">{{profile.displayName}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <ng-template #displayNoEmployer></ng-template>
+    </ng-container>
+  </div>
+</header>
+<nuverial-dashboard-cards-group>
+  <ng-container *ngFor="let card of cards$ | async; trackBy: trackByFn">
+    <nuverial-dashboard-card
+      [description]="card.description"
+      [icon]="card.icon"
+      [name]="card.name"
+      [route]="card.route"
+      [tags]="card.tags"
+    ></nuverial-dashboard-card>
+  </ng-container>
+</nuverial-dashboard-cards-group>

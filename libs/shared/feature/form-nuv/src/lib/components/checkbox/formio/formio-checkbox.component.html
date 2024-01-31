@@ -1,0 +1,13 @@
+<nuverial-checkbox
+  [ariaLabel]="props.ariaLabel || props.label || 'label'"
+  [checked]="props.checked || false"
+  [colorTheme]="props.colorTheme || 'primary'"
+  [disabled]="props.disabled!"
+  [formControl]="formControl"
+  [invalid]="props.invalid || false"
+  [labelPosition]="props.fieldLabelPosition || 'after'"
+  [required]="props.required!"
+  [validationMessages]="validation?.messages"
+>
+  <div nuverialCardContentType="label">{{props.label}}</div>
+</nuverial-checkbox>

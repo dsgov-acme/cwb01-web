@@ -1,0 +1,41 @@
+@use '../functions/rem';
+@use '../variables' as themeVars;
+
+@mixin styleCheckbox() {
+  :root {
+    display: flex;
+    flex-direction: column;
+
+    @media screen and (max-width: themeVars.$layout-medium-screen-breakpoint) {
+      max-width: 100%;
+    }
+  }
+
+  ::ng-deep .mat-mdc-checkbox .mdc-form-field {
+    border: none;
+    box-shadow: none;
+    background-color: var(--nuverial-checkbox-card-box-shadow);
+  }
+
+  ::ng-deep .mat-mdc-checkbox.mat-accent {
+    --mdc-checkbox-selected-icon-color: var(--theme-color-tertiary);
+  }
+  ::ng-deep .mat-mdc-checkbox.mat-primary {
+    --mdc-checkbox-unselected-focus-icon-color: var(--theme-color-m3-neutral-60);
+    --mdc-checkbox-unselected-hover-icon-color: var(--theme-color-m3-neutral-60);
+    --mdc-checkbox-disabled-selected-icon-color: var(--theme-color-m3-neutral-60);
+    --mdc-checkbox-disabled-unselected-icon-color: var(--theme-color-m3-neutral-80);
+    --mdc-checkbox-unselected-icon-color: var(--theme-color-m3-neutral-80);
+    --mdc-checkbox-unselected-pressed-icon-color: var(--theme-color-tertiary);
+    --mdc-checkbox-selected-icon-color: var(--theme-color-tertiary);
+    --mdc-checkbox-selected-focus-icon-color: var(--theme-color-tertiary);
+    --mdc-checkbox-selected-hover-icon-color: var(--theme-color-tertiary);
+  }
+
+  ::ng-deep .mdc-form-field {
+    width: 100%;
+    label {
+      width: 100%;
+    }
+  }
+}

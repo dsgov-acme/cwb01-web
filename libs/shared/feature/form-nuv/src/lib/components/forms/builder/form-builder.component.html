@@ -1,0 +1,99 @@
+<ng-container *ngIf="loadForm$ | async; else spinner">
+  <div class="builder-container">
+    <ng-container *ngIf="loading">
+      <ng-container *ngTemplateOutlet="spinner"></ng-container>
+    </ng-container>
+    <div class="breadcrumb-container">
+      <nuverial-breadcrumb [breadCrumbs]="breadCrumbs"></nuverial-breadcrumb>
+    </div>
+
+    <ng-container>
+      <dsg-builder-header [metaData]="metaDataFields$ | async"></dsg-builder-header>
+    </ng-container>
+
+    <ng-container *ngIf="builderFormFields$ | async as form">
+      <nuverial-split-area
+        class="form-builder-container"
+        #splitArea
+        [area2InitialSize]="area2InitialSize"
+        [area2MinWidth]="150"
+        [ngClass]="{ hideGutter: !showPreview }"
+        (splitDragging)="onSplitDrag($event)"
+      >
+        <ng-container [ngSwitch]="currentSelectorTab" child1>
+          <div class="split-container-1">
+            <div class="button-row">
+              <nuverial-selector-button
+                [tabs]="selectorTabs"
+                (selectEvent)="currentSelectorTab === selectorTabsKeys.VISUAL ? onTabSelect($event, form) : onTabSelect($event)"
+              ></nuverial-selector-button>
+              <nuverial-button
+                class="preview-button"
+                ariaLabel="Preview"
+                *ngIf="!this.showPreview"
+                (click)="togglePreview()"
+                buttonStyle="filled"
+                buttonType="button"
+                >Preview
+                <nuverial-icon iconName="vertical_split"></nuverial-icon>
+              </nuverial-button>
+            </div>
+            <section *ngSwitchCase="selectorTabsKeys.VISUAL">
+              <section class="formio-builder">
+                <form-builder #formio [form]="form" [options]="options"></form-builder>
+              </section>
+            </section>
+            <section *ngSwitchCase="selectorTabsKeys.JSON" [ngClass]="[showPreview ? 'nuverial-json-editor-split-area' : 'nuverial-json-editor']">
+              <nuverial-json-editor [formioJSONObject]="jsonForm" (jsonChange)="updateJson($any($event))"> </nuverial-json-editor>
+            </section>
+            <nuverial-footer-actions [footerActions]="actions" (actionSelected)="saveChanges(form)"></nuverial-footer-actions>
+          </div>
+        </ng-container>
+        <ng-container [ngSwitch]="currentPreviewSelectorTab" child2>
+          <div class="split-container-2">
+            <nuverial-button
+              class="white-preview-button"
+              ariaLabel="Preview"
+              (click)="togglePreview()"
+              buttonStyle="filled"
+              buttonType="button"
+              colorTheme="primary"
+              style="margin-right: auto"
+              >Preview
+              <nuverial-icon iconName="vertical_split"></nuverial-icon>
+            </nuverial-button>
+            <div class="button-row">
+              <nuverial-selector-button [tabs]="previewSelectorTabs" (selectEvent)="onPreviewTabSelect($event)"></nuverial-selector-button>
+              <nuverial-slide-toggle [checked]="showDataModel" (change)="toggleDataModel()">Data Model</nuverial-slide-toggle>
+            </div>
+            <ng-container *ngIf="showDataModel">
+              <section class="form-data-json" *ngIf="jsonFormData$ | async as jsonFormData">
+                <nuverial-json-editor [formioJSONObject]="jsonFormData" [readOnly]="true"> </nuverial-json-editor>
+              </section>
+            </ng-container>
+            <section *ngSwitchCase="previewSelectorTabs[0].key">
+              <dsg-form-renderer
+                [fields$]="intakeFormFields$"
+                [model$]="formData$"
+                [options]="intakeRendererOptions"
+                (modelChange)="onModelChange($event)"
+                style="margin: 0 auto 4rem auto"
+              ></dsg-form-renderer>
+            </section>
+            <section *ngSwitchCase="previewSelectorTabs[1].key">
+              <dsg-form-renderer
+                [fields$]="reviewFormFields$"
+                [model$]="formData$"
+                [options]="reviewRendererOptions"
+                style="margin: 0 auto 4rem auto"
+              ></dsg-form-renderer>
+            </section>
+          </div>
+        </ng-container>
+      </nuverial-split-area>
+    </ng-container>
+  </div>
+</ng-container>
+<ng-template #spinner>
+  <nuverial-spinner class="overlay"></nuverial-spinner>
+</ng-template>

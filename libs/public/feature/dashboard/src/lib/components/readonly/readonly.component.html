@@ -1,0 +1,24 @@
+<section class="readonly-transaction">
+  <ng-container *ngIf="transaction$ | async as transaction; else loading">
+    <div class="readonly-transaction__header">
+      <h1 class="title" data-testid="header-title">{{transaction.transactionDefinitionName}}</h1>
+      <div class="id">Transaction ID: {{transaction.externalId}}</div>
+      <div class="submit-date" data-testid="header-submit-date">Submitted: {{transaction.submittedOn | date:'MM/dd/yyyy hh:mm a'}}</div>
+      <div class="status">
+        {{'Status: '}}
+        <span class="status__label" data-testid="header-status-label" [ngClass]="statusLabelColorClass">
+          <span> {{transaction.status}} </span>
+        </span>
+      </div>
+    </div>
+    <dsg-form-renderer
+      class="readonly-transaction__form"
+      [fields$]="reviewFormFields$"
+      [model$]="formData$"
+      [options]="reviewRendererOptions"
+    ></dsg-form-renderer>
+  </ng-container>
+  <ng-template #loading>
+    <nuverial-spinner></nuverial-spinner>
+  </ng-template>
+</section>

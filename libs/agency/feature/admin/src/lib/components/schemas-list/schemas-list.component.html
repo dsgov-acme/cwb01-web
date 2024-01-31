@@ -1,0 +1,43 @@
+<h1 class="title">Schemas</h1>
+<ng-container class="schemas-list">
+  <div class="schemas-list__actions">
+    <nuverial-text-input
+      class="filter"
+      ariaLabel="Search schemas"
+      [formControl]="searchInput"
+      [suffixIcon]="searchBoxIcon"
+      [type]="'text'"
+      (clickIcon)="clearSearch()"
+      (keyup.enter)="handleSearch()"
+      (keyup)="setSearchBoxIcon()"
+      placeholder="Search by Name/Key"
+      style="width: 1000px"
+    />
+    <nuverial-button
+      class="new-schema-button"
+      ariaLabel="Submit"
+      [loading]="false"
+      (click)="navigateToAddSchema()"
+      buttonStyle="filled"
+      buttonType="submit"
+      colorTheme="primary"
+    >
+      <nuverial-icon class="white-icon" iconName="add" />
+      NEW SCHEMA
+    </nuverial-button>
+  </div>
+  <ng-container *ngIf="schemaDefinitionsList$ | async">
+    <nuverial-table
+      ariaLabel="transactions list table"
+      [dataSourceTable]="dataSourceTable"
+      [displayedColumns]="displayedColumns"
+      [listIsLoading]="schemaListIsLoading"
+      [pagingMetadata]="pagingMetadata"
+      [pagingRequestModel]="pagingRequestModel"
+      [sortDirection]="sortDirection"
+      (clickRow)="navigateToSchemaBuilder($event.key)"
+      (setPage)="setPage($event)"
+      (sortData)="sortData($event)"
+    ></nuverial-table>
+  </ng-container>
+</ng-container>

@@ -1,0 +1,41 @@
+<ng-container *ngIf="loadSchemaTree$ | async; else spinner">
+  <div class="builder-container">
+    <ng-container *ngIf="loading">
+      <ng-container *ngTemplateOutlet="spinner"></ng-container>
+    </ng-container>
+    <div class="breadcrumb-container">
+      <nuverial-breadcrumb [breadCrumbs]="breadCrumbs"></nuverial-breadcrumb>
+    </div>
+
+    <ng-container>
+      <dsg-schema-builder-header [metaData]="metaDataFields$ | async"></dsg-schema-builder-header>
+    </ng-container>
+
+    <ng-container *ngIf="form$ | async as form">
+      <div class="form-builder-container">
+        <ng-container [ngSwitch]="currentSelectorTab" child1>
+          <div class="split-container-1">
+            <div class="button-row">
+              <nuverial-selector-button
+                [tabs]="selectorTabs"
+                (selectEvent)="currentSelectorTab === selectorTabsKeys.VISUAL ? onTabSelect($event, form) : onTabSelect($event)"
+              ></nuverial-selector-button>
+            </div>
+            <section *ngSwitchCase="selectorTabsKeys.VISUAL">
+              <section class="formio-builder">
+                <form-builder #formio [form]="form" [options]="options"></form-builder>
+              </section>
+            </section>
+            <section class="nuverial-json-editor" *ngSwitchCase="selectorTabsKeys.JSON">
+              <nuverial-json-editor [formioJSONObject]="jsonForm" (jsonChange)="updateJson($any($event))"> </nuverial-json-editor>
+            </section>
+            <nuverial-footer-actions [footerActions]="actions" (actionSelected)="onActionClick($event, form)"></nuverial-footer-actions>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>
+<ng-template #spinner>
+  <nuverial-spinner class="overlay"></nuverial-spinner>
+</ng-template>

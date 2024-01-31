@@ -1,0 +1,36 @@
+<ng-container *ngIf="breadCrumbs.length === 1; else regularBreadcrumbs">
+  <div class="nuverial-breadcrumb">
+    <div
+      [attr.ariaLabel]="breadCrumbs[0].label"
+      (click)="navigate(breadCrumbs[0].navigationPath)"
+      (keyup.enter)="navigate(breadCrumbs[0].navigationPath)"
+      tabindex="0"
+    >
+      <nuverial-icon iconName="chevron_left"></nuverial-icon>
+      {{breadCrumbs[0].label || 'Back'}}
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #regularBreadcrumbs>
+  <span class="nuverial-breadcrumb">
+    <span *ngFor="let breadCrumb of breadCrumbs; let last = last, let index = index, trackBy: trackByFn">
+      <ng-container *ngIf="!last">
+        <a
+          class="label-{{index}}"
+          [attr.ariaLabel]="breadCrumb.label"
+          (click)="navigate(breadCrumb.navigationPath)"
+          (keyup.enter)="navigate(breadCrumb.navigationPath)"
+          tabindex="0"
+          >{{ breadCrumb.label || 'Back' }}</a
+        >
+        <nuverial-icon class="chevron-right" iconName="chevron_right"></nuverial-icon>
+      </ng-container>
+      <ng-container *ngIf="last"
+        ><a [attr.ariaLabel]="breadCrumb.label" (click)="navigate(breadCrumb.navigationPath)" (keyup.enter)="navigate(breadCrumb.navigationPath)" tabindex="0">
+          {{breadCrumb.label || 'Back' }}
+        </a>
+      </ng-container>
+    </span>
+  </span>
+</ng-template>

@@ -1,0 +1,109 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/variables';
+@use '@angular/material' as mat;
+
+:host {
+  --nuverial-dashboard-card-background-color: var(--theme-color-white);
+  --nuverial-dashboard-card-border-color: var(--theme-color-m3-neutral-90);
+  --nuverial-dashboard-hover-border-color: var(--theme-color-primary);
+  --nuverial-dashboard-active-border-color: var(--theme-color-tertiary);
+
+  height: rem.fromPx(200px);
+  width: rem.fromPx(340px);
+
+  .card {
+    border-radius: 8px;
+    border: 1px solid var(--nuverial-dashboard-card-border-color);
+    background-color: var(--theme-color-white);
+    padding: 8px 16px;
+    box-sizing: border-box;
+    height: rem.fromPx(200px);
+    width: rem.fromPx(340px);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    @include mat.elevation(1);
+    transition: box-shadow 0.2s;
+
+    &:hover {
+      border-color: var(--nuverial-dashboard-hover-border-color);
+      @include mat.elevation(3);
+    }
+
+    &:active {
+      border-color: var(--nuverial-dashboard-active-border-color);
+      @include mat.elevation(0);
+    }
+
+    &-header {
+      width: 100%;
+      max-width: 100%;
+      ::ng-deep nuverial-icon {
+        .mat-icon {
+          font-size: rem.fromPx(32px);
+          line-height: rem.fromPx(32px);
+          height: rem.fromPx(32px);
+          width: rem.fromPx(32px);
+          color: var(--theme-color-secondary);
+        }
+      }
+
+      h3 {
+        font-size: rem.fromPx(20px);
+        font-weight: var(--theme-typography-font-weight-bold);
+        line-height: rem.fromPx(26px);
+        margin: 8px 0;
+      }
+
+      &-row {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        max-width: 100%;
+        overflow: hidden;
+        gap: 0.5rem;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      &-icon {
+        flex: 0 0 auto;
+      }
+
+      &-tags {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+        flex: 1 1 auto;
+        column-gap: 0.5rem;
+        max-width: 100%;
+        min-width: 0;
+      }
+    }
+
+    &-description {
+      margin: 0;
+      font-size: rem.fromPx(14px);
+      line-height: rem.fromPx(16px);
+      text-overflow: ellipsis;
+      overflow: hidden;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      display: -webkit-box;
+    }
+
+    &-footer {
+      margin-top: auto;
+      ::ng-deep nuverial-icon {
+        .mat-icon {
+          font-size: rem.fromPx(20px);
+          line-height: rem.fromPx(20px);
+          height: rem.fromPx(20px);
+          width: rem.fromPx(20px);
+          color: var(--theme-color-tertiary);
+        }
+      }
+    }
+  }
+}

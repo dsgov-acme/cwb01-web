@@ -1,0 +1,5 @@
+@use '../functions/rem';
+
+$mobile-breakpoint: rem.fromPx(500px);
+$desktop-max-content-width: rem.fromPx(1280px);
+$medium-screen-breakpoint: rem.fromPx(910px);

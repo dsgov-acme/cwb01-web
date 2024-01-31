@@ -1,0 +1,78 @@
+<header class="header">
+  <h2 class="header-title">Notes</h2>
+  <nuverial-button class="notes-header-button" ariaLabel="Add New Note" [uppercaseText]="true" (click)="navigateToAddNote()" buttonStyle="outlined"
+    >Add New Note</nuverial-button
+  >
+</header>
+
+<section class="notes-toolbar">
+  <h3 class="notes-toolbar-title">Past Notes</h3>
+  <div class="notes-toolbar-actions">
+    <nuverial-selector-button-dropdown
+      ariaLabel="Sort By"
+      [buttonText]="sortByButtonText"
+      [menuItems]="sortByOptions"
+      (buttonClickedEvent)="changeSortBy($event)"
+    >
+    </nuverial-selector-button-dropdown>
+
+    <nuverial-button class="custom-bordered-button" ariaLabel="buttonText" (click)="toggleOrder()" buttonStyle="outlined" colorTheme="primary" mat-flat-button>
+      <nuverial-icon [iconName]="orderButtonIcon" [outlined]="true"></nuverial-icon
+    ></nuverial-button>
+  </div>
+</section>
+
+<section class="notes-container" [infiniteScrollDistance]="scrollDistance" [infiniteScrollThrottle]="throttle" (scrolled)="loadMoreNotes()" infinite-scroll>
+  <ng-container *ngIf="isLoadingMoreNotes">
+    <nuverial-spinner></nuverial-spinner>
+  </ng-container>
+
+  <ng-container *ngIf="(notes$ | async) as notes">
+    <ng-container *ngIf="notes.length; else noNotesTemplate">
+      <div class="note-card" *ngFor="let note of notes; trackBy: trackByFn">
+        <nuverial-accordion [panelList]="[note]">
+          <header class="note-card-header" panel-header>
+            <div class="note-card-header-title">
+              <h4>
+                {{note.title}}
+                <div class="pill-container">
+                  <nuverial-pill>{{noteTypesLabels[note.type.id]}}</nuverial-pill>
+                </div>
+              </h4>
+              <p class="note-card-header-meta">
+                <strong>Created {{note.createdTimestamp | date: 'MM/dd/yyyy'}}</strong>
+                <span *ngIf="note.lastUpdatedTimestamp"> (Updated {{note.lastUpdatedTimestamp | date: 'MM/dd/yyyy'}})</span>
+                | by {{note.lastUpdatedByDisplayName || note.lastCreatedByDisplayName}}
+              </p>
+            </div>
+            <div class="note-card-header-actions" *ngIf="note.expanded">
+              <nuverial-button class="note-card-header-icon-button" ariaLabel="Edit note" (click)="editNote(note.id)"
+                ><nuverial-icon iconName="edit"></nuverial-icon
+              ></nuverial-button>
+              <nuverial-button class="note-card-header-icon-button" ariaLabel="Delete note" (click)="deleteNote(note.id)"
+                ><nuverial-icon iconName="delete"></nuverial-icon
+              ></nuverial-button>
+            </div>
+          </header>
+
+          <ng-template #body let-panel>
+            <nuverial-rich-text-viewer [content]="note.body"></nuverial-rich-text-viewer>
+            <div *ngIf="panel.documents && panel.documents.length > 0">
+              <h4>Documents/Photos</h4>
+              <ul class="note-card-docs">
+                <li *ngFor="let document of panel.documents; trackBy: trackByFn">{{document}}</li>
+              </ul>
+            </div>
+          </ng-template>
+        </nuverial-accordion>
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <ng-template #noNotesTemplate>
+    <div class="notes-cta">
+      <nuverial-icon class="notes-cta-icon" iconName="description-outline"></nuverial-icon>
+      <p class="notes-cta-message">No notes have been added. Start a new note by clicking the 'Add New Note' button above!</p>
+    </div>
+  </ng-template>
+</section>

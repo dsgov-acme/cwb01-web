@@ -1,0 +1,32 @@
+<div class="container">
+  <nuverial-button
+    class="custom-bordered-button"
+    ariaLabel="buttonText"
+    [buttonStyle]="buttonText ? 'outlined' : 'icon-no-border'"
+    [matMenuTriggerFor]="menu"
+    (menuOpened)="onMenuOpened()"
+    colorTheme="primary"
+    mat-flat-button
+    type="submit"
+  >
+    <b *ngIf="buttonText">{{buttonText}}</b> <nuverial-icon [iconName]="icon || 'arrow_drop_down'" [outlined]="true"></nuverial-icon>
+  </nuverial-button>
+</div>
+<span class="selector-button-dropdown-menu-wrapper">
+  <mat-menu class="selector-button-dropdown-menu" #menu="matMenu">
+    <ng-container *ngIf="menuItems; else projectedMenuItems">
+      <button
+        class="selector-button-dropdown-menuItem"
+        *ngFor="let item of menuItems; trackBy: trackByFn"
+        (click)="selectItem(item)"
+        mat-menu-item
+        type="submit"
+      >
+        {{ item.displayTextValue }}
+      </button>
+    </ng-container>
+    <ng-template #projectedMenuItems>
+      <ng-content></ng-content>
+    </ng-template>
+  </mat-menu>
+</span>

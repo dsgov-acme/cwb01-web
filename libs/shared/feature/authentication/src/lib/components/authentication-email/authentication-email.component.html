@@ -1,0 +1,85 @@
+<ng-container [ngSwitch]="processingStatus">
+  <ng-container *ngSwitchCase="'active'">
+    <ng-container *ngTemplateOutlet="activeTemplate"></ng-container>
+  </ng-container>
+  <ng-container *ngSwitchCase="'complete'">
+    <ng-container *ngTemplateOutlet="completeTemplate;context:{status: processingStatus$ | async}"></ng-container>
+  </ng-container>
+  <ng-container *ngSwitchCase="'loading'">
+    <ng-container *ngTemplateOutlet="loadingTemplate"></ng-container>
+  </ng-container>
+</ng-container>
+
+<ng-template #activeTemplate>
+  <ng-container *ngIf="(submitStatus$ | async)?.status === 'loading'">
+    <nuverial-spinner></nuverial-spinner>
+  </ng-container>
+  <nuverial-card>
+    <h1 nuverialCardContentType="title">{{language.headerText}}</h1>
+    <div class="dsg-authentication-email-content-container" *ngIf="formGroup" [formGroup]="formGroup" nuverialCardContentType="content">
+      <div class="dsg-authentication-email-content-instructions">{{language.headerSubText}}</div>
+      <nuverial-text-input
+        [label]="language.emailAddressFormLabel || ''"
+        [placeholder]="language.emailAddressFormPlaceHolder || ''"
+        [required]="true"
+        [validationMessages]="emailValidationMessages"
+        (keyup.enter)="handleEnterKey()"
+        formControlName="emailAddress"
+        type="email"
+      ></nuverial-text-input>
+
+      <nuverial-text-input
+        *ngIf="passwordActive"
+        [label]="language.passwordFormLabel || ''"
+        [placeholder]="language.passwordFormPlaceHolder|| ''"
+        [required]="true"
+        [suffixAriaLabel]="passwordVisible ? language.passwordFormDisplayEnabled || '' : language.passwordFormDisplayDisabled || ''"
+        [togglePassword]="true"
+        [validationMessages]="passwordValidationMessages"
+        (clickIcon)="passwordVisible = !passwordVisible"
+        (keyup.enter)="handleEnterKey()"
+        formControlName="password"
+        minlength="6"
+        type="password"
+      ></nuverial-text-input>
+
+      <div class="dsg-authentication-email-content-controls">
+        <nuverial-button
+          [ariaLabel]="language.formSubmitText || ''"
+          [disabled]="(submitStatus$ | async)?.status !== 'valid'"
+          [uppercaseText]="true"
+          (click)="onSubmitClick()"
+          buttonStyle="filled"
+          colorTheme="primary"
+          >{{language.formSubmitText || ''}}</nuverial-button
+        >
+        <a class="dsg-authentication-email-content-controls-link" *ngIf="displayReset" [routerLink]="[]" (click)="onProviderUpdate('reset')"
+          >{{language.formSubmitLinkText || ''}}</a
+        >
+      </div>
+    </div>
+    <div class="dsg-authentication-email-footer-container" nuverialCardContentType="footer">
+      <span>{{language.footerText}}</span>
+      <a class="dsg-authentication-email-footer-link" [routerLink]="[]" (click)="onProviderUpdate('link')">{{language.footerLinkText || ''}}</a>
+    </div>
+  </nuverial-card>
+</ng-template>
+
+<ng-template #completeTemplate let-status="status">
+  <ng-container>
+    <dsg-authentication-status
+      [authenticationProvider]="authenticationAction"
+      [linkText]="status?.linkText"
+      [message]="status.message"
+      [subTitle]="status.subTitle"
+      [title]="status.title"
+      (statusClose)="onStatusClose()"
+    ></dsg-authentication-status>
+  </ng-container>
+</ng-template>
+
+<ng-template #loadingTemplate>
+  <div class="dsg-authentication-email-loading-container">
+    <mat-spinner class="nuverial-button-spinner" [diameter]="20"></mat-spinner>
+  </div>
+</ng-template>

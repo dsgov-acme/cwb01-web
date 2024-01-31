@@ -1,0 +1,147 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/variables' as themeVars;
+@use '@dsg/shared-theme/partials/mixins' as mixins;
+
+:host {
+  --nuverial-checkbox-card-background-color: var(--theme-color-white);
+  --nuverial-checkbox-card-border-color: var(--theme-color-m3-neutral-80);
+  --nuverial-checkbox-card-box-shadow: var(--theme-color-box-shadow);
+  --nuverial-checkbox-card-color-tertiary: var(--theme-color-tertiary);
+  --nuverial-checkbox-card-color-disabled: var(--theme-color-black-opaque-38);
+
+  @include mixins.checkbox-styleCheckbox();
+
+  .nuverial-checkbox-card-container {
+    border-radius: rem.fromPx(6px);
+    border-style: solid;
+    border-width: 0;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    max-width: rem.fromPx(448px);
+    min-width: rem.fromPx(288px);
+    padding: rem.fromPx(2px);
+  }
+
+  .nuverial-checkbox-card-container:has(.nuverial-card-image) {
+    &.image-position-before {
+      min-width: rem.fromPx(449px);
+      max-width: unset;
+      min-height: rem.fromPx(100px);
+
+      @media screen and (max-width: themeVars.$layout-medium-screen-breakpoint) {
+        min-width: unset;
+      }
+
+      .nuverial-checkbox-card-label-container {
+        flex-direction: row;
+
+        .nuverial-checkbox-card-image-container {
+          flex-shrink: 0;
+
+          ::ng-deep .nuverial-card-image {
+            border-top-left-radius: rem.fromPx(6px);
+            border-bottom-left-radius: rem.fromPx(6px);
+            border-top-right-radius: 0;
+            width: 100%;
+            max-width: rem.fromPx(300px);
+
+            @media screen and (max-width: themeVars.$layout-mobile-breakpoint) {
+              max-width: rem.fromPx(150px);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .nuverial-checkbox-card-container:focus-within:has(.checkbox-card-checked) {
+    border-color: var(--nuverial-checkbox-card-color-tertiary);
+  }
+  .nuverial-checkbox-card-container:focus-within {
+    border-color: var(--nuverial-checkbox-card-color-tertiary);
+    border-width: rem.fromPx(1px);
+  }
+
+  .nuverial-checkbox-card-label-container {
+    border-style: solid;
+    border-width: rem.fromPx(2px);
+    border-color: var(--nuverial-checkbox-card-border-color);
+    border-radius: rem.fromPx(6px);
+    box-shadow: var(--nuverial-checkbox-card-box-shadow);
+    background-color: var(--nuverial-checkbox-card-background-color);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    &.checkbox-card-checked {
+      border-color: var(--nuverial-checkbox-card-color-tertiary);
+    }
+
+    &.checkbox-card-disabled {
+      ::ng-deep .nuverial-card-image {
+        opacity: 0.5;
+      }
+      ::ng-deep {
+        .nuverial-card-title,
+        .nuverial-card-content {
+          color: var(--nuverial-checkbox-card-color-disabled);
+        }
+      }
+    }
+
+    .nuverial-checkbox-card-image-container {
+      display: flex;
+      flex-shrink: 1;
+
+      ::ng-deep .nuverial-card-image {
+        border-top-left-radius: rem.fromPx(6px);
+        border-top-right-radius: rem.fromPx(6px);
+        width: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+
+  .nuverial-checkbox-card-label-container:focus-within {
+    border-color: var(--nuverial-checkbox-card-color-tertiary);
+  }
+
+  .nuverial-checkbox-card-label-content {
+    display: flex;
+
+    .nuverial-checkbox-card-content-container {
+      padding: rem.fromPx(10px) 1rem 1rem 0;
+
+      ::ng-deep .nuverial-card-content {
+        display: flex;
+        flex-direction: column;
+        font-size: var(--theme-typography-font-size-small);
+        line-height: rem.fromPx(20px);
+      }
+
+      ::ng-deep .nuverial-card-title {
+        line-height: rem.fromPx(24px);
+        font-weight: var(--theme-typography-font-weight-bold);
+      }
+    }
+
+    ::ng-deep .nuverial-checkbox-card-content-container:has(.nuverial-card-title) {
+      > .nuverial-card-content {
+        padding-top: rem.fromPx(6px);
+      }
+    }
+  }
+
+  .nuverial-checkbox-error {
+    padding-top: 0.5rem;
+    nuverial-icon {
+      padding-right: 0.25rem;
+    }
+  }
+
+  .nuverial-checkbox-card-forced-invalid,
+  .nuverial-checkbox-card-invalid {
+    --mdc-checkbox-unselected-icon-color: var(--theme-color-error) !important;
+  }
+}

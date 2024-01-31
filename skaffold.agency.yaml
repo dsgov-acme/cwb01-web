@@ -1,0 +1,75 @@
+apiVersion: skaffold/v3
+kind: Config
+metadata:
+  name: agency
+profiles:
+  - name: dev
+    build:
+      local:
+        useDockerCLI: false
+        useBuildkit: false
+      artifacts:
+        - image: node-builder
+          docker:
+            dockerfile: docker/builder.Dockerfile
+        - image: agency
+          requires:
+            - image: node-builder
+              alias: NODE_BUILDER
+          docker:
+            dockerfile: docker/nginx.Dockerfile
+            buildArgs:
+              APP: agency
+              ENVIRONMENT: production
+    deploy:
+      helm:
+        releases:
+          - name: agency
+            createNamespace: true
+            chartPath: .ci/helm/web
+            # Ref: https://skaffold.dev/docs/deployers/helm/#image-configuration
+            setValueTemplates:
+              image.repository: "{{.IMAGE_REPO_agency}}"
+              image.tag: "{{.IMAGE_TAG_agency}}@{{.IMAGE_DIGEST_agency}}"
+            setValues:
+              environment: dev
+              image:
+                pullPolicy: IfNotPresent
+            valuesFiles:
+              - .ci/helm/web/agency/values.yaml
+              - .ci/helm/web/agency/dev.yaml
+  - name: prod
+    build:
+      local:
+        useDockerCLI: false
+        useBuildkit: false
+      artifacts:
+        - image: node-builder
+          docker:
+            dockerfile: docker/builder.Dockerfile
+        - image: agency
+          requires:
+            - image: node-builder
+              alias: NODE_BUILDER
+          docker:
+            dockerfile: docker/nginx.Dockerfile
+            buildArgs:
+              APP: agency
+              ENVIRONMENT: production
+    deploy:
+      helm:
+        releases:
+          - name: agency
+            createNamespace: true
+            chartPath: .ci/helm/web
+            # Ref: https://skaffold.dev/docs/deployers/helm/#image-configuration
+            setValueTemplates:
+              image.repository: "{{.IMAGE_REPO_agency}}"
+              image.tag: "{{.IMAGE_TAG_agency}}@{{.IMAGE_DIGEST_agency}}"
+            setValues:
+              environment: prod
+              image:
+                pullPolicy: IfNotPresent
+            valuesFiles:
+              - .ci/helm/web/agency/values.yaml
+              - .ci/helm/web/agency/prod.yaml

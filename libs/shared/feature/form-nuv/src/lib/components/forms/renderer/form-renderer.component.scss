@@ -1,0 +1,20 @@
+@use '@dsg/shared-theme/partials/mixins' as mixins;
+
+:host {
+  display: flex;
+  flex: 1;
+  margin: 4rem auto;
+  justify-content: center;
+
+  form {
+    flex: 1;
+  }
+
+  ::ng-deep formly-form > formly-field formly-group {
+    @include mixins.dynamicForms-styleFormlyFields();
+
+    .formly-field-hide {
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,15 @@
+@use '../../styles/_mixins.scss';
+
+:host {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-flow: column nowrap;
+  @include mixins.styleTransactionDetailHeader();
+
+  .messages-breadcrumb {
+    ::ng-deep .nuverial-breadcrumb {
+      padding: 0;
+    }
+  }
+}

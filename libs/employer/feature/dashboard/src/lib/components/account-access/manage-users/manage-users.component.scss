@@ -1,0 +1,89 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+
+:host {
+  padding-bottom: 1.5rem;
+  .manage-users {
+    &__actions {
+      position: absolute;
+      right: 0;
+      top: rem.fromPx(-10px);
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      align-items: baseline;
+      gap: 1rem;
+
+      nuverial-text-input {
+        min-width: 340px;
+      }
+    }
+    &__invite-user {
+      ::ng-deep .mdc-button {
+        font-weight: var(--theme-typography-font-weight-bold);
+        width: 150px;
+        background-color: var(--theme-color-white);
+      }
+    }
+    &__search {
+      min-width: 300px !important;
+      ::ng-deep {
+        .mat-mdc-form-field-infix {
+          padding-top: rem.fromPx(8px);
+          padding-bottom: rem.fromPx(8px);
+          min-height: 40px;
+        }
+        .mdc-notched-outline__leading {
+          border-radius: 0.5rem 0 0 0.5rem;
+        }
+        .mdc-notched-outline__trailing {
+          border-radius: 0 0.5rem 0.5rem 0;
+        }
+        .mat-icon,
+        .mat-mdc-input-element,
+        .mat-mdc-input-element::placeholder {
+          color: var(--theme-color-primary);
+        }
+        .mat-mdc-input-element::placeholder {
+          -webkit-text-fill-color: var(--theme-color-primary);
+        }
+      }
+    }
+  }
+
+  ::ng-deep {
+    .manage-users__tab-body {
+      overflow: hidden !important;
+
+      .mat-mdc-tab-body-content {
+        overflow: unset !important;
+      }
+    }
+
+    .manage-users__tab-label {
+      .mdc-tab__text-label {
+        gap: 10px;
+
+        > h3 {
+          font-size: var(--theme-typography-font-size-large);
+          font-weight: var(--theme-typography-font-weight-bold);
+        }
+      }
+
+      &.mdc-tab-indicator--active {
+        .manage-users__tab-label__count {
+          background-color: var(--theme-color-primary);
+        }
+      }
+
+      &__count {
+        display: inline-block;
+        padding: 4px 8px;
+        background-color: var(--theme-color-m3-neutral-60);
+        font-size: var(--theme-typography-font-size-small);
+        font-weight: var(--theme-typography-font-weight-mid);
+        color: var(--theme-color-white);
+        border-radius: 4px;
+      }
+    }
+  }
+}

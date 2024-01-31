@@ -1,0 +1,45 @@
+<div class="user-action">
+  <h2 class="user-action__title">{{ dialogLabel }}</h2>
+  <nuverial-icon class="user-action__close" aria-label="close" iconName="clear" mat-dialog-close="" role="button" />
+  <mat-dialog-content class="user-action__content">
+    <ng-container *ngIf="dialogMode === 'edit' && user">
+      <div class="user-action__info">
+        <p>Name: <strong>{{user.displayName}}</strong></p>
+        <p>Email: <strong>{{user.email}}</strong></p>
+      </div>
+    </ng-container>
+    <form [formGroup]="formGroup">
+      <nuverial-text-input
+        ariaLabel="Email"
+        *ngIf="dialogMode === userActionModalModes.invite"
+        [required]="true"
+        [validationMessages]="emailValidationMessages"
+        formControlName="emailAddress"
+        label="Email"
+        placeholder="Enter email address"
+        type="email"
+      />
+      <nuverial-select
+        ariaLabel="role"
+        [selectOptions]="(roles$ | async) ?? []"
+        [validationMessages]="roleValidationMessages"
+        formControlName="role"
+        label="Role"
+        placeholder="Select Role"
+      />
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions class="user-action__actions">
+    <nuverial-button ariaLabel="Cancel" buttonStyle="outlined" colorTheme="primary" mat-dialog-close>CANCEL</nuverial-button>
+    <nuverial-button
+      class="user-action__submit"
+      ariaLabel="Send Invite"
+      [disabled]="!formGroup.valid"
+      (click)="submit()"
+      buttonStyle="filled"
+      colorTheme="primary"
+    >
+      {{submitText}}
+    </nuverial-button>
+  </mat-dialog-actions>
+</div>

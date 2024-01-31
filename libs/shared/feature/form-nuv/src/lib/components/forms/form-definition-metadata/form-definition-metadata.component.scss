@@ -1,0 +1,61 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+
+:host {
+  display: block;
+
+  .modal {
+    padding: rem.fromPx(24px) rem.fromPx(18px);
+    width: rem.fromPx(500px);
+    height: rem.fromPx(460px);
+    position: relative;
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .close-icon {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    &__actions {
+      background-color: white;
+      bottom: rem.fromPx(16px);
+      box-shadow: 0px rem.fromPx(-4px) rem.fromPx(3px) #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: rem.fromPx(100px);
+      left: rem.fromPx(8px);
+      right: rem.fromPx(8px);
+      position: absolute;
+      text-align: center;
+
+      &--cancel,
+      &--save {
+        flex-grow: 1;
+        width: calc(50% - rem.fromPx(15px));
+      }
+    }
+
+    .form {
+      margin-top: rem.fromPx(24px);
+    }
+
+    .text-area {
+      margin-top: rem.fromPx(10px);
+    }
+
+    .form-name {
+      margin-top: rem.fromPx(10px);
+    }
+  }
+  .create-form {
+    color: var(--mdc-dialog-supporting-text-color, black);
+    font-size: 26px;
+    padding-left: 20px;
+  }
+}

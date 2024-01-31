@@ -1,0 +1,11 @@
+<nuverial-card>
+  <h1 nuverialCardContentType="title">{{language.headerText}}</h1>
+  <div class="dsg-authentication-content-container" nuverialCardContentType="content">
+    <div class="dsg-authentication-content-instructions">{{language.headerSubText}}</div>
+    <div class="dsg-authentication-content-message">{{language.statusSuccessMessage}}</div>
+  </div>
+  <div class="dsg-authentication-footer-container" nuverialCardContentType="footer">
+    <span>{{language.footerText}}</span>
+    <a class="dsg-authentication-footer-link" [routerLink]="[]" (click)="onProviderUpdate()">{{language.footerLinkText || ''}}</a>
+  </div>
+</nuverial-card>

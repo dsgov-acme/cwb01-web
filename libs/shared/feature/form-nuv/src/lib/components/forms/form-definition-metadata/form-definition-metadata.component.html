@@ -1,0 +1,42 @@
+<div class="modal">
+  <div class="modal-header">
+    <div [ngSwitch]="dialogData.mode">
+      <h1 class="create-form" *ngSwitchCase="'Create'">New Form</h1>
+      <h1 *ngSwitchCase="'Update'">Form Configuration</h1>
+    </div>
+    <div class="close-icon" mat-dialog-close><span class="material-symbols-outlined"> close </span></div>
+  </div>
+  <mat-dialog-content>
+    <div class="form">
+      <form [formGroup]="formGroup">
+        <nuverial-text-input ariaLabel="Key" formControlName="key" label="Key" placeholder="Key"></nuverial-text-input>
+        <div class="form-name">
+          <nuverial-text-input ariaLabel="Form Name" formControlName="name" label="Form Name" nuverialTrimInput placeholder="Name"></nuverial-text-input>
+        </div>
+        <div class="text-area">
+          <nuverial-text-area
+            ariaLabel="Description"
+            [maxlength]="200"
+            formControlName="description"
+            label="Description"
+            placeholder="Form Description"
+          ></nuverial-text-area>
+        </div>
+        <nuverial-button class="modal__actions--cancel" ariaLabel="Cancel" buttonStyle="outlined" colorTheme="primary" mat-dialog-close>
+          CANCEL
+        </nuverial-button>
+        <nuverial-button
+          class="modal__actions--save"
+          ariaLabel="Submit"
+          [disabled]="loading"
+          (click)="onSave()"
+          buttonStyle="filled"
+          buttonType="submit"
+          colorTheme="primary"
+        >
+          SAVE
+        </nuverial-button>
+      </form>
+    </div>
+  </mat-dialog-content>
+</div>

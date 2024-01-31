@@ -1,0 +1,126 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+
+:host {
+  display: flex;
+
+  ::ng-deep {
+    .mat-sidenav {
+      display: flex;
+      flex: 1;
+      overflow: unset;
+    }
+
+    .mat-drawer-inner-container {
+      display: flex;
+      flex: 1;
+      overflow: unset;
+    }
+  }
+
+  .sidenav-container {
+    width: rem.fromPx(56px);
+    overflow: unset;
+    height: 100%;
+    display: flex;
+    box-shadow: 0px 0px 20px var(--theme-color-black-opaque-2);
+
+    .top-nav-container {
+      position: sticky;
+      top: 0;
+
+      .nav-home {
+        border-bottom: 1px solid var(--theme-color-primary);
+      }
+    }
+
+    .sidenav {
+      background-color: var(--theme-color-white);
+      border: none;
+
+      .mat-nav-list-container {
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+        width: 100%;
+
+        .mdc-list-item:focus::before {
+          background-color: unset;
+        }
+
+        ::ng-deep {
+          nuverial-icon {
+            .mat-icon {
+              color: var(--theme-color-primary);
+            }
+          }
+
+          .mdc-list-item__content {
+            height: rem.fromPx(24px);
+          }
+        }
+
+        .selected {
+          padding-left: rem.fromPx(12px);
+          border-left: 4px solid var(--theme-color-black);
+          background-color: var(--theme-color-m3-neutral-95);
+        }
+
+        .bottom-nav-container {
+          position: fixed;
+          bottom: 0;
+
+          .last-item {
+            z-index: 1;
+            margin-bottom: rem.fromPx(5px);
+            border-top-style: double;
+            border-top-color: #ababab;
+            border-top-width: 1px;
+            height: rem.fromPx(54px);
+            padding-top: rem.fromPx(15px);
+          }
+        }
+      }
+    }
+
+    &.dark {
+      .sidenav {
+        background-color: #3d3d3d;
+
+        .mat-nav-list-container {
+          ::ng-deep nuverial-icon {
+            .mat-icon {
+              color: var(--theme-color-white) !important;
+            }
+          }
+
+          .selected {
+            background-color: white;
+            color: var(--theme-color-black);
+            border: none;
+            padding-left: rem.fromPx(16px);
+
+            ::ng-deep nuverial-icon {
+              .mat-icon {
+                color: black !important;
+              }
+            }
+          }
+
+          .bottom-nav-container {
+            background-color: var(--theme-color-black);
+
+            .last-item {
+              border: none;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+:host-context(.footer-actions-open) {
+  .bottom-nav-container {
+    bottom: 106px !important;
+  }
+}

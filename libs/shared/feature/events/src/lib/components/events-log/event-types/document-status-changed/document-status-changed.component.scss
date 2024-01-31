@@ -1,0 +1,29 @@
+:host {
+  display: block;
+
+  .label {
+    font-weight: var(--theme-typography-font-weight-bold);
+    padding-right: 5px;
+  }
+
+  .docName {
+    padding-bottom: 0.5rem;
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .rejected-reasons-container {
+    padding-left: 1.5rem;
+
+    & .rejected-reasons-list {
+      margin: 0;
+      margin-top: 0.5rem;
+    }
+  }
+
+  .download-link {
+    color: var(--theme-color-blue);
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}

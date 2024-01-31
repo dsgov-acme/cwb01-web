@@ -1,0 +1,59 @@
+@use '../functions/rem';
+@use '../variables' as themeVars;
+
+:root {
+  --nuverial-snackbar-position-vertical-bottom: #{rem.fromPx(100px)};
+  --nuverial-snackbar-position-vertical-top: #{rem.fromPx(110px)};
+}
+
+//
+// The NuverialSnack uses the panel class panelClass `nuverial-snackbar-container`
+// to customize styling. Position of snackbars top/bottom is tricky
+//
+@mixin styleSnackBar() {
+  .mat-mdc-snack-bar-container .mdc-snackbar__surface {
+    --mdc-snackbar-container-color: var(--theme-color-white);
+    border-style: solid;
+    border-width: 1px 1px 1px 5px;
+  }
+
+  .mat-mdc-snack-bar-container .mdc-snackbar__label {
+    --mdc-snackbar-supporting-text-color: var(--theme-color-black);
+    --mdc-snackbar-supporting-text-size: var(--theme-typography-font-size-small);
+    --mdc-snackbar-supporting-text-weight: var(--theme-typography-font-weight-bold);
+    --mdc-snackbar-supporting-text-weight: 20px;
+    padding-right: 0;
+  }
+
+  .nuverial-snackbar-container {
+    @media screen and (max-width: themeVars.$layout-medium-screen-breakpoint) {
+      margin-left: 24px;
+      margin-right: 24px;
+    }
+
+    &.snackbar-error {
+      .mdc-snackbar__surface {
+        color: var(--theme-color-error);
+      }
+    }
+    &.snackbar-success {
+      .mdc-snackbar__surface {
+        border-color: var(--theme-color-success);
+      }
+    }
+    &.snackbar-warn {
+      .mdc-snackbar__surface {
+        border-color: var(--theme-color-warning);
+      }
+    }
+
+    &.snackbar-position-vertical-top {
+      margin-top: var(--nuverial-snackbar-position-vertical-top);
+    }
+
+    &.snackbar-position-vertical-bottom {
+      bottom: var(--nuverial-snackbar-position-vertical-bottom);
+      position: fixed;
+    }
+  }
+}

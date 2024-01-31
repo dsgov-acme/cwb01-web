@@ -1,0 +1,75 @@
+apiVersion: skaffold/v3
+kind: Config
+metadata:
+  name: employer
+profiles:
+  - name: dev
+    build:
+      local:
+        useDockerCLI: false
+        useBuildkit: false
+      artifacts:
+        - image: node-builder
+          docker:
+            dockerfile: docker/builder.Dockerfile
+        - image: employer
+          requires:
+            - image: node-builder
+              alias: NODE_BUILDER
+          docker:
+            dockerfile: docker/nginx.Dockerfile
+            buildArgs:
+              APP: employer
+              ENVIRONMENT: production
+    deploy:
+      helm:
+        releases:
+          - name: employer
+            createNamespace: true
+            chartPath: .ci/helm/web
+            # Ref: https://skaffold.dev/docs/deployers/helm/#image-configuration
+            setValueTemplates:
+              image.repository: "{{.IMAGE_REPO_employer}}"
+              image.tag: "{{.IMAGE_TAG_employer}}@{{.IMAGE_DIGEST_employer}}"
+            setValues:
+              environment: dev
+              image:
+                pullPolicy: IfNotPresent
+            valuesFiles:
+              - .ci/helm/web/employer/values.yaml
+              - .ci/helm/web/employer/dev.yaml
+  - name: prod
+    build:
+      local:
+        useDockerCLI: false
+        useBuildkit: false
+      artifacts:
+        - image: node-builder
+          docker:
+            dockerfile: docker/builder.Dockerfile
+        - image: employer
+          requires:
+            - image: node-builder
+              alias: NODE_BUILDER
+          docker:
+            dockerfile: docker/nginx.Dockerfile
+            buildArgs:
+              APP: employer
+              ENVIRONMENT: production
+    deploy:
+      helm:
+        releases:
+          - name: employer
+            createNamespace: true
+            chartPath: .ci/helm/web
+            # Ref: https://skaffold.dev/docs/deployers/helm/#image-configuration
+            setValueTemplates:
+              image.repository: "{{.IMAGE_REPO_employer}}"
+              image.tag: "{{.IMAGE_TAG_employer}}@{{.IMAGE_DIGEST_employer}}"
+            setValues:
+              environment: prod
+              image:
+                pullPolicy: IfNotPresent
+            valuesFiles:
+              - .ci/helm/web/employer/values.yaml
+              - .ci/helm/web/employer/prod.yaml

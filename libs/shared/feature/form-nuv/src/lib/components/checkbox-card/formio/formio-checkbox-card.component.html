@@ -1,0 +1,18 @@
+<nuverial-checkbox-card
+  [ariaLabel]="props.ariaLabel"
+  [checked]="props.checked || false"
+  [colorTheme]="props.colorTheme || 'primary'"
+  [displayError]="props.displayError || true"
+  [formControl]="formControl"
+  [imagePosition]="props.imagePosition || 'top'"
+  [invalid]="props.invalid || false"
+  [label]="props.label"
+  [pointValue]="props.pointValue || 0"
+  [required]="props.required!"
+  [validationMessages]="validation?.messages"
+  [value]="props.value || ''"
+>
+  <img *ngIf="props.imagePath" alt="{{props.imageAltLabel}}" nuverialCardContentType="image" src="{{props.imagePath}}" />
+  <div *ngIf="props.cardTitle" nuverialCardContentType="title">{{props.cardTitle}}</div>
+  <div *ngIf="props.cardContent" nuverialCardContentType="content">{{props.cardContent}}</div>
+</nuverial-checkbox-card>

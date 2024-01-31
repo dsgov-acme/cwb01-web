@@ -1,0 +1,8 @@
+<as-split data-testid="as-split" #split [useTransition]="true" direction="horizontal" unit="pixel">
+  <as-split-area class="first-area" #area1 [size]="splitAreaSizes.area1">
+    <ng-content select="[child1]"></ng-content>
+  </as-split-area>
+  <as-split-area class="second-area" #area2 [minSize]="area2MinWidth" [size]="splitAreaSizes.area2">
+    <ng-content select="[child2]"></ng-content>
+  </as-split-area>
+</as-split>

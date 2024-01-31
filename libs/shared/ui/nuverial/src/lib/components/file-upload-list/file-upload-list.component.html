@@ -1,0 +1,61 @@
+<ul class="file-list">
+  <li class="file-item" *ngFor="let file of fileList; trackBy: trackByFn">
+    <ng-container *ngTemplateOutlet="file.uploadProgress === 100 ? uploaded : uploading; context: { $implicit: file }"></ng-container>
+  </li>
+</ul>
+
+<ng-template #uploading let-file>
+  <div class="file-uploading" [ngClass]="{ 'mobile': mobile }">
+    <div class="file-uploading__body" [ngClass]="{ 'mobile': mobile }">
+      <div class="file-uploading__body__header">
+        <nuverial-icon [outlined]="true" iconName="description"></nuverial-icon>
+        <span class="file-uploading__body__header__name">{{file.name}}</span>
+      </div>
+      <div class="file-uploading__body__progress">
+        <div class="progress-bar" [ngStyle]="{ 'width': file.progressWidth }"></div>
+      </div>
+    </div>
+    <div class="file-action-button" (click)="onStopUpload(file.name)" (keyup.enter)="onStopUpload(file.name)" tabindex="0">
+      <span class="file-action-button__label">Cancel</span>
+      <nuverial-icon [outlined]="true" iconName="cancel"></nuverial-icon>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #uploaded let-file>
+  <div class="file-uploaded" [ngClass]="{ 'mobile': mobile }">
+    <div class="file-uploaded__label">
+      <nuverial-icon
+        class="file-uploaded__label__icon--{{file.status}}"
+        [iconName]="file.status === statusOptions.success ? 'check_circle' : file.status === statusOptions.failure ? 'error' : 'refresh'"
+        [outlined]="true"
+      ></nuverial-icon>
+      <span class="file-uploaded__label__name" [ngClass]="{ 'failure': file.status === statusOptions.failure }"> {{file.name}} </span>
+    </div>
+    <nuverial-divider class="file-uploaded__divider" *ngIf="mobile" [ngClass]="{ 'failure': file.status === statusOptions.failure }"></nuverial-divider>
+    <div class="file-uploaded__actions" [ngClass]="{ 'mobile': mobile }">
+      <div class="file-uploaded__actions__tooltip" *ngIf="file.status === statusOptions.failure && file.processingStatus.processors?.length">
+        <nuverial-file-processor-tooltip [processors]="file.processingStatus.processors">
+          <span class="file-uploaded__actions__tooltip__text">Document Issues Detected</span>
+        </nuverial-file-processor-tooltip>
+      </div>
+      <div class="file-uploaded__actions__buttons">
+        <button
+          class="file-action-button"
+          [attr.aria-disabled]="!!file.isLoading"
+          [disabled]="!!file.isLoading"
+          (click)="onDownloadFile(file.name)"
+          (keyup.enter)="onDownloadFile(file.name)"
+          type="button"
+        >
+          <span class="file-action-button__label">Download</span>
+          <nuverial-icon [outlined]="true" iconName="file_download"></nuverial-icon>
+        </button>
+        <button class="file-action-button" (click)="onRemoveFile(file.name)" (keyup.enter)="onRemoveFile(file.name)" tabindex="0" type="button">
+          <span class="file-action-button__label">Remove</span>
+          <nuverial-icon [outlined]="true" iconName="delete"></nuverial-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

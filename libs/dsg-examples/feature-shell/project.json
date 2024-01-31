@@ -1,0 +1,9 @@
+{
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "name": "dsg-examples-feature-shell",
+  "prefix": "dsg",
+  "projectType": "library",
+  "sourceRoot": "libs/dsg-examples/feature-shell/src",
+  "tags": ["scope:shared", "type:feature"],
+  "targets": {}
+}

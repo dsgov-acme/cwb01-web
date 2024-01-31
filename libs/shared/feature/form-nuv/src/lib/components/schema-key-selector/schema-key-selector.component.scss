@@ -1,0 +1,73 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/variables' as themeVars;
+
+:host {
+  display: block;
+
+  .nowrap {
+    white-space: nowrap;
+  }
+
+  ::ng-deep .schema-key-selector {
+    &__selected {
+      border-radius: rem.fromPx(10px);
+      border: 1px solid var(--theme-color-tertiary);
+      color: var(--theme-color-tertiary);
+      padding: rem.fromPx(6px) rem.fromPx(8px);
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+
+      &--unselect {
+        font-size: var(--theme-typography-font-size-x-large);
+        font-family: monospace;
+        padding: 0 rem.fromPx(5px);
+        cursor: pointer;
+        text-align: center;
+        margin-left: auto;
+
+        .nuverial-icon {
+          --nuverial-icon-size: rem.fromPx(16px);
+          --nuverial-icon-color: var(--theme-color-tertiary);
+          display: flex;
+        }
+      }
+
+      & .tag-text {
+        padding-left: rem.fromPx(5px);
+        text-align: center;
+        font-size: var(--theme-typography-font-size-small);
+        font-weight: var(--theme-typography-font-weight-mid);
+        line-height: rem.fromPx(20px);
+        letter-spacing: rem.fromPx(0.1px);
+      }
+    }
+
+    &__button {
+      display: flex;
+      align-items: center;
+      gap: rem.fromPx(4px);
+      padding: rem.fromPx(10px) rem.fromPx(24px);
+      width: fit-content;
+
+      color: var(--theme-color-primary);
+      font-size: var(--theme-typography-font-size-small);
+      font-weight: var(--theme-typography-font-weight-mid);
+      line-height: rem.fromPx(16px);
+      letter-spacing: rem.fromPx(0.4px);
+
+      border-radius: rem.fromPx(6px);
+      border: 2px solid var(--theme-color-primary);
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      &.disabled {
+        color: var(--theme-color-m3-neutral-65);
+        border: 2px solid var(--theme-color-m3-neutral-65);
+        pointer-events: none;
+      }
+    }
+  }
+}

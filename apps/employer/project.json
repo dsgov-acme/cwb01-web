@@ -1,0 +1,143 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "implicitDependencies": ["shared-ui-theme"],
+  "name": "employer",
+  "prefix": "dsg",
+  "projectType": "application",
+  "sourceRoot": "apps/employer/src",
+  "tags": ["type:app", "scope:employer"],
+  "targets": {
+    "build": {
+      "configurations": {
+        "development": {
+          "buildOptimizer": false,
+          "extractLicenses": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/employer/src/environments/environment.ts",
+              "with": "apps/employer/src/environments/environment.dev.ts"
+            }
+          ],
+          "namedChunks": true,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "local": {
+          "fileReplacements": [
+            {
+              "replace": "apps/employer/src/environments/environment.ts",
+              "with": "apps/employer/src/environments/environment.local.ts"
+            }
+          ]
+        },
+        "personal": {
+          "fileReplacements": [
+            {
+              "replace": "apps/employer/src/environments/environment.ts",
+              "with": "apps/employer/src/environments/environment.personal.ts"
+            }
+          ]
+        },
+        "production": {
+          "budgets": [
+            {
+              "maximumError": "5mb",
+              "maximumWarning": "3mb",
+              "type": "initial"
+            },
+            {
+              "maximumError": "20kb",
+              "maximumWarning": "15kb",
+              "type": "anyComponentStyle"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "apps/employer/src/environments/environment.ts",
+              "with": "apps/employer/src/environments/environment.prod.ts"
+            }
+          ],
+          "outputHashing": "all"
+        }
+      },
+      "defaultConfiguration": "production",
+      "executor": "@angular-devkit/build-angular:browser",
+      "options": {
+        "allowedCommonJsDependencies": ["formiojs", "lodash", "moment", "jsoneditor", "dompurify"],
+        "assets": [
+          "apps/employer/src/favicon.ico",
+          "apps/employer/src/assets",
+          {
+            "glob": "**/*",
+            "input": "libs/shared/ui/theme/assets/",
+            "output": "/assets/"
+          }
+        ],
+        "index": "apps/employer/src/index.html",
+        "inlineStyleLanguage": "scss",
+        "main": "apps/employer/src/main.ts",
+        "outputPath": "dist/apps/employer",
+        "polyfills": ["zone.js"],
+        "scripts": [
+          {
+            "bundleName": "environment",
+            "inject": false,
+            "input": "libs/shared/utils/environment/src/lib/environment.js"
+          }
+        ],
+        "styles": ["apps/employer/src/styles.scss"],
+        "tsConfig": "apps/employer/tsconfig.app.json"
+      },
+      "outputs": ["{options.outputPath}"]
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "employer:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["apps/employer/**/*.ts", "apps/employer/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "serve": {
+      "configurations": {
+        "development": {
+          "browserTarget": "employer:build:development"
+        },
+        "local": {
+          "browserTarget": "employer:build:development,local"
+        },
+        "personal": {
+          "browserTarget": "employer:build:development,personal"
+        },
+        "production": {
+          "browserTarget": "employer:build:production"
+        }
+      },
+      "defaultConfiguration": "development",
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "options": {
+        "port": 4202
+      }
+    },
+    "test": {
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      },
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "apps/employer/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"]
+    }
+  }
+}

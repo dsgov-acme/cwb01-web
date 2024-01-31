@@ -1,0 +1,7 @@
+@use '@dsg/shared-theme/partials/mixins' as mixins;
+
+:host {
+  display: block;
+
+  @include mixins.dynamicForms-styleReviewFields();
+}

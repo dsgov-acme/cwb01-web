@@ -1,0 +1,77 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/mixins' as mixins;
+
+:host {
+  display: block;
+
+  @include mixins.footer-styleFooterActions();
+
+  .notes-header {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: rem.fromPx(30px);
+    padding: rem.fromPx(15px) 0 rem.fromPx(30px);
+    background-color: var(--theme-color-m3-neutral-95);
+
+    &-breadcrumb {
+      text-transform: uppercase;
+
+      ::ng-deep .nuverial-breadcrumb {
+        padding: rem.fromPx(10.75px) 0;
+      }
+    }
+  }
+  .notes-form {
+    display: flex;
+    flex: 1;
+    flex-flow: column nowrap;
+    padding: rem.fromPx(30px);
+
+    &-header {
+      display: flex;
+      flex-flow: column nowrap;
+      gap: rem.fromPx(15px);
+
+      &-title {
+        margin-top: rem.fromPx(10px);
+        font-size: var(--theme-typography-font-size-xx-large);
+      }
+
+      &-subtitle {
+        margin: 0;
+        color: var(--theme-color-m3-neutral-30);
+      }
+    }
+
+    &-fields {
+      display: flex;
+      flex-flow: row wrap;
+      gap: rem.fromPx(5px) rem.fromPx(30px);
+      margin-top: rem.fromPx(30px);
+    }
+
+    &-field {
+      flex: 1;
+
+      &-full {
+        flex: 1 1 100%;
+      }
+    }
+
+    &-attachment-button {
+      align-self: flex-end;
+      margin-bottom: rem.fromPx(80px);
+
+      ::ng-deep .mdc-button {
+        font-weight: var(--theme-typography-font-weight-bold);
+        text-transform: uppercase;
+      }
+    }
+
+    ::ng-deep .footer-actions {
+      z-index: 3;
+    }
+  }
+}

@@ -1,0 +1,33 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/variables' as themeVars;
+@use '@dsg/shared-theme/partials/mixins' as mixins;
+
+:host {
+  --nuverial-checkbox-background-color: var(--theme-color-white);
+  --nuverial-checkbox-border-color: var(--theme-color-m3-neutral-80);
+  --nuverial-checkbox-box-shadow: var(--theme-color-box-shadow);
+  --nuverial-checkbox-color-tertiary: var(--theme-color-tertiary);
+  --nuverial-checkbox-color-disabled: var(--theme-color-black-opaque-38);
+
+  @include mixins.checkbox-styleCheckbox();
+
+  .nuverial-checkbox-container:focus-visible:has(.checkbox-checked) {
+    border-color: var(--nuverial-checkbox-color-tertiary);
+  }
+  .nuverial-checkbox-container:focus-within {
+    border-color: var(--nuverial-checkbox-color-tertiary);
+    border-width: rem.fromPx(1px);
+  }
+
+  .nuverial-checkbox-forced-invalid,
+  .nuverial-checkbox-invalid {
+    --mdc-checkbox-unselected-icon-color: var(--theme-color-error) !important;
+  }
+
+  .nuverial-checkbox-error {
+    padding-top: 0.5rem;
+    nuverial-icon {
+      padding-right: 0.25rem;
+    }
+  }
+}

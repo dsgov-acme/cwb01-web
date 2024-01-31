@@ -1,0 +1,67 @@
+{
+  "configurations": [
+    {
+      "name": "Debug pre-started Public Portal",
+      "request": "launch",
+      "type": "chrome",
+      "url": "http://localhost:4200",
+      "webRoot": "${workspaceFolder}"
+    },
+    {
+      "name": "Debug pre-started Agency Portal",
+      "request": "launch",
+      "type": "chrome",
+      "url": "http://localhost:4201",
+      "webRoot": "${workspaceFolder}"
+    },
+    {
+      "command": "yarn start public -c=local",
+      "cwd": "${workspaceFolder}",
+      "name": "Debug Public to Minikube",
+      "request": "launch",
+      "serverReadyAction": {
+        "action": "startDebugging",
+        "name": "Debug pre-started Public Portal",
+        "pattern": "listening on localhost:4200"
+      },
+      "type": "node-terminal"
+    },
+    {
+      "command": "yarn start public -c=dev",
+      "cwd": "${workspaceFolder}",
+      "name": "Debug Public to Dev",
+      "request": "launch",
+      "serverReadyAction": {
+        "action": "startDebugging",
+        "name": "Debug pre-started Public Portal",
+        "pattern": "listening on localhost:4200"
+      },
+      "type": "node-terminal"
+    },
+    {
+      "command": "yarn start agency -c=local",
+      "cwd": "${workspaceFolder}",
+      "name": "Debug Agency to Minikube",
+      "request": "launch",
+      "serverReadyAction": {
+        "action": "startDebugging",
+        "name": "Debug pre-started Agency Portal",
+        "pattern": "listening on localhost:4201"
+      },
+      "type": "node-terminal"
+    },
+    {
+      "command": "yarn start agency -c=dev",
+      "cwd": "${workspaceFolder}",
+      "name": "Debug Agency to Dev",
+      "request": "launch",
+      "serverReadyAction": {
+        "action": "startDebugging",
+        "name": "Debug pre-started Agency Portal",
+        "pattern": "listening on localhost:4201"
+      },
+      "type": "node-terminal"
+    }
+  ],
+  "version": "0.2.0"
+}

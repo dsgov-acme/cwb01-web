@@ -1,0 +1,73 @@
+<h2>Card Groups</h2>
+<div class="component-section" [formGroup]="radioGroup">
+  <h3>Radio</h3>
+  <div id="test-label-radio">Pick a card!</div>
+  <nuverial-card-group
+    aria-labelledby="test-label-radio"
+    [validationMessages]="validationMessages"
+    (change)="onRadioGroupChange($event)"
+    (validationErrors)="onRadioValidationErrors($event)"
+    formControlName="radioControl1"
+  >
+    <nuverial-radio-card value="1">
+      <div nuverialCardContentType="title">Card 1</div>
+      <div nuverialCardContentType="content">Radio 1</div>
+    </nuverial-radio-card>
+    <nuverial-radio-card [disabled]="true" value="2">
+      <div nuverialCardContentType="title">Radio 2</div>
+    </nuverial-radio-card>
+    <nuverial-radio-card value="3">
+      <div nuverialCardContentType="title">Radio 3</div>
+    </nuverial-radio-card>
+  </nuverial-card-group>
+
+  <div>Radio Status</div>
+  <ng-container *ngIf="radioChanges$ | async as changes">
+    <div *ngFor="let change of  changes;  trackBy: trackByFn">{{change | json}}</div>
+  </ng-container>
+  <div>Radio Errors</div>
+  <div *ngIf="radioErrors$ | async as points">{{points | json}}</div>
+</div>
+
+<div class="component-section">
+  <h3>Checkbox</h3>
+  <div>Select checkbox min: {{minPoints}} max: {{maxPoints}} total: {{totalPoints}}</div>
+  <div id="test-label-checkbox">Pick a card!</div>
+  <nuverial-card-group
+    aria-labelledby="test-label-radio"
+    [maxPoints]="maxPoints"
+    [minPoints]="minPoints"
+    [validationMessages]="validationMessages"
+    [(ngModel)]="radioModel.isValid"
+    (change)="onCardGroupChange($event)"
+    (changeCard)="onCardChange($event)"
+    (changePoints)="onChangePoints($event)"
+    (validationErrors)="onCheckboxValidationErrors($event)"
+  >
+    <nuverial-checkbox-card [pointValue]="1" value="card-1">
+      <div nuverialCardContentType="title">Card 1</div>
+      <div nuverialCardContentType="content">points 1</div>
+    </nuverial-checkbox-card>
+    <nuverial-checkbox-card [pointValue]="2" value="card-2">
+      <div nuverialCardContentType="title">Card 2</div>
+      <div nuverialCardContentType="content">points 2</div>
+    </nuverial-checkbox-card>
+    <nuverial-checkbox-card [disabled]="true" [pointValue]="1" value="card-3">
+      <div nuverialCardContentType="title">Card 3</div>
+      <div nuverialCardContentType="content">points 1</div>
+    </nuverial-checkbox-card>
+    <nuverial-checkbox-card [pointValue]="2" value="card-4">
+      <div nuverialCardContentType="title">Card 4</div>
+      <div nuverialCardContentType="content">points 1</div>
+    </nuverial-checkbox-card>
+  </nuverial-card-group>
+
+  <div>Checkbox Status</div>
+  <ng-container *ngIf="checkboxChanges$ | async as changes">
+    <div *ngFor="let change of changes; trackBy: trackByFn">{{change | json}}</div>
+  </ng-container>
+  <div>Checkbox Points</div>
+  <div *ngIf="checkboxPoints$ | async as points">{{points | json}}</div>
+  <div>Checkbox Errors</div>
+  <div *ngIf="checkboxErrors$ | async as points">{{points | json}}</div>
+</div>

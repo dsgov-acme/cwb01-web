@@ -1,0 +1,31 @@
+<div class="flex-container">
+  <nuverial-text-input
+    class="relative-date-text-input"
+    [ariaLabel]="props.ariaLabel"
+    [autocomplete]="props.autocomplete || ''"
+    [formControl]="numberOfUnit"
+    [hint]="props.hint"
+    [label]="props.label || ''"
+    [maskPattern]="props.mask!"
+    [maxlength]="props.showMaxLength && props.maxLength || 0"
+    [placeholder]="props.placeholder!"
+    [prefixAriaLabel]="props.prefixAriaLabel!"
+    [prefixIcon]="props.prefixIcon"
+    [required]="props.required!"
+    [suffixAriaLabel]="props.suffixAriaLabel!"
+    [suffixIcon]="props.suffixIcon"
+    [tooltip]="props.tooltip"
+    [type]="props.type || 'text'"
+    [validationMessages]="validation?.messages"
+    (change)="updateValueFromControl()"
+    style="width: 100px"
+  ></nuverial-text-input>
+  <nuverial-select
+    class="relative-date-select"
+    [formControl]="dateUnit"
+    [required]="false"
+    [selectOptions]="selectOption"
+    (validOptionSelected)="updateValueFromControl()"
+    style="width: 100px"
+  ></nuverial-select>
+</div>

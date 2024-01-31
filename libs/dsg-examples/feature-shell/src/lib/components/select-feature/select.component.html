@@ -1,0 +1,32 @@
+<h2>Select</h2>
+<div class="component-section" [formGroup]="selectFormGroup">
+  <nuverial-select [formControl]="selectFormControl" [loading]="true" [selectOptions]="partialStates"></nuverial-select>
+  <nuverial-select
+    ariaDescribedBy="desc...."
+    [required]="true"
+    [selectOptions]="partialStates"
+    [validationMessages]="{required: 'Ng Model test is required'}"
+    formControlName="testGroupControl1"
+    label="Select max 10"
+    placeholder="Partial States"
+    prefixIcon="person_outline"
+    selectedOptionIconName="check"
+  >
+  </nuverial-select>
+</div>
+
+<div class="component-section">
+  <nuverial-select
+    ariaDescribedBy="desc...."
+    [dropDownArialLabels]="dropDownArialLabels"
+    [formControl]="selectSearchFormControl"
+    [required]="true"
+    [selectOptions]="allStates"
+    [validationMessages]="{required: 'Ng Model test is required'}"
+    label="Select All"
+    placeholder="All States"
+    prefixIcon="person_outline"
+    selectedOptionIconName="check"
+  >
+  </nuverial-select>
+</div>

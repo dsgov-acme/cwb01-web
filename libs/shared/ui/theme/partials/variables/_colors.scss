@@ -1,0 +1,79 @@
+@use '../functions/rem';
+
+/*
+Define colors for Material theme as theme generation does not fully support not support CSS
+ */
+$primary: #1f1f1f;
+$secondary: #696969;
+$tertiary: #f76e39;
+$error: #de0000;
+$red: #be1e2d;
+$black: #000000;
+$blue: #0077c8;
+$white: #ffffff;
+$box-shadow: 0 rem.fromPx(2px) rem.fromPx(8px) rgba(0, 0, 0, 0.15);
+
+:root {
+  --theme-color-primary: #{$primary};
+  --theme-color-primary-opaque-12: rgba(31, 31, 31, 0.12);
+
+  --theme-color-secondary: #{$secondary};
+
+  --theme-color-tertiary: #{$tertiary};
+  --theme-color-tertiary-opaque-08: rgba(247, 110, 57, 0.08);
+  --theme-color-tertiary-opaque-38: rgba(247, 110, 57, 0.38);
+
+  --theme-color-success: #237a00;
+  --theme-color-success-secondary: #d7ecdc;
+  --theme-color-warning: #f2a900;
+  --theme-color-link: #0053be;
+  --theme-color-error: #{$error};
+  --theme-color-disabled: #1f1f1f00;
+
+  --theme-color-priority-low: #237a00;
+  --theme-color-priority-medium: #de6b00;
+  --theme-color-priority-high: #de0000;
+  --theme-color-priority-urgent: #de0000;
+
+  --theme-color-white: #{$white};
+
+  --theme-color-blue: #{$blue};
+  --theme-color-blue-20: #126c9c;
+  --theme-color-blue-opaque-16: rgba(0, 119, 200, 0.16);
+
+  --theme-color-red: #{$red};
+  --theme-color-red-opaque-4: rgba(254, 195, 195, 0.4);
+
+  --theme-color-black: #{$black};
+  --theme-color-black-opaque-7: rgba(0, 0, 0, 0.7);
+  --theme-color-black-opaque-5: rgba(0, 0, 0, 0.5);
+  --theme-color-black-opaque-2: rgba(0, 0, 0, 0.2);
+  --theme-color-black-opaque-38: rgba(0, 0, 0, 0.38);
+  --theme-color-black-opaque-08: rgba(0, 0, 0, 0.08);
+
+  // using the material 3 neutral palette as a naming scheme for the various gray shades
+  --theme-color-m3-neutral-99: #f9f9f9;
+  --theme-color-m3-neutral-95: #f5f5f5;
+  --theme-color-m3-neutral-92: #eaeaea;
+  --theme-color-m3-neutral-90: #d4d4d4;
+  --theme-color-m3-neutral-86: #d9e1e2;
+  --theme-color-m3-neutral-85: #d0d0ce;
+  --theme-color-m3-neutral-81: #c2c2c2;
+  --theme-color-m3-neutral-80: #bdbdbd;
+  --theme-color-m3-neutral-65: #ababab;
+  --theme-color-m3-neutral-60: #9e9e9e;
+  --theme-color-m3-neutral-50: #7c7c7c;
+  --theme-color-m3-neutral-40: #696969;
+  --theme-color-m3-neutral-35: #62666a;
+  --theme-color-m3-neutral-30: #5a5a5a;
+  --theme-color-m3-neutral-20: #313033;
+  --theme-color-m3-neutral-10: #1c1b1f;
+
+  --theme-color-box-shadow: #{$box-shadow};
+  --theme-color-box-shadow-secondary: 0px -4px 8px rgba(0, 0, 0, 0.1);
+
+  --theme-color-background-errors: rgba(222, 0, 0, 0.07);
+
+  --theme-color-header-background: #{$primary};
+  --theme-color-header-profile-icon: #{$white};
+}

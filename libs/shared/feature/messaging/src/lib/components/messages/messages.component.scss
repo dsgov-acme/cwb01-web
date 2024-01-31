@@ -1,0 +1,126 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+
+:host {
+  flex: 1;
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 30px;
+
+  .actions {
+    position: absolute;
+    top: rem.fromPx(-8px);
+    right: 0;
+  }
+
+  .conversations-container {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .conversation {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    border-radius: 6px;
+    padding: 24px 16px;
+    box-shadow: var(--theme-color-box-shadow);
+
+    &__content {
+      flex: 1;
+    }
+
+    &__title {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: var(--theme-typography-font-size-large);
+      font-weight: var(--theme-typography-font-weight-bold);
+      margin: 0;
+      margin-bottom: 0.5rem;
+      line-height: 1.5rem;
+    }
+
+    &__total-messages {
+      display: inline-block;
+      padding: rem.fromPx(2px) rem.fromPx(8px);
+      background-color: var(--theme-color-m3-neutral-95);
+      border: 1px solid var(--theme-color-m3-neutral-90);
+      border-radius: 4px;
+      font-size: var(--theme-typography-font-size-small);
+      line-height: 1em;
+      color: var(--theme-color-m3-neutral-50);
+    }
+
+    &__created {
+      margin: 0;
+      font-size: var(--theme-typography-font-size-small);
+      font-style: italic;
+      line-height: 1.25rem;
+      font-weight: var(--theme-typography-font-weight-bold);
+      color: var(--theme-color-m3-neutral-30);
+    }
+
+    &__sender {
+      display: inline-block;
+      margin-left: 14px;
+      font-weight: var(--theme-typography-font-weight-normal);
+      &::before {
+        content: '|';
+        position: relative;
+        left: -8px;
+      }
+    }
+  }
+  .cta {
+    display: flex;
+    flex: 1;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+
+    &-icon {
+      --nuverial-icon-size: 100px;
+      --nuverial-icon-color: var(--theme-color-tertiary);
+      position: relative;
+
+      &::before {
+        content: '';
+        width: 72px;
+        height: 82px;
+        position: absolute;
+        bottom: 0;
+        right: 2px;
+        background: var(--theme-color-tertiary-opaque-08);
+        border-radius: 4px;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 18px;
+        right: 2px;
+        border-top: 28px solid var(--theme-color-white);
+        border-left: 28px solid var(--theme-color-tertiary-opaque-08);
+        width: 0;
+      }
+
+      ::ng-deep .mat-icon {
+        z-index: 1;
+      }
+    }
+
+    &-message {
+      font-size: var(--theme-typography-font-size-medium);
+      max-width: 300px;
+      text-align: center;
+      line-height: 1.5;
+    }
+  }
+}

@@ -1,0 +1,20 @@
+<ng-container *ngIf="loadSubCategory$ | async as subCategory; else loading">
+  <section class="sub-category-container">
+    <div class="sub-category-header">
+      <ng-container *ngIf="subCategory.useTransactionLabel; else label">
+        <h2 class="sub-category-title" *ngIf="loadTransactionDetails$ | async as transaction; else label">{{ transaction.transactionDefinitionName }}</h2>
+      </ng-container>
+      <ng-template #label>
+        <h2 class="sub-category-title">{{ subCategory.label }}</h2>
+      </ng-template>
+    </div>
+    <div class="sub-category-content">
+      <div class="sub-category-content-tabs">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </section>
+</ng-container>
+<ng-template #loading>
+  <nuverial-spinner></nuverial-spinner>
+</ng-template>

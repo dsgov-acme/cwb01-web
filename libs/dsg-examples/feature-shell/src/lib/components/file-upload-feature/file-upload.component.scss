@@ -1,0 +1,27 @@
+@use '@dsg/shared-theme/partials/variables' as themeVars;
+@use '@dsg/shared-theme/partials/functions/rem';
+
+:host {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+
+  .file-container {
+    display: flex;
+    justify-content: space-evenly;
+    @media screen and (max-width: themeVars.$layout-medium-screen-breakpoint) {
+      flex-direction: column;
+      div {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+    }
+  }
+
+  .header {
+    display: flex;
+    justify-content: center;
+    margin: 15px;
+  }
+}

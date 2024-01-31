@@ -1,0 +1,28 @@
+<h2>Accordion</h2>
+<nuverial-accordion class="component-section" [multiExpansion]="true" [panelList]="firstPanelList">
+  <ng-template #body let-panel>
+    <div *ngIf="panel.panelTitle === 'First Panel Example'; else notFirstExample">
+      <nuverial-section-header> {{panel.panelTitle}} </nuverial-section-header>
+      <nuverial-button ariaLabel="testing" buttonStyle="outlined" colorTheme="primary">Primary</nuverial-button>
+      <nuverial-button ariaLabel="testing" buttonStyle="filled">Basic</nuverial-button>
+      <nuverial-button ariaLabel="testing" buttonStyle="text" colorTheme="warn">Warn</nuverial-button>
+      <nuverial-button ariaLabel="testing" [disabled]="true" [loading]="true" buttonStyle="text">Disabled</nuverial-button>
+      <nuverial-footer>{{ firstAccordion.footer }}</nuverial-footer>
+    </div>
+    <ng-template #notFirstExample>
+      <div>
+        <nuverial-section-header> {{panel.panelTitle}} </nuverial-section-header>
+        <nuverial-radio-card>
+          <div nuverialCardContentType="title">{{ checkboxHeader }}</div>
+          <div nuverialCardContentType="content">
+            <div>{{ checkboxContent }}</div>
+          </div>
+        </nuverial-radio-card>
+        <nuverial-footer>
+          <div>Duis aute irure dolor in <b>reprehenderit</b> in voluptate velit esse cillum dolore eu fugiat</div>
+        </nuverial-footer>
+      </div>
+    </ng-template>
+  </ng-template>
+</nuverial-accordion>
+<nuverial-accordion class="component-section" [multiExpansion]="false" [panelList]="secondPanelList"> </nuverial-accordion>

@@ -1,0 +1,16 @@
+<nuverial-card>
+  <h1 nuverialCardContentType="title">{{title}}</h1>
+  <div class="dsg-authentication-status-content-container" nuverialCardContentType="content">
+    <div class="dsg-authentication-status-content-instructions">{{subTitle}}</div>
+    <div class="dsg-authentication-status-content-message">{{message}}</div>
+    <nuverial-button
+      *ngIf="authenticationProvider !== undefined && authenticationProvider !== null && linkText"
+      [ariaLabel]="linkText"
+      [uppercaseText]="true"
+      (click)="statusClose.next()"
+      buttonStyle="filled"
+      colorTheme="primary"
+      >{{linkText}}</nuverial-button
+    >
+  </div>
+</nuverial-card>

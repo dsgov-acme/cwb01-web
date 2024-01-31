@@ -1,0 +1,76 @@
+<!-- eslint-disable @angular-eslint/template/no-call-expression -->
+<section class="activity-log">
+  <ng-container *ngIf="isLoadingMoreEvents">
+    <nuverial-spinner></nuverial-spinner>
+  </ng-container>
+  <div [infiniteScrollDistance]="scrollDistance" [infiniteScrollThrottle]="throttle" (scrolled)="loadMoreEvents()" infinite-scroll>
+    <ng-container *ngIf="(eventsDetails$ | async) as events">
+      <ng-container *ngIf="(transaction$ | async) as transaction">
+        <ng-container *ngFor="let event of events; trackBy: trackByFn">
+          <nuverial-card
+            class="event-card"
+            [ngClass]="{ 
+                'no-footer': event.eventData.activityType &&
+                  [
+                    eventActivityType.TransactionAssignedToChanged.toString(),
+                    eventActivityType.TransactionStatusChanged.toString(),
+                    eventActivityType.TransactionPriorityChanged.toString(),
+                    eventActivityType.ProfileUserRemoved.toString(),
+                    eventActivityType.ProfileUserAdded.toString(),
+                    eventActivityType.ProfileInvitationSent.toString(),
+                    eventActivityType.ProfileInvitationClaimed.toString(),
+                    eventActivityType.ProfileInvitationDeleted.toString()
+                  ].includes(event.eventData.activityType)
+              }"
+          >
+            <div class="title" nuverialCardContentType="title">
+              <nuverial-icon class="material-symbols-outlined icon" [iconName]="event.icon" [outlined]="true"></nuverial-icon>
+              <div [innerHTML]="event.summary"></div>
+            </div>
+            <div class="subtitle" nuverialCardContentType="content">
+              <div class="">{{event.displayName}} on {{event.timestamp | date:'medium'}}</div>
+            </div>
+            <div class="content" nuverialCardContentType="footer">
+              <div [ngSwitch]="event.eventData.activityType">
+                <div *ngSwitchCase="eventActivityType.ProfileUserAccessLevelChanged">
+                  <dsg-acess-level-changed [event]="event"></dsg-acess-level-changed>
+                </div>
+                <div *ngSwitchCase="eventActivityType.TransactionCreated">
+                  <dsg-transaction-created [transaction]="transaction"></dsg-transaction-created>
+                </div>
+                <div *ngSwitchCase="eventActivityType.NoteAdded">
+                  <dsg-note-base-event [event]="event"></dsg-note-base-event>
+                </div>
+                <div *ngSwitchCase="eventActivityType.NoteDeleted">
+                  <dsg-note-base-event [event]="event"></dsg-note-base-event>
+                </div>
+                <div *ngSwitchCase="eventActivityType.NoteUpdated">
+                  <dsg-note-updated [event]="event"></dsg-note-updated>
+                </div>
+                <ng-container *ngIf="(formConfiguration$ | async) as formConfiguration">
+                  <div *ngSwitchCase="eventActivityType.TransactionDataChanged">
+                    <dsg-transaction-data-changed [event]="event" [formConfiguration]="formConfiguration" />
+                  </div>
+                  <div *ngSwitchCase="eventActivityType.DocumentRejected">
+                    <dsg-document-status-changed [event]="event" [formConfiguration]="formConfiguration" />
+                  </div>
+                  <div *ngSwitchCase="eventActivityType.DocumentAccepted">
+                    <dsg-document-status-changed [event]="event" [formConfiguration]="formConfiguration" />
+                  </div>
+                  <div *ngSwitchCase="eventActivityType.DocumentUnrejected">
+                    <dsg-document-status-changed [event]="event" [formConfiguration]="formConfiguration" />
+                  </div>
+                  <div *ngSwitchCase="eventActivityType.DocumentUnaccepted">
+                    <dsg-document-status-changed [event]="event" [formConfiguration]="formConfiguration" />
+                  </div>
+                </ng-container>
+                <div *ngSwitchCase="eventActivityType.TransactionAssignedToChanged || eventActivityType.TransactionStatusChanged"></div>
+                <div *ngSwitchDefault>{{event.summary}}</div>
+              </div>
+            </div>
+          </nuverial-card>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </div>
+</section>

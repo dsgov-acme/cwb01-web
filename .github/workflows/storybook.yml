@@ -1,0 +1,40 @@
+name: 'STORYBOOK'
+on:
+  push:
+    branches:
+      - main
+    paths: ['libs/**']
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' }}
+    steps:
+      - name: Fetch [main]
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v3
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '16'
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+      - name: Set affected projects
+        run: |
+          affected=$(yarn nx print-affected --select=projects | awk 'NR > 2 && $1 != "Done"')
+          echo "affected=$affected" >> $GITHUB_ENV
+      - name: Build storybook
+        if: contains(env.affected, 'storybook-host')
+        run: yarn nx run storybook-host:build-storybook --configuration=ci
+      - name: Deploy storybook
+        if: contains(env.affected, 'storybook-host')
+        uses: JamesIves/github-pages-deploy-action@3.6.2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: storybook # The branch the action should deploy to.
+          FOLDER: dist/storybook/storybook-host # The folder that the build-storybook script generates files.
+          CLEAN: true # Automatically remove deleted files from the deploy branch
+          TARGET_FOLDER: docs # The folder that we serve our Storybook files from

@@ -1,0 +1,106 @@
+apiVersion: skaffold/v3
+kind: Config
+metadata:
+  name: cwb01-web
+profiles:
+  - name: minikube
+    activation:
+      - kubeContext: minikube
+    build:
+      local:
+        useDockerCLI: false
+        useBuildkit: false
+      artifacts:
+        - image: node-builder
+          custom:
+            buildCommand: |
+              yarn install --frozen-lockfile
+              docker build -f ./docker/builder.Dockerfile -t $IMAGE .
+            dependencies:
+              paths:
+                - node_modules
+        - image: agency
+          requires:
+            - image: node-builder
+              alias: NODE_BUILDER
+          docker:
+            dockerfile: docker/nginx.Dockerfile
+            buildArgs:
+              APP: agency
+              ENVIRONMENT: production
+        - image: public
+          requires:
+            - image: node-builder
+              alias: NODE_BUILDER
+          docker:
+            dockerfile: docker/nginx.Dockerfile
+            buildArgs:
+              APP: public
+              ENVIRONMENT: production
+        - image: employer
+          requires:
+            - image: node-builder
+              alias: NODE_BUILDER
+          docker:
+            dockerfile: docker/nginx.Dockerfile
+            buildArgs:
+              APP: employer
+              ENVIRONMENT: production
+    deploy:
+      helm:
+        releases:
+          - name: agency
+            createNamespace: true
+            chartPath: .ci/helm/web
+            setValueTemplates:
+              image.repository: agency
+              image.tag: agency
+            setValues:
+              environment: dev
+              image:
+                pullPolicy: IfNotPresent
+            valuesFiles:
+              - .ci/helm/web/values.local.yaml
+              - .ci/helm/web/agency.local.yaml
+          - name: public
+            createNamespace: true
+            chartPath: .ci/helm/web
+            setValueTemplates:
+              image.repository: public
+              image.tag: public
+            setValues:
+              environment: dev
+              image:
+                pullPolicy: IfNotPresent
+            valuesFiles:
+              - .ci/helm/web/values.local.yaml
+              - .ci/helm/web/public.local.yaml
+          - name: employer
+            createNamespace: true
+            chartPath: .ci/helm/web
+            setValueTemplates:
+              image.repository: employer
+              image.tag: employer
+            setValues:
+              environment: dev
+              image:
+                pullPolicy: IfNotPresent
+            valuesFiles:
+              - .ci/helm/web/values.local.yaml
+              - .ci/helm/web/employer.local.yaml
+    portForward:
+      - resourceType: service
+        resourceName: agency
+        namespace: cwb01
+        localPort: 8080
+        port: 80
+      - resourceType: service
+        resourceName: public
+        namespace: cwb01
+        localPort: 8081
+        port: 80
+      - resourceType: service
+        resourceName: employer
+        namespace: cwb01
+        localPort: 8082
+        port: 80

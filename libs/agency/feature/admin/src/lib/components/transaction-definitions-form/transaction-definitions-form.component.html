@@ -1,0 +1,62 @@
+<ng-container *ngIf="(formData$ | async) as formData; else loading">
+  <div class="breadcrumb-container">
+    <nuverial-breadcrumb [breadCrumbs]="breadcrumbs"></nuverial-breadcrumb>
+  </div>
+  <header class="transaction-definitions-form-header"></header>
+  <div class="body">
+    <h1 class="title">Transaction Configuration</h1>
+    <header *ngIf="formErrors.length"><nuverial-form-errors [formErrors]="formErrors"></nuverial-form-errors></header>
+    <div class="form">
+      <div class="section-header">Transaction Definition</div>
+      <form [formGroup]="formGroup">
+        <div class="form-row">
+          <nuverial-text-input [id]="formConfigs.key.id" formControlName="key" label="Key" placeholder="Key"></nuverial-text-input>
+          <nuverial-text-input [id]="formConfigs.name.id" formControlName="name" label="Name" nuverialTrimInput placeholder="Name"></nuverial-text-input>
+          <nuverial-text-input [id]="formConfigs.category.id" formControlName="category" label="Category" placeholder="Category"></nuverial-text-input>
+        </div>
+        <nuverial-text-area
+          [id]="formConfigs.description.id"
+          [maxlength]="200"
+          formControlName="description"
+          label="Description"
+          placeholder="Description"
+        ></nuverial-text-area>
+        <div class="section-header">Configuration Elements</div>
+        <div class="form-row">
+          <nuverial-select
+            [id]="formConfigs.schemaKey.id"
+            [loading]="transactionSearchLoading"
+            [selectOptions]="formData.schemaOptions"
+            (optionCleared)="handleClearSchema()"
+            (searchInput)="handleSearchSchema($event)"
+            formControlName="schemaKey"
+            label="Schema"
+            placeholder="Select Schema"
+          ></nuverial-select>
+          <nuverial-select
+            [id]="formConfigs.processDefinitionKey.id"
+            [selectOptions]="formData.workflowOptions"
+            (optionCleared)="handleClearWorkflow()"
+            formControlName="processDefinitionKey"
+            label="Workflow"
+            placeholder="Select Workflow"
+          ></nuverial-select>
+        </div>
+      </form>
+    </div>
+    <dsg-form-configurations
+      *ngIf="this.mode === this.formModeEnum.UPDATE"
+      [transactionDefinition]="formData.transactionDefinition"
+      (changeDefaultFormConfiguration)="handleChangeDefaultFormConfiguration($event)"
+    ></dsg-form-configurations>
+    <dsg-form-selection-rules
+      *ngIf="this.mode === this.formModeEnum.UPDATE"
+      [transactionDefinition]="formData.transactionDefinition"
+      (changeFormSelectionRules)="handleChangeFormSelectionRules($event)"
+    ></dsg-form-selection-rules>
+    <nuverial-footer-actions [footerActions]="actions" (actionSelected)="onActionClick($event)"></nuverial-footer-actions>
+  </div>
+</ng-container>
+<ng-template #loading>
+  <nuverial-spinner></nuverial-spinner>
+</ng-template>

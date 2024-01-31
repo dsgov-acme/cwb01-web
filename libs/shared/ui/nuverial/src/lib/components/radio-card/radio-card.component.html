@@ -1,0 +1,22 @@
+<div class="nuverial-radio-card-container" [ngClass]="{'image-position-before': imagePosition === 'before'}">
+  <div class="nuverial-radio-card-label-container" [ngClass]="{ 'radio-card-checked': checked, 'radio-card-disabled': disabled }">
+    <mat-radio-button
+      [aria-describedby]="ariaDescribedBy"
+      [aria-label]="ariaLabel"
+      [checked]="checked"
+      [disabled]="disabled"
+      [name]="groupName"
+      [value]="value"
+      (change)="onChange($event)"
+    >
+      <div class="nuverial-radio-card-label">
+        <div class="nuverial-radio-card-image-container">
+          <ng-content select="[nuverialCardContentType='image']"></ng-content>
+        </div>
+        <div class="nuverial-radio-card-content">
+          <ng-content select="[nuverialCardContentType='title'], [nuverialCardContentType='content']"></ng-content>
+        </div>
+      </div>
+    </mat-radio-button>
+  </div>
+</div>

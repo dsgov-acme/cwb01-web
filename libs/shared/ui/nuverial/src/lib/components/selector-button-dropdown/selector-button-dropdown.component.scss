@@ -1,0 +1,39 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/variables' as themeVars;
+
+:host {
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @media screen and (max-width: themeVars.$layout-mobile-breakpoint) {
+    nuverial-button {
+      width: 100%;
+    }
+  }
+}
+
+@media screen and (max-width: themeVars.$layout-mobile-breakpoint) {
+  ::ng-deep .selector-button-dropdown-menu {
+    width: 100vw;
+    margin: 0 1.25rem 0 1.25rem !important;
+    border: 0 solid var(--theme-color-primary);
+    border-width: 0 0.0625rem 0.0625rem 0.0625rem !important;
+    ::ng-deep .selector-button-dropdown-menuItem {
+      height: 2.75rem !important;
+    }
+  }
+}
+
+::ng-deep .selector-button-dropdown-menu {
+  background-color: var(--theme-color-white);
+  border: 0 solid var(--theme-color-primary);
+  border-width: 0.0625rem;
+  max-width: 100% !important;
+  ::ng-deep .selector-button-dropdown-menuItem {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+}

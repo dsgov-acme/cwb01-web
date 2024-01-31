@@ -1,0 +1,9 @@
+<dsg-authentication-status
+  *ngIf="processingStatus$ | async as status"
+  [authenticationProvider]="authenticationAction"
+  [linkText]="status.linkText"
+  [message]="status.message"
+  [subTitle]="status.subTitle"
+  [title]="status.title"
+  (statusClose)="onStatusClose()"
+></dsg-authentication-status>

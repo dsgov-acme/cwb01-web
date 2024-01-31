@@ -1,0 +1,3 @@
+<form *ngIf="fields$ | async as fields" [formGroup]="form">
+  <formly-form [fields]="fields" [form]="form" [model]="model$ | async" [options]="options" (modelChange)="onModelChange($event)"></formly-form>
+</form>

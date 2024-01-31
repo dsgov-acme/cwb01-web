@@ -1,0 +1,63 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/variables' as themeVars;
+@use '@dsg/shared-theme/partials/mixins' as mixins;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  @include mixins.footer-styleFooterActions();
+
+  .validate-form-button {
+    margin-left: auto;
+    padding-right: rem.fromPx(20px);
+
+    ::ng-deep .mdc-button {
+      min-width: 200px;
+      border-width: rem.fromPx(2px);
+      z-index: 0;
+    }
+  }
+
+  h1 {
+    margin: revert;
+  }
+  .confirmation-template p {
+    padding-bottom: rem.fromPx(25px);
+  }
+
+  .confirmation-template {
+    ::ng-deep .mat-expansion-panel {
+      background-color: var(--theme-color-m3-neutral-95);
+
+      .mat-expansion-indicator {
+        margin-right: 1rem;
+      }
+    }
+
+    .confirmation-panel-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+
+      & > .step-container {
+        flex: 1;
+      }
+
+      & > .nuverial-button {
+        border: none;
+
+        .nuverial-icon {
+          --nuverial-icon-color: var(--theme-color-tertiary);
+        }
+      }
+    }
+  }
+
+  .review-template {
+    .review-panel-container {
+      margin: rem.fromPx(20px);
+    }
+  }
+}

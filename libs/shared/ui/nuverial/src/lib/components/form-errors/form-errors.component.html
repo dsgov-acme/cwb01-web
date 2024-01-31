@@ -1,0 +1,16 @@
+<p class="errors-title"><nuverial-icon iconName="error_outline"></nuverial-icon>Missing Information</p>
+<p>Please correct the following information to continue.</p>
+
+<ul class="form-errors-list" tabindex="0">
+  <li *ngFor="let error of displayedErrors; let i = index; trackBy: trackByFn" [attr.data-testId]="'error-' + i">
+    <a (click)="handleFocus(error)" (keyup.enter)="handleFocus(error)" role="button" tabindex="0">{{error.label}}</a>
+  </li>
+
+  <li class="show-more" *ngIf="formErrors.length > 3">
+    <a (click)="toggleShowMore()" (keyup.enter)="toggleShowMore()" role="button" tabindex="0">
+      <span class="show-more-text">{{showMore ? 'SHOW LESS' : 'SHOW MORE'}}</span>
+      <span class="arrow up-arrow" *ngIf="!showMore"></span>
+      <span class="arrow down-arrow" *ngIf="showMore"></span>
+    </a>
+  </li>
+</ul>

@@ -1,0 +1,189 @@
+timeout: 1800s
+logsBucket: "gs://${_ARTIFACT_BUCKET_NAME}/cloudbuild-logs/app-${_SERVICE_NAME}-pull-request-trigger"
+options:
+  machineType: 'E2_HIGHCPU_8'
+availableSecrets:
+  secretManager:
+    - versionName: ${_DEPLOY_KEY_SECRET}
+      env: "DEPLOY_SSH_KEY"
+    # This secret at this time is manually created from SonarQube's admin UI and saved to Google Secrets Manager
+    - versionName: "projects/$PROJECT_ID/secrets/${_SONARQUBE_TOKEN_SECRET_NAME}/versions/latest"
+      env: 'SONARQUBE_TOKEN'
+    - versionName: projects/$PROJECT_ID/secrets/${_GITHUB_BOT_TOKEN_SECRET_NAME}/versions/latest
+      env: 'GH_TOKEN'
+steps:
+  - id: "Install DEPLOY SSH Key"
+    name: "gcr.io/cloud-builders/git"
+    secretEnv: ["DEPLOY_SSH_KEY"]
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        echo "$$DEPLOY_SSH_KEY" >> /root/.ssh/id_rsa
+        chmod 400 /root/.ssh/id_rsa
+        ssh-keyscan -t rsa github.com > /root/.ssh/known_hosts
+    volumes:
+      - name: "ssh"
+        path: /root/.ssh
+
+  - id: "Clone full repo copy"
+    name: "gcr.io/cloud-builders/git"
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        rm -rf * .*
+        git clone git@github.com:dsgov-acme/cwb01-web.git . -b ${BRANCH_NAME}
+    volumes:
+      - name: "ssh"
+        path: /root/.ssh
+
+  - id: "Install dependencies"
+    name: "node:16"
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        max_attempts=3
+        base_sleep=5  # Initial sleep time in seconds
+        attempt=1
+
+        while [ $attempt -le $max_attempts ]; do
+            echo "Attempt $attempt: Running npm install..."
+            yarn install --frozen-lockfile
+
+            if [ $? -eq 0 ]; then
+                echo "npm install succeeded on attempt $attempt"
+                break
+            else
+                echo "npm install failed on attempt $attempt"
+                if [ $attempt -lt $max_attempts ]; then
+                    sleep_duration=$((base_sleep ** attempt))
+                    echo "Retrying in $sleep_duration seconds..."
+                    ((attempt++))
+                    sleep $sleep_duration
+                else
+                    echo "Max attempts reached. Exiting."
+                    exit 1
+                fi
+            fi
+        done
+
+  - id: "Linting the code"
+    name: "node:16"
+    entrypoint: "bash"
+    waitFor:
+      - "Install dependencies"
+    args:
+      - "-c"
+      - |
+        yarn lint:ci --base=origin/$_BASE_BRANCH --head=HEAD --parallel=3
+
+  - id: "Unit Tests"
+    # runInBand because Axe accessibility tests timeout when run in parallel
+    name: "node:16"
+    entrypoint: "bash"
+    waitFor:
+      - "Install dependencies"
+    args:
+      - "-c"
+      - |
+        yarn test:ci --base=origin/${_BASE_BRANCH} --head=HEAD --parallel=3 --runInBand --maxWorkers=75%
+
+#  - id: "e2e Tests"
+#    name: "cypress/base:16"
+#    entrypoint: "bash"
+#    args:
+#    - "-c"
+#    - |
+#     yarn e2e:ci --base=origin/${_BASE_BRANCH} --head=HEAD --parallel=3
+
+  - id: "Build the apps"
+    name: "node:16"
+    entrypoint: "bash"
+    waitFor:
+      - "Unit Tests"
+      - "Linting the code"
+    args:
+      - "-c"
+      - |
+        yarn build:ci --base=origin/$_BASE_BRANCH --head HEAD --parallel=3
+
+  - id: "Build storybook"
+    name: "node:16"
+    entrypoint: "bash"
+    waitFor:
+      - "Build the apps"
+    args:
+      - "-c"
+      - |
+        affected=$(yarn nx print-affected --select=projects | awk 'NR > 2 && $1 != "Done"')
+        echo $affected > /workspace/affected_projects.txt
+        affected=$(cat /workspace/affected_projects.txt);
+        if [[ $affected =~ storybook-host ]]; then
+            yarn nx run storybook-host:build-storybook --configuration=ci;
+        fi
+
+  - id: "Publish Report to SonarQube"
+    secretEnv: ['SONARQUBE_TOKEN','GH_TOKEN']
+    name: "${_GAR_BUILDER_URL}/cloudbuild-nodejs16"
+    entrypoint: "bash"
+    waitFor:
+      - "Unit Tests"
+    args:
+      - '-c'
+      - |
+        SONAR_HOST=$(gcloud compute instances list --filter 'name~sonarqube' --format 'value(name)')
+        SONAR_ZONE=$(gcloud compute instances list --filter 'name~sonarqube' --format 'value(zone)')
+        gcloud compute ssh sonarqube@$$SONAR_HOST --zone $$SONAR_ZONE
+        gcloud compute ssh sonarqube@$$SONAR_HOST  \
+          --zone $$SONAR_ZONE \
+          --tunnel-through-iap \
+          --project $PROJECT_ID \
+          -- -NL 9000:localhost:9000 &
+        PID=$?
+        ELAPSED=0
+        TIMEOUT=10
+        echo "Establishing tunnel..."
+        until curl -s http://localhost:9000
+          do
+          sleep 1
+          if (( ELAPSED > TIMEOUT ))
+            then
+            echo "establishing tunnel timed out. exiting."
+            kill $$PID
+            exit 1
+          fi
+          ELAPSED=$(( ELAPSED + 1 ))
+        done
+
+        echo "Tunnel has been established"
+        echo "Attempting to chmod the sonar-scanner binary"
+        chmod +x /workspace/node_modules/sonar-scanner/bin/sonar-scanner
+        echo "Permissions updated for sonar-scanner"
+        yarn sonar -Dsonar.login=$$SONARQUBE_TOKEN \
+                   -Dsonar.projectKey=${REPO_NAME} \
+                   -Dsonar.projectName=${REPO_NAME} \
+                   -Dsonar.branch.name=${BRANCH_NAME} \
+                   -Dsonar.qualitygate.wait=true \
+                   -Dsonar.host.url=http://localhost:9000
+
+        SQEXIT=$?
+        echo "Sonarqube scan exited with status code $$SQEXIT"
+
+        kill $$PID
+
+        echo "Linking build report to github"
+        export REPORT_URL=$(cat /workspace/report_url.txt)
+        gh auth login --with-token
+        gh pr comment ${_PR_NUMBER} --body "
+        :sparkles: Build reports have been generated and can be accessed here:
+        :one: **Jacoco Report URL in GCS:** https://console.cloud.google.com/storage/browser/${_ARTIFACT_BUCKET_NAME}/${REPO_NAME}/${_PR_NUMBER}/jacoco/test/html/index.html
+        :two: **SonarQube:** ${_SONARQUBE_HOST}/dashboard?branch=${BRANCH_NAME}&id=${REPO_NAME}
+        "
+
+        ## Fail code needs to be the last step in the ID.
+        ## Moving an escape check to the end of the ID.
+        if [[ $$SQEXIT > 0 ]]; then
+          exit 1
+        fi

@@ -1,0 +1,13 @@
+@use '@angular/material' as mat;
+
+:host {
+  flex: 1;
+
+  .form-renderer {
+    margin: 0 auto 4rem auto;
+  }
+
+  ::ng-deep .mat-horizontal-stepper-header-container {
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
+  }
+}

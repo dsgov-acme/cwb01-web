@@ -1,0 +1,7 @@
+:host {
+  display: block;
+
+  .transaction-name {
+    font-weight: var(--theme-typography-font-weight-bold);
+  }
+}

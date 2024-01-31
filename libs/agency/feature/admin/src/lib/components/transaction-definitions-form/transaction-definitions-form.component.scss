@@ -1,0 +1,55 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/mixins' as mixins;
+
+:host {
+  display: block;
+  height: 100%;
+
+  @include mixins.footer-styleFooterActions();
+
+  .transaction-definitions-form-header {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: rem.fromPx(30px);
+    padding-bottom: rem.fromPx(30px);
+  }
+
+  .body {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding-left: 75px;
+    margin-bottom: 24px;
+  }
+
+  .form {
+    padding-right: 75px;
+
+    .section-header {
+      font-weight: 700;
+      color: var(--theme-color-black);
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+    .form-row {
+      display: flex;
+      flex-direction: row;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      & > * {
+        width: 100%;
+      }
+    }
+
+    nuverial-text-area {
+      width: 100%;
+    }
+  }
+
+  .breadcrumb-container {
+    margin-top: -1.5rem;
+    margin-left: 1.5rem;
+  }
+}

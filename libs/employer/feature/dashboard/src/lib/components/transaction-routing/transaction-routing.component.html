@@ -1,0 +1,7 @@
+<ng-container *ngIf="(loadTransactionDetails$ | async) && !loading; else loadingSpinner">
+  <router-outlet></router-outlet>
+</ng-container>
+
+<ng-template #loadingSpinner>
+  <nuverial-spinner></nuverial-spinner>
+</ng-template>

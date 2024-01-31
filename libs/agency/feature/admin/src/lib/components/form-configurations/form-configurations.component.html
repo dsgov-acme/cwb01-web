@@ -1,0 +1,55 @@
+<h1 class="title">Form Configurations</h1>
+<ng-container class="form-configuration-list">
+  <div class="form-configuration-list__actions">
+    <nuverial-button
+      class="new-form-button"
+      ariaLabel="Add a new form"
+      [loading]="false"
+      (click)="open()"
+      buttonStyle="outlined"
+      buttonType="submit"
+      colorTheme="primary"
+    >
+      <nuverial-icon class="black-icon" iconName="add" />
+      Add a new Form
+    </nuverial-button>
+  </div>
+  <div class="form-configuration-list__table">
+    <ng-container *ngIf="loadForms$ | async">
+      <ng-container *ngIf="formConfigurationsList$ | async">
+        <table aria-describedby="form configurations list table" [dataSource]="dataSourceTable" mat-table matSort multiTemplateDataRows>
+          <ng-container *ngFor="let col of displayedColumns; trackBy: trackByFn" [matColumnDef]="col.value">
+            <th
+              class="form-configuration-list__table--header"
+              *matHeaderCellDef
+              [disabled]="col.sortable ? false : true"
+              [mat-sort-header]="col.sortable === true ? col.value : ''"
+              [style.width]="col.width || 'auto'"
+              mat-header-cell
+            >
+              {{col.label | nuverialSplitCamelCase }}
+            </th>
+            <ng-container [ngSwitch]="col.value">
+              <ng-container *ngSwitchCase="'default'">
+                <td *matCellDef="let element" mat-cell>
+                  <nuverial-radio-button
+                    [checked]="element.key === this.transactionDefinition.defaultFormConfigurationKey"
+                    (click)="setDefaultFormConfiguration(element.key)"
+                  ></nuverial-radio-button>
+                </td>
+              </ng-container>
+              <ng-container *ngSwitchDefault>
+                <td *matCellDef="let element" mat-cell>{{element[col.value]}}</td>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+          <tr *matHeaderRowDef="displayColumnValues" mat-header-row></tr>
+          <tr *matRowDef="let row; columns: displayColumnValues" (click)="navigateToBuilder(row.key)" mat-row></tr>
+        </table>
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf=" formConfigurationListIsLoading">
+      <nuverial-spinner />
+    </ng-container>
+  </div>
+</ng-container>

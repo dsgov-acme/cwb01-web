@@ -1,0 +1,77 @@
+import { CommonModule } from '@angular/common';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SharedUtilsLoggingModule } from '@dsg/shared/utils/logging';
+import { action } from '@storybook/addon-actions';
+import { componentWrapperDecorator, Meta, moduleMetadata, Story } from '@storybook/angular';
+import { NuverialButtonComponent } from '../button';
+import { NuverialIconComponent } from '../icon';
+import { NuverialStepperComponent } from './stepper.component';
+
+export default {
+  argTypes: {
+    style: {
+      control: {
+        labels: {
+          icon: 'Icon',
+          test: 'Text',
+        },
+        type: 'radio',
+      },
+      defaultValue: 'icon',
+      options: ['icon', 'text'],
+      type: {
+        name: 'string',
+        required: false,
+      },
+    },
+  },
+  component: NuverialStepperComponent,
+  decorators: [
+    moduleMetadata({
+      imports: [
+        BrowserAnimationsModule,
+        CommonModule,
+        MatTooltipModule,
+        MatTooltipModule,
+        NuverialButtonComponent,
+        NuverialIconComponent,
+        NuverialStepperComponent,
+        SharedUtilsLoggingModule.useConsoleLoggingAdapter(),
+      ],
+    }),
+    componentWrapperDecorator(story => `<div style="width: 100%; display: flex; justify-items: center;">${story}</div>`),
+  ],
+  parameters: {},
+  title: 'DSG/Nuverial/Components/Stepper',
+} as Meta<NuverialStepperComponent>;
+/*
+
+ */
+
+const Template: Story<NuverialStepperComponent> = (args: NuverialStepperComponent) => {
+  return {
+    props: {
+      ...args,
+      onClick: (event: unknown) => {
+        return action('change')(event);
+      },
+    },
+    template: `<nuverial-stepper>
+      <nuverial-step ariaLabel="step 1" tooltip="step 1" state="complete" label="99" icon="done" (click)='onClick($event)'></nuverial-step>
+      <nuverial-step ariaLabel="step 2" tooltip="step 2" state="active" label="2" (click)='onClick($event)'></nuverial-step>
+      <nuverial-step ariaLabel="step 3" tooltip="step 3" state="inactive" label="3" (click)='onClick($event)'></nuverial-step>
+      <nuverial-step ariaLabel="step 4" tooltip="step 4" state="inactive" label="4" (click)='onClick($event)'></nuverial-step>
+      <nuverial-step ariaLabel="step 5" tooltip="step 5" [disabled]="true" state="inactive" label="5" (click)='onClick($event)'></nuverial-step>
+    </nuverial-stepper>`,
+  };
+};
+export const Stepper = Template.bind({});
+Stepper.args = {
+  // ariaDescribedByNext: '',
+  // ariaDescribedByPrevious: '',
+  // arialLabelNext: '',
+  // arialLabelPrevious: '',
+  ariaLabel: '',
+  // style: 'icon',
+};

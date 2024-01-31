@@ -1,0 +1,33 @@
+<ng-container [ngSwitch]="mode">
+  <ng-container *ngSwitchCase="'edit'" [ngTemplateOutlet]="editTemplate"></ng-container>
+  <ng-container *ngSwitchCase="'review'" [ngTemplateOutlet]="reviewTemplate"></ng-container>
+  <ng-container *ngSwitchDefault>{{mode}} mode not implemented</ng-container>
+</ng-container>
+
+<ng-template #editTemplate>
+  <nuverial-accordion
+    [panelList]="[{expanded: true, panelTitle: props.label}]"
+    closeSuffixHeaderText="SHOW MORE"
+    openSuffixHeaderText="SHOW LESS"
+    prefixIconName="cloud_upload_outline"
+  >
+    <ng-template #body let-panel>
+      <div class="field-flex-wrapper" [ngClass]="{ 'multiple': field.props.multiple }">
+        <div data-testid="edit-content" [innerHTML]="props.content" [ngClass]="fullWidth ? 'flex-full' : 'flex-half'"></div>
+        <formly-field *ngFor="let _field of field.fieldGroup; trackBy: trackByFn" [field]="_field"></formly-field>
+      </div>
+    </ng-template>
+  </nuverial-accordion>
+</ng-template>
+
+<ng-template #reviewTemplate>
+  <div class="field-value-container" [ngClass]="{'field-section-header': field.fieldGroup && field.fieldGroup.length > 1}">
+    <div class="field-label" *ngIf="field.fieldGroup && field.fieldGroup.length <= 1">{{ props.label }}</div>
+    <nuverial-section-header class="field-label" *ngIf="field.fieldGroup && field.fieldGroup.length > 1">
+      <b nuverialCardContentType="label">{{ props.label }}</b>
+    </nuverial-section-header>
+    <div class="field-flex-wrapper">
+      <formly-field *ngFor="let _field of field.fieldGroup; trackBy: trackByFn" [field]="_field"></formly-field>
+    </div>
+  </div>
+</ng-template>

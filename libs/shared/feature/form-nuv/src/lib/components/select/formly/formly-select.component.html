@@ -1,0 +1,29 @@
+<ng-container [ngSwitch]="mode">
+  <ng-container *ngSwitchCase="'edit'" [ngTemplateOutlet]="editTemplate"></ng-container>
+  <ng-container *ngSwitchCase="'review'" [ngTemplateOutlet]="reviewTemplate"></ng-container>
+  <ng-container *ngSwitchDefault>{{mode}} mode not implemented</ng-container>
+</ng-container>
+
+<ng-template #editTemplate>
+  <nuverial-select
+    [ariaDescribedBy]="props.ariaDescribedBy"
+    [ariaLabel]="props.ariaLabel"
+    [autocomplete]="props.autocomplete || ''"
+    [formControl]="formControl"
+    [label]="props.label"
+    [placeholder]="props.placeholder || ''"
+    [prefixIcon]="props.prefixIcon"
+    [required]="props.required || false"
+    [selectedOptionIconName]="props.selectedOptionIconName || ''"
+    [selectOptions]="props.selectOptions || []"
+    [validationMessages]="props.validationMessages"
+  >
+  </nuverial-select>
+</ng-template>
+
+<ng-template #reviewTemplate>
+  <div class="field-value-container">
+    <div class="field-label">{{ props.label }}</div>
+    <div class="field-value">{{ displayTextValue }}</div>
+  </div>
+</ng-template>

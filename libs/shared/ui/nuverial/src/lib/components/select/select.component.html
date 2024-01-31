@@ -1,0 +1,65 @@
+<mat-form-field [floatLabel]="floatLabel" appearance="outline">
+  <mat-label *ngIf="label !== undefined">{{label}}</mat-label>
+  <nuverial-button *ngIf="prefixIcon" buttonStyle="icon-no-border" matPrefix>
+    <nuverial-icon [iconName]="prefixIcon"></nuverial-icon>
+  </nuverial-button>
+
+  <nuverial-icon
+    class="selectedOptionPrefixIcon"
+    *ngIf="selectedOption?.prefixIcon"
+    [iconName]="selectedOption?.prefixIcon"
+    [style.--nuverial-icon-color]="selectedOption?.color"
+  ></nuverial-icon>
+
+  <input
+    #formBaseInput
+    [attr.aria-invalid]="formControl && formControl.invalid"
+    [attr.aria-label]="this.ariaLabel || this.label"
+    [autocomplete]="autocomplete && formControl.invalid ? autocomplete : 'disabled'"
+    [formControl]="formControl"
+    [matAutocomplete]="autoCompletePanel"
+    [placeholder]="placeholder"
+    [required]="required"
+    [style.color]="selectedOption?.color"
+    (blur)="selectOnBlur()"
+    matInput
+    type="text"
+  />
+
+  <mat-autocomplete
+    class="nuverial-select-autocomplete-panel"
+    #autoCompletePanel="matAutocomplete"
+    [displayWith]="displayWith"
+    (closed)="applyAutoSelect()"
+    (optionSelected)="onOptionSelected($event)"
+  >
+    <mat-option
+      class="nuverial-select-option-container"
+      *ngFor="let option of selectOptions$ | async; trackBy: trackByFn"
+      [disabled]="option.disabled"
+      [ngClass]="{'nuverial-select-option-selected': option.selected}"
+      [value]="option.key"
+    >
+      <div class="nuverial-select-option" [style.color]="option.color">
+        <nuverial-icon *ngIf="option.selected && selectedOptionIconName" [iconName]="selectedOptionIconName"></nuverial-icon>
+        <nuverial-icon *ngIf="!option.selected && selectedOptionIconName"></nuverial-icon>
+        <nuverial-icon *ngIf="option?.prefixIcon" [iconName]="option?.prefixIcon" [style.--nuverial-icon-color]="option?.color"></nuverial-icon>
+        <span>{{option.displayTextValue}}</span>
+        <span class="nuverial-select-option-chip" *ngIf="option.displayChipValue">{{option.displayChipValue}}</span>
+      </div>
+    </mat-option>
+  </mat-autocomplete>
+  <mat-spinner class="nuverial-select-loading" ariaLabel="Loading" *ngIf="loading; else suffixIcon" [diameter]="24" mode="indeterminate"></mat-spinner>
+  <ng-template #suffixIcon>
+    <nuverial-button
+      class="selectSuffixIcon"
+      *ngIf="suffixIconName$ | async as option"
+      [ariaLabel]="option.ariaLabel"
+      (click)="onClickMenuIcon(option)"
+      buttonStyle="icon"
+    >
+      <nuverial-icon [iconName]="option.iconName"></nuverial-icon>
+    </nuverial-button>
+  </ng-template>
+  <mat-error *ngIf="error$ | async as error"><nuverial-icon iconName="error_outline"></nuverial-icon>{{error}}</mat-error>
+</mat-form-field>

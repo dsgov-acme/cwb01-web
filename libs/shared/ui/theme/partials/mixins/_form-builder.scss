@@ -1,0 +1,583 @@
+/*
+---usage example:
+
+@use '@dsg/shared-theme/partials/mixins' as mixins;
+
+:host form-builder ::ng-deep,
+::ng-deep .formio-dialog {
+  @import 'bootstrap/scss/bootstrap.scss';
+}
+
+:host {
+  @include mixins.formBuilder-formBuilderStyles();
+}
+
+::ng-deep {
+  @include mixins.formBuilder-dialogStyles();
+}
+*/
+
+@use '../functions/rem';
+
+@mixin formBuilderStyles() {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+
+  ::ng-deep {
+    .card-header {
+      border-bottom: none;
+    }
+
+    .formio-component {
+      .card.border {
+        border: none !important;
+      }
+    }
+  }
+
+  .button-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .button-row nuverial-button:first-child {
+    margin-right: 1rem;
+  }
+  .button-row nuverial-button:last-child {
+    margin-left: auto;
+    margin-right: 7px;
+  }
+
+  .preview-button {
+    ::ng-deep .mdc-button {
+      background-color: var(--theme-color-m3-neutral-99);
+    }
+
+    ::ng-deep .nuverial-icon {
+      --nuverial-icon-color: var(--theme-color-black);
+    }
+  }
+
+  .hideGutter {
+    ::ng-deep .as-split-gutter {
+      display: none;
+    }
+
+    .split-container-2 {
+      height: 0px;
+    }
+  }
+
+  .form-data-json {
+    padding: 10px;
+
+    ::ng-deep .jsoneditor-outer {
+      height: 300px;
+    }
+
+    ::ng-deep .jsoneditor-menu {
+      display: none;
+    }
+
+    ::ng-deep .jsoneditor-statusbar {
+      display: none;
+    }
+  }
+
+  .form-builder-container {
+    padding-top: 10px;
+    margin-right: -15px;
+    margin-bottom: 10px;
+  }
+
+  .split-container-1 {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-top: 10px;
+    padding-right: 15px;
+    border-radius: 25px;
+  }
+
+  .split-container-2 {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding-top: 12px;
+    padding-right: 25px;
+
+    .white-preview-button {
+      ::ng-deep .nuverial-icon {
+        --nuverial-icon-color: var(--theme-color-white);
+      }
+    }
+  }
+
+  .stepper-container {
+    position: relative;
+    z-index: 0;
+  }
+
+  .selector-options-wrapper {
+    margin-top: rem.fromPx(20px);
+    margin-bottom: rem.fromPx(20px);
+  }
+
+  .nuverial-json-editor {
+    height: rem.fromPx(750px);
+    margin-bottom: rem.fromPx(20px);
+  }
+
+  .nuverial-json-editor-split-area {
+    height: rem.fromPx(1000px);
+    margin-bottom: rem.fromPx(20px);
+  }
+
+  .builder-container {
+    margin: 0 15px !important;
+  }
+
+  form-builder {
+    ::ng-deep {
+      @include pagesPanel();
+      @include sidebar();
+      @include dragDropPanel();
+    }
+  }
+
+  ::ng-deep {
+    @include tooltipStyles();
+  }
+
+  .breadcrumb-container {
+    padding-top: 5px;
+    margin-top: -2.5rem;
+  }
+}
+
+@mixin commonPageTabPrefixIcon() {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0.4rem;
+  font-size: 1rem;
+}
+
+@mixin commonInactiveTabStyles() {
+  color: var(--theme-color-m3-neutral-30);
+  font-weight: bold;
+}
+
+@mixin tooltipButton($content) {
+  background-color: transparent !important;
+  border: none !important;
+  padding: 0 1.8rem 0 0 !important;
+  margin: 0 !important;
+  i.fa {
+    display: none;
+  }
+
+  &::before {
+    content: $content;
+    font-family: 'Material Icons';
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 0.4rem;
+    font-size: 1.5rem;
+    color: var(--theme-color-black);
+    line-height: rem.fromPx(38px) !important; // Match button container
+    margin-top: rem.fromPx(-10px) !important; // Vertical offset of button container
+    pointer-events: none;
+  }
+}
+
+@mixin standardButtons() {
+  .btn {
+    background-color: var(--theme-color-white);
+    border: 0.125rem solid var(--theme-color-black);
+    color: var(--theme-color-black);
+    &.btn-success {
+      background-color: var(--theme-color-black);
+      color: var(--theme-color-white);
+    }
+  }
+}
+
+@mixin pagesPanel() {
+  .breadcrumb {
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 1;
+    border-bottom: 4px solid var(--theme-color-m3-neutral-92);
+
+    li {
+      display: inline;
+      background-color: transparent;
+
+      .wizard-page-label {
+        padding: 1rem 1.5rem;
+        background-color: var(--theme-color-white);
+        @include commonInactiveTabStyles();
+        border-radius: 0;
+        border: 0;
+        margin-bottom: -7px;
+        cursor: pointer;
+      }
+
+      .badge-primary {
+        background-color: var(--theme-color-m3-neutral-92);
+        color: var(--theme-color-black);
+        border-radius: 0.375rem 0.375rem 0 0;
+        margin-bottom: -4px;
+        padding: calc(1rem - 4px) 1.2rem 12px 1.2rem;
+      }
+
+      .badge-info {
+        padding: calc(1rem - 4px);
+        border-bottom: 4px solid var(--theme-color-tertiary);
+        position: relative;
+        z-index: 2;
+      }
+
+      .badge-success {
+        border-bottom: 4px solid var(--theme-color-m3-neutral-92);
+        margin-bottom: -4px;
+        padding: calc(1rem - 4px) 1.2rem 8px 1.2rem;
+        color: var(--theme-color-tertiary);
+      }
+
+      .fa-plus::before {
+        @include commonPageTabPrefixIcon();
+      }
+    }
+  }
+}
+
+@mixin sidebar() {
+  .formbuilder {
+    flex-wrap: nowrap;
+  }
+
+  .formcomponents {
+    min-width: min-content;
+
+    .formcomponent {
+      padding: rem.fromPx(4px) rem.fromPx(8px) rem.fromPx(4px) rem.fromPx(8px);
+      margin-top: 0.2rem;
+      font-size: var(--bs-btn-font-size);
+      line-height: var(--bs-btn-line-height);
+      border-radius: 10px;
+    }
+  }
+
+  .formarea {
+    flex-shrink: 1;
+    min-width: 200px;
+  }
+
+  .builder-sidebar_search {
+    min-width: 145px;
+    margin-bottom: 15px !important;
+  }
+  .card.form-builder-panel {
+    min-width: 130px;
+    border: none;
+
+    &:first-child {
+      .card-header.form-builder-group-header {
+        border-top-left-radius: 10px !important;
+        border-top-right-radius: 10px !important;
+      }
+    }
+
+    &:last-child {
+      .card-header.form-builder-group-header {
+        border-bottom-left-radius: 10px !important;
+        border-bottom-right-radius: 10px !important;
+      }
+    }
+
+    .card-header.form-builder-group-header {
+      border: none;
+      border-radius: 0 !important;
+      background-color: var(--theme-color-m3-neutral-92);
+      padding: 3px 5px;
+
+      button.builder-group-button {
+        width: 100%;
+        padding: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: left;
+
+        &::after {
+          content: 'open_in_full';
+          font-family: 'Material Icons';
+          display: inline-block;
+          vertical-align: middle;
+        }
+      }
+    }
+
+    .collapse {
+      border: var(--theme-color-m3-neutral-95) 1px solid;
+
+      span.drag-copy {
+        background-color: var(--theme-color-m3-neutral-99);
+        border: none;
+        color: var(--theme-color-black);
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        text-align: left;
+        border-radius: 10px;
+        cursor: grab;
+        i,
+        span {
+          margin: 0;
+          padding: 0;
+        }
+        i {
+          flex: 0 0 auto;
+          padding-right: 5px;
+        }
+        span {
+          flex-grow: 1;
+          text-align: left;
+        }
+
+        &:hover {
+          background-color: var(--theme-color-m3-neutral-92);
+        }
+      }
+    }
+  }
+}
+
+@mixin dragDropPanel() {
+  .card-body {
+    padding: 0;
+  }
+
+  .drag-container {
+    padding-bottom: 0;
+  }
+
+  .nested-component .drag-container {
+    border: dotted 2px var(--theme-color-m3-neutral-30);
+  }
+
+  .drag-and-drop-alert.alert.alert-info.no-drag {
+    background-color: transparent;
+    color: var(--theme-color-black) !important;
+    border: none;
+    margin: 0;
+
+    &::after {
+      content: 'open_with';
+      font-family: 'Material Icons';
+      font-feature-settings: 'liga';
+      display: block;
+      text-align: center;
+      font-size: 1.5rem;
+      padding-top: 10px;
+    }
+  }
+}
+
+@mixin tooltipStyles() {
+  .component-btn-group {
+    background-color: var(--theme-color-m3-neutral-92);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 7px 10px rgba(0, 0, 0, 0.2);
+
+    .component-settings-button {
+      box-shadow: none !important;
+    }
+
+    .component-settings-button-remove {
+      @include tooltipButton('delete_outline');
+      padding: 0 1.8rem 0 0 !important;
+    }
+
+    .component-settings-button-copy {
+      @include tooltipButton('content_copy_outline');
+    }
+
+    .component-settings-button-paste {
+      @include tooltipButton('download_outline');
+    }
+
+    .component-settings-button-edit-json {
+      @include tooltipButton('code_outline');
+    }
+
+    .component-settings-button-move {
+      @include tooltipButton('open_with_outline');
+    }
+
+    .component-settings-button-edit {
+      @include tooltipButton('edit_outline');
+    }
+  }
+}
+
+@mixin dialogStyles() {
+  .formio-dialog {
+    .card-header {
+      border-bottom: none;
+    }
+
+    .card {
+      border: none;
+    }
+
+    .component-edit-tabs {
+      min-height: 0 !important;
+    }
+
+    .input-group-text {
+      padding: 0.75rem 0.75rem;
+    }
+
+    z-index: 900 !important;
+
+    .formio-dialog-content {
+      background-color: var(--theme-color-white) !important;
+      font-family: var(--theme-typography-font-family) !important;
+      @include standardButtons();
+
+      .lead {
+        @include commonInactiveTabStyles();
+      }
+
+      .nav-link {
+        border: none;
+        background-color: var(--theme-color-m3-neutral-92);
+        padding: 0.5rem 1.5rem;
+        color: var(--theme-color-m3-neutral-30);
+        font-weight: bold;
+
+        &.active {
+          color: var(--theme-color-black);
+        }
+      }
+
+      .card-header.bg-default {
+        background-color: transparent;
+        color: var(--theme-color-m3-neutral-30);
+        font-weight: bold;
+      }
+
+      .form-check-input {
+        background-color: var(--theme-color-tertiary);
+        border-color: var(--theme-color-tertiary);
+      }
+
+      .component-edit-tabs {
+        margin-bottom: 35px;
+        + .col.col-sm-6 {
+          display: flex;
+          flex-direction: column;
+          .card.panel.preview-panel {
+            & + div {
+              display: flex;
+              justify-content: space-between;
+              flex-direction: row-reverse;
+              margin-top: auto !important;
+
+              button {
+                flex: 1;
+                height: var(--nuverial-button-height);
+                font-size: var(--nuverial-button-font-size);
+                text-transform: uppercase;
+
+                &:not(:first-child) {
+                  margin-right: 10px;
+                }
+              }
+            }
+
+            > .card-header {
+              background-color: var(--theme-color-m3-neutral-92);
+
+              & > .card-title.mb-0 {
+                border: none;
+                background-color: var(--theme-color-white);
+                padding: 0.7rem 1.5rem;
+                color: var(--theme-color-black);
+                font-weight: bold;
+                border-radius: 0.375rem 0.375rem 0 0;
+                display: inline-block;
+                font-size: var(--bs-nav-link-font-size);
+                margin-bottom: -10px !important;
+              }
+            }
+          }
+        }
+      }
+
+      .datagrid-table {
+        .formio-button-remove-row {
+          > .fa.fa-times-circle-o::before {
+            font-family: 'Material Icons Outlined', sans-serif;
+            content: '\e5c9';
+            vertical-align: middle;
+          }
+        }
+        .formio-drag-button::before {
+          font-family: 'Material Icons', sans-serif;
+          content: '\e25d';
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+}
+
+// // this mixin is temporary to make our nuverial components match formio component styling.
+// // Eventually we will want to remove this mixin and make all components the components in the formio modal match our nuverial components.
+
+@mixin mimicFormioStyles() {
+  .mat-mdc-form-field-flex {
+    height: 40px;
+    line-height: 40px;
+  }
+  .mat-mdc-text-field-wrapper {
+    height: 40px;
+    line-height: 40px;
+  }
+
+  .mat-mdc-form-field:not(.mat-form-field-no-animations) .mdc-text-field__input {
+    height: 40px !important;
+  }
+
+  .mat-mdc-text-field-wrapper.mdc-text-field--outlined .mat-mdc-form-field-infix {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+  }
+
+  .mat-mdc-text-field-wrapper,
+  .mat-mdc-select {
+    height: 40px;
+  }
+
+  .nuverial-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  nuverial-button:has(.nuverial-button-icon) {
+    height: 40px;
+  }
+
+  mat-spinner.nuverial-select-loading {
+    height: 40px !important;
+    align-self: flex-start !important;
+  }
+}

@@ -1,0 +1,58 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  padding: rem.fromPx(16px) rem.fromPx(24px);
+  background: var(--theme-color-background-errors);
+  font-size: var(--theme-typography-font-size-small);
+
+  .errors-title {
+    color: var(--theme-color-error);
+    display: flex;
+    gap: rem.fromPx(6px);
+    align-items: self-end;
+
+    ::ng-deep .nuverial-icon {
+      --nuverial-icon-size: var(--theme-typography-font-size-normal);
+      --nuverial-icon-color: var(--theme-color-error);
+    }
+  }
+
+  > ul {
+    display: flex;
+    flex-direction: column;
+    gap: rem.fromPx(12px);
+
+    & > li > a {
+      cursor: pointer;
+    }
+
+    .show-more {
+      color: var(--theme-color-error);
+      display: flex;
+      align-items: center;
+      margin-left: -1cm;
+      margin-top: 10px;
+
+      .show-more-text {
+        margin-right: 8px;
+      }
+
+      .arrow {
+        width: 6px;
+        height: 6px;
+        display: inline-block;
+        margin-bottom: 3px;
+        border: solid var(--theme-color-error);
+        border-width: 0 2px 2px 0;
+        transform: rotate(-135deg);
+
+        &.up-arrow {
+          transform: rotate(45deg);
+          margin-top: -2px;
+        }
+      }
+    }
+  }
+}

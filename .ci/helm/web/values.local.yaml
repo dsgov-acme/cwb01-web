@@ -1,0 +1,21 @@
+replicaCount: 1
+revisionHistoryLimit: 3
+
+environment: 'minikube'
+namespace: "cwb01"
+createIngress: true
+
+image:
+  repository: my-image
+  pullPolicy: Always
+  tag: 'latest'
+
+net:
+  applicationPort: 80
+  readinessPath: '/nginx-health'
+  livenessPath: '/nginx-health'
+
+resources:
+  mem:
+    min: '10Mi'
+    max: '100Mi'

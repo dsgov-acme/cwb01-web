@@ -1,0 +1,56 @@
+@mixin attributeStyles() {
+  display: block;
+
+  .attribute-container {
+    display: flex;
+    align-items: center;
+    justify-content: initial;
+    background-color: var(--theme-color-m3-neutral-30);
+    color: var(--theme-color-white);
+    font-size: var(--theme-typography-font-size-x-small);
+    padding: 0.375rem 0.5rem;
+    border-radius: 4px;
+    box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+
+    .attribute-icon {
+      ::ng-deep .mat-icon {
+        color: var(--theme-color-white) !important;
+        font-size: var(--theme-typography-font-size-x-small);
+      }
+    }
+
+    p {
+      margin: 0;
+      font-weight: var(--theme-typography-font-weight-mid);
+      > span {
+        font-weight: var(--theme-typography-font-weight-normal);
+        padding-left: 0.5rem;
+      }
+    }
+  }
+}
+
+@mixin icon($name: '') {
+  .fa-#{$name}::before {
+    content: '#{$name}' !important;
+    font-family: 'Material Icons Outlined' !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    font-weight: unset !important;
+  }
+}
+
+@mixin attributeIcon() {
+  @include icon('short_text');
+  @include icon('format_list_bulleted');
+  @include icon('radio_button_checked');
+  @include icon('schema');
+  @include icon('money');
+  @include icon('east');
+  @include icon('calendar_today');
+  @include icon('schedule');
+  @include icon('description');
+  .fa {
+    font-weight: unset !important;
+  }
+}

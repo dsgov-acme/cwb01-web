@@ -1,0 +1,48 @@
+@use '../functions/rem';
+@use '../variables' as themeVars;
+
+@mixin styleMenu() {
+  .mat-mdc-menu-content {
+    --nuverial-icon-size: #{rem.fromPx(16px)};
+    .mat-mdc-menu-item {
+      .nuverial-icon {
+        --nuverial-icon-size: #{rem.fromPx(16px)};
+      }
+
+      .mdc-list-item__primary-text {
+        font-weight: var(--theme-typography-font-weight-bold);
+      }
+    }
+  }
+  .mdc-menu-surface {
+    --mdc-shape-medium: 8px;
+  }
+  .mat-elevation-z8,
+  .mat-mdc-elevation-specific.mat-elevation-z8 {
+    box-shadow: var(--theme-color-box-shadow);
+  }
+  .mat-mdc-menu-panel {
+    background-color: var(--theme-color-m3-neutral-95);
+  }
+}
+
+@mixin styleMenuAction() {
+  &.mat-mdc-menu-panel {
+    background-color: var(--theme-color-white) !important;
+    margin-bottom: rem.fromPx(6px) !important;
+    border-style: solid;
+    border-width: 1px;
+
+    .mdc-list-item__primary-text {
+      font-size: rem.fromPx(12px) !important;
+    }
+
+    .menu-button {
+      height: rem.fromPx(36px);
+      min-height: auto;
+      min-width: rem.fromPx(233px);
+      padding-right: rem.fromPx(8px) !important;
+      padding-left: rem.fromPx(8px) !important;
+    }
+  }
+}

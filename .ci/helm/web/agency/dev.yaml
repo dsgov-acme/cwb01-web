@@ -1,0 +1,28 @@
+environment: "dev"
+
+firebase:
+  project: "cwb01-dev"
+
+net:
+  host: "agency-dev.cwb01.dsgov.nuvalence.io"
+
+environmentJSON: {
+  authenticationConfiguration: {
+    firebaseConfiguration: {
+      firebase: {
+        apiKey: "AIzaSyDzhnv-M6FAIuXNQxTvuYXetdRrjLxvY8E",
+        authDomain: "cwb01-dev.dsgov.nuvalence.io",
+      },
+      providerFlow: 'redirect',
+      providerId: 'oidc.agency',
+      tenantId: 'agency-portal-euxjr',
+    },
+    sessionExpiration: {
+      idleTimeSeconds: 1800,
+      sessionTimeSeconds: 64800,
+    },
+  },
+  httpConfiguration: {
+    baseUrl: "https://api-dev.cwb01.dsgov.nuvalence.io",
+  },
+}

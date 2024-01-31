@@ -1,0 +1,9 @@
+@use '@dsg/shared-theme/partials/mixins' as mixins;
+
+:host {
+  display: block;
+
+  ::ng-deep {
+    @include mixins.richText-styleRichText();
+  }
+}

@@ -1,0 +1,35 @@
+@use '@dsg/shared-theme/partials/functions/rem';
+@use '@dsg/shared-theme/partials/mixins' as mixins;
+
+:host {
+  --mdc-icon-button-icon-color: var(--theme-color-tertiary);
+
+  --nuverial-text-input-icon-size: rem.fromPx(10px);
+
+  ::ng-deep .nuverial-icon {
+    --nuverial-icon-size: var(--nuverial-text-input-icon-size);
+  }
+
+  @include mixins.formField-styleFormField();
+}
+
+::ng-deep .nuverial-datepicker-panel {
+  border-radius: 100%;
+  .mat-datepicker-content.mat-accent:has(.mat-calendar-body-selected) {
+    .mat-calendar-body-cell-content {
+      color: var(--theme-color-white);
+    }
+  }
+}
+::ng-deep .mat-datepicker-content.mat-accent .mat-calendar-body-today.mat-calendar-body-selected {
+  box-shadow: none;
+}
+::ng-deep .mat-datepicker-content.mat-accent .mat-calendar-body-selected {
+  color: var(--theme-color-white);
+  background-color: var(--theme-color-tertiary);
+}
+
+::ng-deep .mat-calendar-body-selected {
+  color: var(--theme-color-white);
+  background-color: var(--theme-color-tertiary);
+}

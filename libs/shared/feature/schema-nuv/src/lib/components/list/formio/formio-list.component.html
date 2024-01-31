@@ -1,0 +1,8 @@
+<!-- eslint-disable @angular-eslint/template/no-call-expression -->
+<div class="attribute-container">
+  <nuverial-icon class="attribute-icon" [iconName]="props.icon" />
+  <p>
+    {{props.name}}
+    <span> ({{props.concatenatedContentType?.includes("DynamicEntity") ? props.concatenatedContentType!.split("-")[1] : props.concatenatedContentType}}) </span>
+  </p>
+</div>

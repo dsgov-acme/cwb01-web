@@ -1,0 +1,48 @@
+:host {
+  .title {
+    background-color: var(--theme-color-m3-neutral-92);
+    padding: 0.7rem;
+    font-weight: bold;
+  }
+
+  .modal-container {
+    background-color: var(--theme-color-m3-neutral-95);
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  .logic-validator-formio {
+    border: 1px solid var(--theme-color-m3-neutral-80);
+    text-align: center;
+    padding: 0;
+    ::ng-deep {
+      h2 {
+        font-size: var(--theme-typography-font-size-normal);
+        font-weight: bold;
+      }
+
+      .alert-modal {
+        font-family: var(--mdc-dialog-supporting-text-font, 'Arial');
+        line-height: var(--mdc-dialog-supporting-text-line-height, 14px);
+        font-size: var(--mdc-dialog-supporting-text-size, 14px);
+        font-weight: var(--mdc-dialog-supporting-text-weight, 500);
+        letter-spacing: var(--mdc-dialog-supporting-text-tracking, 1px);
+        background-color: var(--theme-color-white) !important;
+        box-shadow: var(
+          --mdc-dialog-container-elevation,
+          0px 11px 15px -7px rgba(0, 0, 0, 0.2),
+          0px 24px 38px 3px rgba(0, 0, 0, 0.14),
+          0px 9px 46px 8px rgba(0, 0, 0, 0.12)
+        );
+        .modal-text {
+          margin-top: 0.8rem;
+        }
+      }
+
+      mat-dialog-actions {
+        justify-content: flex-end !important;
+      }
+    }
+  }
+}

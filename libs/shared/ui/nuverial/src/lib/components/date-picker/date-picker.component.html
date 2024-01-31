@@ -1,0 +1,33 @@
+<mat-form-field [floatLabel]="floatLabel" appearance="outline">
+  <mat-label *ngIf="inputLabel !== undefined">{{inputLabel}}</mat-label>
+  <input
+    #formBaseInput
+    [attr.aria-invalid]="formControl.invalid"
+    [attr.aria-label]="ariaLabel || inputLabel"
+    [attr.autocomplete]="autocomplete ? autocomplete: null"
+    [attr.disabled]="disabled"
+    [formControl]="formControl"
+    [matDatepicker]="datepicker"
+    [max]="maxDate"
+    [min]="minDate"
+    [placeholder]="placeholder"
+    [required]="required"
+    (dateChange)="valueChanged()"
+    matInput
+    nuverialDateMask
+  />
+  <mat-hint *ngIf="hint">{{hint}}</mat-hint>
+
+  <mat-datepicker-toggle [for]="datepicker" matIconSuffix></mat-datepicker-toggle>
+  <mat-datepicker
+    #datepicker
+    [attr.disabled]="disabled"
+    [dateClass]="dateClass"
+    [opened]="opened"
+    [panelClass]="panelClass"
+    [restoreFocus]="restoreFocus"
+    [startAt]="startAt"
+    [startView]="startView"
+  ></mat-datepicker>
+  <mat-error *ngIf="error$ | async as error"><nuverial-icon iconName="error_outline"></nuverial-icon>{{error}}</mat-error>
+</mat-form-field>
