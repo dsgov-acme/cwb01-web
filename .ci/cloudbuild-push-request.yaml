@@ -213,7 +213,7 @@ steps:
       - "-c"
       - |
         gcloud deploy releases create "$(echo ${REPO_NAME} | cut -d- -f2-)-agency-${SHORT_SHA}" \
-          --project=cwb01-services \
+          --project=cwb01-shared-services-e4d8 \
           --region=us-east4 \
           --delivery-pipeline="${REPO_NAME}-agency" \
           --gcs-source-staging-dir=gs://cwb01-application-pipeline_clouddeploy/source \
@@ -229,7 +229,7 @@ steps:
       - "-c"
       - |
         gcloud deploy releases create "$(echo ${REPO_NAME} | cut -d- -f2-)-public-${SHORT_SHA}" \
-          --project=cwb01-services \
+          --project=cwb01-shared-services-e4d8 \
           --region=us-east4 \
           --delivery-pipeline="${REPO_NAME}-public" \
           --gcs-source-staging-dir=gs://cwb01-application-pipeline_clouddeploy/source \
@@ -245,7 +245,7 @@ steps:
       - "-c"
       - |
         gcloud deploy releases create "$(echo ${REPO_NAME} | cut -d- -f2-)-employer-${SHORT_SHA}" \
-          --project=cwb01-services \
+          --project=cwb01-shared-services-e4d8 \
           --region=us-east4 \
           --delivery-pipeline="${REPO_NAME}-employer" \
           --gcs-source-staging-dir=gs://cwb01-application-pipeline_clouddeploy/source \
